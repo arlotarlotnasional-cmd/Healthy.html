@@ -864,6 +864,9 @@ body{
     .startMeta{font-size:10px;}
 }
 
+
+.anomalyFeed{position:absolute;left:16px;bottom:18px;max-width:360px;font:10px/1.5 monospace;letter-spacing:1px;color:#8cff9b;opacity:.72;pointer-events:none;text-shadow:0 0 8px #0f0;z-index:8}.anomalyFeed .warn{color:#ffd166}.anomalyFeed .crit{color:#ff6b6b}.resultOverlay{position:fixed;inset:0;background:rgba(0,0,0,.86);display:none;align-items:center;justify-content:center;z-index:70;font-family:monospace}.resultCard{width:min(430px,88vw);padding:28px;border:1px solid #4cff72;background:#071009;box-shadow:0 0 35px #0f52; text-align:center}.resultTag{font-size:10px;letter-spacing:3px;color:#6aff8a}.resultCard h2{font-size:22px;margin:12px 0 20px;color:#fff}.resultGrid{display:grid;grid-template-columns:1fr auto;gap:9px 24px;text-align:left;font-size:11px}.resultGrid span{color:#7c8b82}.resultGrid b{color:#fff}.resultBar{height:5px;background:#17251a;margin:24px 0 14px;overflow:hidden}.resultBar span{display:block;width:0;height:100%;background:#55ff66;transition:width 1.2s}.resultCard p{font:11px/1.6 Arial;color:#aeb8b0}.resultCard button{margin-top:12px;background:#55ff66;color:#041006;border:0;padding:11px 24px;font-weight:800;letter-spacing:2px;cursor:pointer}.cursorTrace{position:absolute;width:18px;height:18px;border:1px solid rgba(255,255,255,.12);border-radius:50%;pointer-events:none;z-index:7;transform:translate(-50%,-50%);transition:left .08s,top .08s}.toy.evade{transform:scale(1.04) translate(-8px,3px) rotate(-4deg)}
+@media(max-width:600px){.anomalyFeed{left:10px;bottom:12px;font-size:9px;max-width:260px}.resultCard{padding:22px}}
 </style>
 </head>
 
@@ -919,7 +922,7 @@ body{
 
         <div class="hudRight">
             <div>SCORE: <span id="score">0</span></div>
-            <div>TIME: <span id="timer">15</span></div>
+            <div>TIME: <span id="timer">15</span></div><div>MISS: <span id="miss">0</span></div>
         </div>
     </div>
 
@@ -930,7 +933,9 @@ body{
         <div class="toy" id="toy" title="Find me!">🧸</div>
     </div>
 
+    <div class="anomalyFeed" id="anomalyFeed"></div>
     <div class="roundMessage" id="roundMessage"></div>
+    <div class="resultOverlay" id="resultOverlay"><div class="resultCard"><div class="resultTag">SESSION REPORT</div><h2 id="resultTitle">SESSION COMPLETE</h2><div class="resultGrid"><span>LEVEL</span><b id="resultLevel">3/3</b><span>SCORE</span><b id="resultScore">0</b><span>WRONG CLICKS</span><b id="resultMiss">0</b><span>SESSION</span><b id="resultSession">#----</b></div><div class="resultBar"><span id="resultBarFill"></span></div><p id="resultText">Browser simulation complete.</p><button id="continueHorror" type="button">CONTINUE</button></div></div>
 </div>
 
 
@@ -1124,6 +1129,17 @@ const scoreEl = document.getElementById("score");
 const hintText = document.getElementById("hintText");
 const targetGlow = document.getElementById("targetGlow");
 const roundMessage = document.getElementById("roundMessage");
+const missEl=document.getElementById("miss");
+const anomalyFeed=document.getElementById("anomalyFeed");
+const resultOverlay=document.getElementById("resultOverlay");
+const resultTitle=document.getElementById("resultTitle");
+const resultLevel=document.getElementById("resultLevel");
+const resultScore=document.getElementById("resultScore");
+const resultMiss=document.getElementById("resultMiss");
+const resultSession=document.getElementById("resultSession");
+const resultBarFill=document.getElementById("resultBarFill");
+const resultText=document.getElementById("resultText");
+const continueHorror=document.getElementById("continueHorror");
 const screen = document.getElementById("screen");
 const terminal = document.getElementById("terminal");
 const black = document.getElementById("black");
@@ -1235,8 +1251,18 @@ function updateHUD(){
     levelEl.textContent=level;
     scoreEl.textContent=score;
     timerEl.textContent=timer;
+    missEl.textContent=wrongClicks;
 }
 
+function pushAnomaly(text,type=""){
+    const line=document.createElement("div"); line.className=type; line.textContent="["+(type==="crit"?"CRITICAL":type==="warn"?"WARNING":"NOTICE")+"] "+text;
+    anomalyFeed.appendChild(line); while(anomalyFeed.children.length>3) anomalyFeed.firstChild.remove();
+}
+function randomAnomaly(){
+    if(sequenceStarted || Math.random()>0.32) return;
+    const events=["Rendering latency detected.","Input response variance detected.","Session clock drift detected.","Visual process resynchronized.","Signal interruption detected."];
+    const t=events[Math.floor(Math.random()*events.length)]; pushAnomaly(t, Math.random()<.28?"warn":""); glitchSound();
+}
 function clearDecoys(){
     decoys.forEach(d=>d.remove());
     decoys=[];
@@ -1254,6 +1280,8 @@ function randomPosition(el, bottomSafe=80){
 
 function moveToy(){
     randomPosition(toy,90);
+    toy.classList.toggle("evade", Math.random()<0.22);
+    randomAnomaly();
     const x=parseFloat(toy.style.left)||0;
     const y=parseFloat(toy.style.top)||0;
     targetGlow.style.left=(x-30)+"px";
@@ -1277,6 +1305,14 @@ function spawnDecoys(){
     }
 }
 
+gameArea.addEventListener("pointermove",e=>{
+    if(sequenceStarted) return;
+    const r=gameArea.getBoundingClientRect();
+    if(!window.cursorTrace){ const c=document.createElement("div"); c.className="cursorTrace"; gameArea.appendChild(c); window.cursorTrace=c; }
+    cursorTrace.style.left=(e.clientX-r.left)+"px"; cursorTrace.style.top=(e.clientY-r.top)+"px";
+    const tr=toy.getBoundingClientRect(); const dx=e.clientX-(tr.left+tr.width/2),dy=e.clientY-(tr.top+tr.height/2);
+    if(Math.hypot(dx,dy)<90 && Math.random()<.08){ randomPosition(toy,90); pushAnomaly("Target displacement detected."); }
+});
 function wrongTarget(d){
     if(sequenceStarted) return;
     wrongClicks++;
@@ -1290,6 +1326,7 @@ function wrongTarget(d){
     setTimeout(()=>gameArea.classList.remove("panic"),350);
     if(wrongClicks>=3){
         hintText.textContent="STOP CLICKING RANDOMLY.";
+        pushAnomaly("Target-selection confidence falling.","warn");
         alarmSound();
     }
 }
@@ -1348,6 +1385,14 @@ function showRoundMessage(text){
 function gameOver(reason){
     if(sequenceStarted) return;
     sequenceStarted=true;
+    clearInterval(timerInterval); clearInterval(moveInterval); clearDecoys();
+    resultTitle.textContent=reason==="completed"?"SESSION COMPLETE":"SESSION INTERRUPTED";
+    resultLevel.textContent=level+"/3"; resultScore.textContent=score; resultMiss.textContent=wrongClicks; resultSession.textContent=playerName.textContent;
+    resultText.textContent=reason==="completed"?"Performance recorded locally. Proceed when ready.":"The session ended before all targets were found.";
+    resultOverlay.style.display="flex";
+    requestAnimationFrame(()=>resultBarFill.style.width=Math.min(100,Math.max(8,score/10))+"%");
+    continueHorror.onclick=()=>{ resultOverlay.style.display="none"; fakePhone(); };
+}
     clearInterval(timerInterval); clearInterval(moveInterval); clearDecoys();
     game.style.display="none";
     glitchSound();
