@@ -1385,18 +1385,30 @@ function showRoundMessage(text){
 function gameOver(reason){
     if(sequenceStarted) return;
     sequenceStarted=true;
-    clearInterval(timerInterval); clearInterval(moveInterval); clearDecoys();
-    resultTitle.textContent=reason==="completed"?"SESSION COMPLETE":"SESSION INTERRUPTED";
-    resultLevel.textContent=level+"/3"; resultScore.textContent=score; resultMiss.textContent=wrongClicks; resultSession.textContent=playerName.textContent;
-    resultText.textContent=reason==="completed"?"Performance recorded locally. Proceed when ready.":"The session ended before all targets were found.";
-    resultOverlay.style.display="flex";
-    requestAnimationFrame(()=>resultBarFill.style.width=Math.min(100,Math.max(8,score/10))+"%");
-    continueHorror.onclick=()=>{ resultOverlay.style.display="none"; fakePhone(); };
-}
-    clearInterval(timerInterval); clearInterval(moveInterval); clearDecoys();
-    game.style.display="none";
-    glitchSound();
-    showPhoneSimulation(reason);
+    clearInterval(timerInterval);
+    clearInterval(moveInterval);
+    clearDecoys();
+
+    resultTitle.textContent = reason === "completed" ? "SESSION COMPLETE" : "SESSION INTERRUPTED";
+    resultLevel.textContent = level + "/3";
+    resultScore.textContent = score;
+    resultMiss.textContent = wrongClicks;
+    resultSession.textContent = playerName.textContent;
+    resultText.textContent = reason === "completed"
+        ? "Performance recorded locally. Proceed when ready."
+        : "The session ended before all targets were found.";
+
+    resultOverlay.style.display = "flex";
+    requestAnimationFrame(() => {
+        resultBarFill.style.width = Math.min(100, Math.max(8, score / 10)) + "%";
+    });
+
+    continueHorror.onclick = () => {
+        resultOverlay.style.display = "none";
+        game.style.display = "none";
+        glitchSound();
+        showPhoneSimulation(reason);
+    };
 }
 
 function showPhoneSimulation(reason){
