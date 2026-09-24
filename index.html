@@ -1,24 +1,81 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Healthly — Health Companion Prototype</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthly — Your Health Companion</title>
 <style>
-:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#6f7a8f;--p:#2f7d6d;--pd:#225f53;--soft:#e8f4f0;--line:#e5e9ef;--danger:#c94c4c}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text)}
-button,input{font:inherit}.app{min-height:100vh;display:flex}.side{position:fixed;width:245px;inset:0 auto 0 0;background:#fff;border-right:1px solid var(--line);padding:22px 14px}.brand{display:flex;gap:10px;align-items:center;padding:5px 10px 25px}.logo{width:42px;height:42px;border-radius:14px;background:var(--p);color:#fff;display:grid;place-items:center;font-size:22px}.brand h1{font-size:20px;margin:0}.brand small{color:var(--muted)}nav{display:grid;gap:5px}nav button{border:0;background:transparent;text-align:left;padding:12px 14px;border-radius:11px;color:#596477}nav button:hover,nav button.active{background:var(--soft);color:var(--pd)}
-.main{margin-left:245px;width:calc(100% - 245px);padding:27px}.top{max-width:1150px;margin:auto;display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.top h2{margin:0}.top p{margin:5px 0;color:var(--muted)}.tag{background:var(--soft);color:var(--pd);padding:7px 11px;border-radius:99px;font-size:12px;font-weight:700}
-.page{display:none;max-width:1150px;margin:auto}.page.active{display:block}.hero{background:linear-gradient(135deg,#205f53,#41927e);color:#fff;border-radius:23px;padding:35px;display:grid;grid-template-columns:1.5fr 1fr;align-items:center}.hero h1{font-size:40px;line-height:1.08;margin:0 0 12px}.hero p{line-height:1.7;color:#e5f5f1;max-width:650px}.search{display:flex;background:#fff;border-radius:12px;padding:5px;margin-top:18px}.search input{border:0;outline:0;flex:1;padding:12px}.search button,.primary{border:0;background:var(--p);color:#fff;padding:11px 16px;border-radius:10px;font-weight:700}.hero .search button{background:#173f37}.hero-art{text-align:center;font-size:100px}.section{display:flex;justify-content:space-between;margin:28px 0 13px}.section h3{margin:0}.grid{display:grid;gap:15px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:0 7px 25px #1720330a}.action{cursor:pointer;transition:.2s}.action:hover{transform:translateY(-3px);box-shadow:0 14px 35px #17203312}.icon{font-size:28px;margin-bottom:10px}.card h3{margin:4px 0 8px}.card p{color:var(--muted);line-height:1.6;margin:0}.stat{font-size:28px;font-weight:800;margin:7px 0}.progress{height:8px;background:#edf0f4;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;background:var(--p)}.muted{color:var(--muted)}.check{display:flex;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}.check input{accent-color:var(--p)}.sym{max-width:800px;margin:auto}.option{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;padding:14px;border-radius:11px;margin:9px 0}.option:hover{border-color:var(--p);background:var(--soft)}.info{background:var(--soft);border-left:4px solid var(--p);padding:14px;border-radius:9px;margin:14px 0}.warning{background:#fff2f2;border-left:4px solid var(--danger);padding:14px;border-radius:9px;margin:14px 0}.pill{display:inline-block;background:#f0f3f5;padding:5px 9px;border-radius:99px;font-size:12px}.library{min-height:155px}.footer{text-align:center;color:var(--muted);font-size:12px;margin:28px}.toast{position:fixed;right:20px;bottom:20px;background:#172033;color:#fff;padding:12px 16px;border-radius:11px;opacity:0;transition:.2s}.toast.show{opacity:1}
-@media(max-width:850px){.side{width:70px}.brand div:not(.logo),nav button span{display:none}.brand{justify-content:center}.main{margin-left:70px;width:calc(100% - 70px)}.hero{grid-template-columns:1fr}.hero-art{display:none}.g4{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.main{padding:13px}.g4,.g3,.g2{grid-template-columns:1fr}.hero{padding:25px}.hero h1{font-size:31px}.top{align-items:flex-start}.tag{display:none}}
+:root{
+  --bg:#f4f7f6;--card:#fff;--text:#172033;--muted:#6d7888;
+  --primary:#2f7d6d;--primary-dark:#22594f;--soft:#e7f3ef;
+  --accent:#f2b84b;--danger:#c94c4c;--danger-soft:#fff1f1;
+  --line:#e3e9e6;--shadow:0 12px 35px rgba(23,32,51,.07)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+.app{min-height:100vh;display:flex}
+.sidebar{position:fixed;z-index:20;left:0;top:0;bottom:0;width:250px;background:#fff;border-right:1px solid var(--line);padding:22px 14px}
+.brand{display:flex;align-items:center;gap:11px;padding:4px 9px 25px}
+.logo{width:43px;height:43px;border-radius:14px;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:22px}
+.brand h1{font-size:20px;margin:0}.brand small{color:var(--muted)}
+.nav{display:grid;gap:5px}
+.nav button{width:100%;border:0;background:transparent;color:#596477;text-align:left;padding:12px 13px;border-radius:11px;display:flex;align-items:center;gap:10px}
+.nav button:hover,.nav button.active{background:var(--soft);color:var(--primary-dark)}
+.main{margin-left:250px;width:calc(100% - 250px);padding:25px}
+.topbar{max-width:1180px;margin:auto auto 23px;display:flex;align-items:center;justify-content:space-between}
+.topbar h2{margin:0;font-size:25px}.topbar p{margin:5px 0 0;color:var(--muted)}
+.tag{background:var(--soft);color:var(--primary-dark);padding:7px 11px;border-radius:999px;font-size:11px;font-weight:800}
+.page{display:none;max-width:1180px;margin:auto}.page.active{display:block}
+.hero{background:linear-gradient(135deg,#205f53,#41927e);color:#fff;border-radius:25px;padding:36px;display:grid;grid-template-columns:1.5fr .8fr;gap:20px;align-items:center;box-shadow:var(--shadow)}
+.hero h1{font-size:42px;line-height:1.06;margin:0 0 14px}.hero p{line-height:1.7;color:#e5f5f1;max-width:680px}
+.hero-art{font-size:115px;text-align:center}
+.search{display:flex;background:#fff;border-radius:13px;padding:5px;margin-top:20px}
+.search input{border:0;outline:0;flex:1;padding:12px}.search button{border:0;background:#173f37;color:#fff;padding:11px 17px;border-radius:10px;font-weight:700}
+.section{display:flex;justify-content:space-between;align-items:center;margin:29px 0 13px}.section h3{margin:0}
+.grid{display:grid;gap:15px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 7px 25px rgba(23,32,51,.04)}
+.action{cursor:pointer;transition:.2s}.action:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.icon{font-size:29px;margin-bottom:10px}.card h3{margin:5px 0 8px}.card h4{margin:15px 0 8px}.card p{margin:0;color:var(--muted);line-height:1.6}
+.stat{font-size:29px;font-weight:800;margin:7px 0}.muted{color:var(--muted)}
+.progress{height:9px;background:#edf1ef;border-radius:99px;overflow:hidden}.progress span{height:100%;display:block;background:var(--primary);border-radius:99px;transition:.3s}
+.primary,.secondary,.danger-btn,.ghost{border:0;padding:11px 15px;border-radius:10px;font-weight:700}
+.primary{background:var(--primary);color:#fff}.primary:hover{background:var(--primary-dark)}
+.secondary{background:#eef3f1;color:var(--primary-dark)}.danger-btn{background:var(--danger-soft);color:var(--danger)}.ghost{background:transparent;color:var(--primary-dark)}
+.full{width:100%}
+.field{display:grid;gap:7px;margin:11px 0}.field label{font-size:13px;font-weight:700}.field input,.field select,.field textarea,.form-input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;outline:0;background:#fff}.field input:focus,.field select:focus,.field textarea:focus,.form-input:focus{border-color:var(--primary)}
+.check{display:flex;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}.check input{accent-color:var(--primary);width:18px;height:18px}
+.pill{display:inline-block;background:#eef3f1;color:#52655f;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:700}
+.info{background:var(--soft);border-left:4px solid var(--primary);padding:14px;border-radius:9px;margin:14px 0;line-height:1.6}
+.warning{background:var(--danger-soft);border-left:4px solid var(--danger);padding:14px;border-radius:9px;margin:14px 0;line-height:1.6}
+.option{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;padding:14px;border-radius:11px;margin:9px 0}.option:hover{border-color:var(--primary);background:var(--soft)}
+.symptom-box{max-width:820px;margin:auto}.stepbar{height:7px;background:#edf1ef;border-radius:99px;overflow:hidden;margin:15px 0 20px}.stepbar span{display:block;height:100%;background:var(--primary);transition:.25s}
+.library-card{min-height:175px}.library-card .read{margin-top:14px}
+.result-list{display:grid;gap:10px}.result-item{padding:12px;border:1px solid var(--line);border-radius:10px}
+.empty{padding:25px;text-align:center;color:var(--muted)}
+.mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mini{padding:14px;background:#f8faf9;border-radius:12px}
+.toast{position:fixed;z-index:100;right:22px;bottom:22px;background:#172033;color:#fff;padding:13px 17px;border-radius:12px;opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translateY(0)}
+.modal{display:none;position:fixed;z-index:80;inset:0;background:rgba(10,20,25,.5);padding:20px;align-items:center;justify-content:center}.modal.show{display:flex}
+.modal-box{background:#fff;width:min(620px,100%);max-height:90vh;overflow:auto;border-radius:18px;padding:23px}.modal-head{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#eef2f0;border-radius:9px;padding:8px 11px}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin:30px 0 10px}
+.mobile-menu{display:none}
+@media(max-width:900px){
+ .sidebar{width:72px}.brand div:not(.logo),.nav button span{display:none}.brand{justify-content:center}.nav button{justify-content:center}
+ .main{margin-left:72px;width:calc(100% - 72px);padding:18px}.hero{grid-template-columns:1fr}.hero-art{display:none}.g4{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:620px){
+ .main{padding:12px}.g4,.g3,.g2,.mini-grid{grid-template-columns:1fr}.hero{padding:25px}.hero h1{font-size:31px}.tag{display:none}.topbar h2{font-size:21px}
+}
 </style>
 </head>
 <body>
 <div class="app">
-<aside class="side">
+<aside class="sidebar">
   <div class="brand"><div class="logo">♥</div><div><h1>Healthly</h1><small>Health Companion</small></div></div>
-  <nav>
+  <nav class="nav">
     <button class="active" data-page="home">🏠 <span>Home</span></button>
     <button data-page="symptoms">🔎 <span>Symptom Guide</span></button>
     <button data-page="life">🥗 <span>Healthy Living</span></button>
@@ -27,96 +84,349 @@ button,input{font:inherit}.app{min-height:100vh;display:flex}.side{position:fixe
     <button data-page="library">📚 <span>Health Library</span></button>
   </nav>
 </aside>
+
 <main class="main">
-<div class="top"><div><h2 id="title">Health Dashboard</h2><p id="sub">Small healthy choices can add up.</p></div><div class="tag">PROTOTYPE • EDUCATIONAL</div></div>
+<div class="topbar">
+  <div><h2 id="pageTitle">Health Dashboard</h2><p id="pageSub">Small healthy choices can add up.</p></div>
+  <div class="tag">PROTOTYPE • EDUCATIONAL</div>
+</div>
 
 <section id="home" class="page active">
-<div class="hero"><div><h1>Understand your health.<br>Build healthier habits.</h1><p>Healthly is a prototype that helps people explore common health topics, understand symptoms educationally, and track simple healthy habits.</p><div class="search"><input id="homeSearch" placeholder="Search a health topic..."><button onclick="searchLib()">Search</button></div></div><div class="hero-art">🌿</div></div>
-<div class="section"><h3>What do you want to do?</h3></div>
-<div class="grid g4">
-<div class="card action" onclick="go('symptoms')"><div class="icon">🔎</div><h3>Understand Symptoms</h3><p>Explore common symptoms in an educational way.</p></div>
-<div class="card action" onclick="go('life')"><div class="icon">🥗</div><h3>Healthy Living</h3><p>Learn practical everyday health habits.</p></div>
-<div class="card action" onclick="go('habits')"><div class="icon">🎯</div><h3>Build a Habit</h3><p>Track small daily actions.</p></div>
-<div class="card action" onclick="go('library')"><div class="icon">📚</div><h3>Learn</h3><p>Browse health education topics.</p></div>
-</div>
-<div class="section"><h3>Today's snapshot</h3></div>
-<div class="grid g4">
-<div class="card"><span class="muted">Water</span><div class="stat" id="ws">0 / 8</div><div class="progress"><span id="wb" style="width:0%"></span></div></div>
-<div class="card"><span class="muted">Sleep</span><div class="stat" id="ss">0 h</div><p>Last recorded</p></div>
-<div class="card"><span class="muted">Activity</span><div class="stat" id="as">0 min</div><p>Today's movement</p></div>
-<div class="card"><span class="muted">Habits</span><div class="stat" id="hs">0 / 3</div><p>Completed today</p></div>
-</div>
+  <div class="hero">
+    <div>
+      <span class="pill">YOUR PERSONAL HEALTH COMPANION</span>
+      <h1>Understand your health.<br>Build healthier habits.</h1>
+      <p>Healthly membantu pengguna mengeksplorasi gejala, belajar tentang kesehatan, membangun kebiasaan, dan melihat perkembangan diri — semuanya dalam satu tempat.</p>
+      <div class="search"><input id="homeSearch" placeholder="Cari topik kesehatan..."><button onclick="searchLibrary()">Cari</button></div>
+    </div>
+    <div class="hero-art">🌿</div>
+  </div>
+
+  <div class="section"><h3>Apa yang ingin kamu lakukan?</h3></div>
+  <div class="grid g4">
+    <div class="card action" onclick="go('symptoms')"><div class="icon">🔎</div><h3>Pahami Gejala</h3><p>Jawab pertanyaan sederhana dan dapatkan informasi edukatif.</p></div>
+    <div class="card action" onclick="go('life')"><div class="icon">🥗</div><h3>Healthy Living</h3><p>Pelajari pola hidup sehat yang realistis.</p></div>
+    <div class="card action" onclick="go('habits')"><div class="icon">🎯</div><h3>Bangun Kebiasaan</h3><p>Buat kebiasaan sendiri dan pantau progres.</p></div>
+    <div class="card action" onclick="go('library')"><div class="icon">📚</div><h3>Health Library</h3><p>Cari dan baca topik kesehatan.</p></div>
+  </div>
+
+  <div class="section"><h3>Today's Snapshot</h3><button class="secondary" onclick="go('tracker')">Update data</button></div>
+  <div class="grid g4">
+    <div class="card"><span class="muted">💧 Water</span><div class="stat" id="homeWater">0 / 8</div><div class="progress"><span id="homeWaterBar" style="width:0%"></span></div></div>
+    <div class="card"><span class="muted">😴 Sleep</span><div class="stat" id="homeSleep">0 h</div><p>Catatan terakhir</p></div>
+    <div class="card"><span class="muted">🏃 Activity</span><div class="stat" id="homeActivity">0 min</div><p>Aktivitas hari ini</p></div>
+    <div class="card"><span class="muted">🎯 Habits</span><div class="stat" id="homeHabits">0 / 3</div><p>Selesai hari ini</p></div>
+  </div>
+
+  <div class="section"><h3>Quick Health Check</h3></div>
+  <div class="card">
+    <p>Kalau kamu sedang mengalami keluhan, gunakan Symptom Guide untuk memahami informasi umum terlebih dahulu.</p>
+    <div style="margin-top:13px"><button class="primary" onclick="go('symptoms')">Mulai Symptom Guide →</button></div>
+  </div>
 </section>
 
-<section id="symptoms" class="page"><div class="card sym"><span class="pill">Educational symptom guide</span><h2>Let's understand what you're experiencing</h2><p class="muted">This prototype does not diagnose illness. It gives general educational information.</p><div id="flow" style="margin-top:20px"></div></div></section>
+<section id="symptoms" class="page">
+  <div class="card symptom-box">
+    <span class="pill">EDUCATIONAL — NOT A DIAGNOSIS</span>
+    <h2>Symptom Guide</h2>
+    <p class="muted">Pilih kategori keluhan untuk memulai. Prototype ini memberikan kemungkinan umum dan tanda peringatan, bukan diagnosis.</p>
+    <div id="symptomCategory" style="margin-top:20px"></div>
+    <div id="symptomFlow"></div>
+  </div>
+</section>
 
-<section id="life" class="page"><div class="section"><h3>Healthy Living</h3></div><div class="grid g3">
-<div class="card library"><div class="icon">🥗</div><h3>Balanced Nutrition</h3><p>A varied eating pattern can help provide nutrients your body needs. Avoid extreme restrictions.</p></div>
-<div class="card library"><div class="icon">😴</div><h3>Sleep</h3><p>Consistent sleep routines and a comfortable environment can support everyday well-being.</p></div>
-<div class="card library"><div class="icon">🏃</div><h3>Movement</h3><p>Regular physical activity can support cardiovascular health, strength and general well-being.</p></div>
-<div class="card library"><div class="icon">💧</div><h3>Hydration</h3><p>Drink fluids regularly and consider thirst, activity and environmental conditions.</p></div>
-<div class="card library"><div class="icon">🧼</div><h3>Hygiene</h3><p>Good hand and food hygiene can reduce exposure to some infections.</p></div>
-<div class="card library"><div class="icon">🧘</div><h3>Well-being</h3><p>Breaks, social connection and healthy routines can support everyday emotional well-being.</p></div>
-</div></section>
+<section id="life" class="page">
+  <div class="section"><h3>Healthy Living</h3></div>
+  <div class="grid g3">
+    <div class="card library-card"><div class="icon">🥗</div><h3>Balanced Nutrition</h3><p>Makan beragam dan cukup sesuai kebutuhan tubuh. Hindari pola pembatasan ekstrem.</p><button class="ghost read" onclick="openArticle('nutrition')">Pelajari →</button></div>
+    <div class="card library-card"><div class="icon">😴</div><h3>Sleep</h3><p>Rutinitas tidur yang konsisten dan lingkungan nyaman dapat mendukung kualitas istirahat.</p><button class="ghost read" onclick="openArticle('sleep')">Pelajari →</button></div>
+    <div class="card library-card"><div class="icon">🏃</div><h3>Movement</h3><p>Aktivitas fisik yang sesuai kemampuan dapat mendukung kebugaran dan kesejahteraan.</p><button class="ghost read" onclick="openArticle('movement')">Pelajari →</button></div>
+    <div class="card library-card"><div class="icon">💧</div><h3>Hydration</h3><p>Kebutuhan cairan berbeda-beda. Perhatikan rasa haus, aktivitas, dan kondisi lingkungan.</p><button class="ghost read" onclick="openArticle('hydration')">Pelajari →</button></div>
+    <div class="card library-card"><div class="icon">🧼</div><h3>Hygiene</h3><p>Kebiasaan kebersihan yang baik membantu mengurangi paparan terhadap sebagian infeksi.</p><button class="ghost read" onclick="openArticle('hygiene')">Pelajari →</button></div>
+    <div class="card library-card"><div class="icon">🧘</div><h3>Well-being</h3><p>Istirahat, koneksi sosial, aktivitas menyenangkan, dan rutinitas dapat mendukung kesejahteraan.</p><button class="ghost read" onclick="openArticle('wellbeing')">Pelajari →</button></div>
+  </div>
+</section>
 
-<section id="habits" class="page"><div class="grid g2">
-<div class="card"><h3>Today's Healthy Checklist</h3><p class="muted">Start small and keep track.</p>
-<label class="check"><input class="habit" type="checkbox">Drink water regularly</label>
-<label class="check"><input class="habit" type="checkbox">Move your body today</label>
-<label class="check"><input class="habit" type="checkbox">Keep a consistent sleep routine</label></div>
-<div class="card"><h3>Habit Progress</h3><div class="stat" id="hb">0 / 3</div><div class="progress"><span id="hbar" style="width:0%"></span></div><p class="muted" id="hm">Start with one small action.</p></div>
-</div></section>
+<section id="habits" class="page">
+  <div class="grid g2">
+    <div class="card">
+      <div class="section" style="margin-top:0"><h3>My Habits</h3><button class="primary" onclick="openHabitModal()">+ Tambah</button></div>
+      <p class="muted">Buat kebiasaan yang ingin kamu bangun. Data disimpan di browser.</p>
+      <div id="habitList"></div>
+    </div>
+    <div class="card">
+      <h3>Today's Progress</h3>
+      <div class="stat" id="habitBig">0 / 0</div>
+      <div class="progress"><span id="habitBar" style="width:0%"></span></div>
+      <p class="muted" id="habitMessage" style="margin-top:10px">Belum ada kebiasaan.</p>
+      <div class="mini-grid" style="margin-top:18px">
+        <div class="mini"><span class="muted">Total habits</span><div class="stat" id="totalHabits">0</div></div>
+        <div class="mini"><span class="muted">Completed</span><div class="stat" id="completedHabits">0</div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<section id="tracker" class="page"><div class="grid g3">
-<div class="card"><h3>💧 Water</h3><p class="muted">Prototype target: 8 glasses.</p><div class="stat" id="wv">0</div><button class="primary" onclick="water()">+ Add glass</button></div>
-<div class="card"><h3>😴 Sleep</h3><p class="muted">Record your latest duration.</p><input id="sleep" type="number" min="0" max="24" step=".5" placeholder="Hours" style="width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;margin:10px 0"><button class="primary" onclick="saveSleep()">Save sleep</button></div>
-<div class="card"><h3>🏃 Activity</h3><p class="muted">Record movement minutes.</p><input id="activity" type="number" min="0" placeholder="Minutes" style="width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;margin:10px 0"><button class="primary" onclick="saveActivity()">Save activity</button></div>
-</div><div class="info"><b>Privacy:</b> prototype values are stored only in your browser with localStorage.</div></section>
+<section id="tracker" class="page">
+  <div class="grid g3">
+    <div class="card">
+      <h3>💧 Water</h3><p class="muted">Prototype target: 8 glasses.</p>
+      <div class="stat" id="waterValue">0</div>
+      <button class="primary" onclick="addWater()">+ Add glass</button>
+      <button class="secondary" onclick="resetWater()" style="margin-left:5px">Reset</button>
+    </div>
+    <div class="card">
+      <h3>😴 Sleep</h3><p class="muted">Catat durasi tidur terakhir.</p>
+      <input class="form-input" id="sleepInput" type="number" min="0" max="24" step=".5" placeholder="Jam tidur">
+      <button class="primary" onclick="saveSleep()" style="margin-top:10px">Simpan</button>
+    </div>
+    <div class="card">
+      <h3>🏃 Activity</h3><p class="muted">Catat durasi aktivitas fisik.</p>
+      <input class="form-input" id="activityInput" type="number" min="0" placeholder="Menit">
+      <button class="primary" onclick="saveActivity()" style="margin-top:10px">Simpan</button>
+    </div>
+  </div>
+  <div class="section"><h3>Health Notes</h3></div>
+  <div class="card">
+    <p class="muted">Catatan pribadi (disimpan hanya di browser ini).</p>
+    <textarea id="healthNotes" placeholder="Contoh: hari ini merasa lebih segar setelah tidur cukup..."></textarea>
+    <button class="primary" onclick="saveNotes()" style="margin-top:10px">Simpan catatan</button>
+  </div>
+  <div class="info"><b>Privacy prototype:</b> data tracker dan notes menggunakan localStorage di perangkat/browser ini. Belum ada server account atau database.</div>
+</section>
 
-<section id="library" class="page"><div class="card"><input id="libSearch" oninput="renderLib()" placeholder="Search topics..." style="width:100%;padding:13px;border:1px solid var(--line);border-radius:10px"></div><div id="libGrid" class="grid g3" style="margin-top:15px"></div></section>
-<div class="footer">Healthly is an educational prototype and does not diagnose illness or replace qualified healthcare advice.</div>
-</main></div>
+<section id="library" class="page">
+  <div class="card">
+    <input class="form-input" id="librarySearch" oninput="renderLibrary()" placeholder="Cari: tidur, batuk, nutrisi, hidrasi, dll.">
+  </div>
+  <div id="libraryGrid" class="grid g3" style="margin-top:15px"></div>
+</section>
+
+<div class="footer">Healthly adalah prototype edukasi. Informasi di dalamnya bukan diagnosis dan bukan pengganti tenaga kesehatan profesional.</div>
+</main>
+</div>
+
+<div class="modal" id="habitModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>Tambah Kebiasaan</h3><button class="close" onclick="closeModal('habitModal')">✕</button></div>
+  <div class="field"><label>Nama kebiasaan</label><input id="newHabit" placeholder="Contoh: Jalan kaki 15 menit"></div>
+  <button class="primary full" onclick="addHabit()">Tambah Habit</button>
+ </div>
+</div>
+
+<div class="modal" id="articleModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3 id="articleTitle">Health Article</h3><button class="close" onclick="closeModal('articleModal')">✕</button></div>
+  <div id="articleBody" style="margin-top:12px;line-height:1.7"></div>
+ </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-const meta={home:["Health Dashboard","Small healthy choices can add up."],symptoms:["Symptom Guide","Explore symptoms through an educational flow."],life:["Healthy Living","Practical information for everyday well-being."],habits:["My Habits","Track small healthy actions."],tracker:["My Health","Record simple personal metrics locally."],library:["Health Library","Browse educational health topics."]};
-function go(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===id));document.getElementById("title").textContent=meta[id][0];document.getElementById("sub").textContent=meta[id][1];if(id==="symptoms")startSymptoms();window.scrollTo(0,0)}
-document.querySelectorAll("nav button").forEach(x=>x.onclick=()=>go(x.dataset.page));
+const pageMeta={
+ home:["Health Dashboard","Small healthy choices can add up."],
+ symptoms:["Symptom Guide","Explore symptoms through an educational flow."],
+ life:["Healthy Living","Practical information for everyday well-being."],
+ habits:["My Habits","Build and track small healthy actions."],
+ tracker:["My Health","Record simple personal metrics locally."],
+ library:["Health Library","Browse educational health topics."]
+};
 
-const qs=[
-["Where is the main discomfort?",["Upper abdomen","Lower abdomen","Around the navel","Not sure"]],
-["How long has it been happening?",["Less than a day","A few days","More than a week","It comes and goes"]],
-["Do you have other symptoms?",["Nausea or vomiting","Diarrhea","Fever","None of these"]],
-["How severe is it right now?",["Mild","Moderate","Severe","Very severe / getting worse"]]
-];let step=0,ans=[];
-function startSymptoms(){step=0;ans=[];question()}
-function question(){if(step>=qs.length)return result();let q=qs[step];document.getElementById("flow").innerHTML="<div class='question'><h3>"+(step+1)+". "+q[0]+"</h3></div>"+q[1].map(o=>"<button class='option' onclick="answer('"+o.replaceAll("'","")+"")">"+o+"</button>").join("")+"<p class='muted'>Step "+(step+1)+" of "+qs.length+"</p>"}
-function answer(v){ans[step++]=v;question()}
-function result(){let severe=ans[3]==="Severe"||ans[3]==="Very severe / getting worse", fever=ans[2]==="Fever";document.getElementById("flow").innerHTML="<h3>What your answers may suggest</h3><p>Abdominal discomfort can have many causes. These answers are not enough to identify a specific condition.</p><div class='info'><b>Educational possibilities:</b><br>Temporary digestive upset, irritation of the digestive tract, or an infection can all cause abdominal symptoms. The exact cause depends on the full clinical picture.</div>"+((severe||fever)?"<div class='warning'><b>Pay attention to warning signs.</b><br>Because you reported "+(severe?"significant or worsening pain":"fever")+", consider getting medical advice, especially if symptoms are severe, persistent or worsening.</div>":"")+"<h4>What you can do</h4><ul><li>Monitor how symptoms change.</li><li>Note when symptoms occur and what other symptoms appear.</li><li>Maintain normal fluids and meals as tolerated.</li><li>Seek professional medical advice if symptoms persist or concern you.</li></ul><button class='primary' onclick='startSymptoms()'>Start again</button>"}
+function go(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+ document.getElementById("pageTitle").textContent=pageMeta[id][0];
+ document.getElementById("pageSub").textContent=pageMeta[id][1];
+ if(id==="symptoms")showCategories();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+
+function toast(msg){
+ const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");
+ setTimeout(()=>el.classList.remove("show"),1800);
+}
+function getData(){
+ return JSON.parse(localStorage.getItem("healthlyData")||JSON.stringify({
+   water:0,sleep:0,activity:0,notes:"",
+   habits:[
+    {name:"Drink water regularly",done:false},
+    {name:"Move your body today",done:false},
+    {name:"Keep a consistent sleep routine",done:false}
+   ]
+ }));
+}
+function saveData(d){localStorage.setItem("healthlyData",JSON.stringify(d));updateAll();}
+function updateAll(){
+ const d=getData(),done=d.habits.filter(h=>h.done).length,total=d.habits.length;
+ document.getElementById("homeWater").textContent=d.water+" / 8";
+ document.getElementById("homeWaterBar").style.width=Math.min(100,d.water/8*100)+"%";
+ document.getElementById("homeSleep").textContent=d.sleep+" h";
+ document.getElementById("homeActivity").textContent=d.activity+" min";
+ document.getElementById("homeHabits").textContent=done+" / "+total;
+ document.getElementById("waterValue").textContent=d.water;
+ document.getElementById("habitBig").textContent=done+" / "+total;
+ document.getElementById("habitBar").style.width=total?done/total*100+"%":"0%";
+ document.getElementById("totalHabits").textContent=total;
+ document.getElementById("completedHabits").textContent=done;
+ document.getElementById("habitMessage").textContent=total===0?"Belum ada kebiasaan.":done===total?"Semua kebiasaan selesai hari ini! 🎉":(total-done)+" kebiasaan lagi.";
+ document.getElementById("healthNotes").value=d.notes||"";
+ renderHabits();
+}
+function addWater(){let d=getData();d.water++;saveData(d);toast("Water logged 💧")}
+function resetWater(){let d=getData();d.water=0;saveData(d);toast("Water di-reset")}
+function saveSleep(){let v=parseFloat(document.getElementById("sleepInput").value);if(isNaN(v)||v<0||v>24){toast("Masukkan durasi yang valid");return}let d=getData();d.sleep=v;saveData(d);toast("Sleep tersimpan 😴")}
+function saveActivity(){let v=parseInt(document.getElementById("activityInput").value);if(isNaN(v)||v<0){toast("Masukkan menit yang valid");return}let d=getData();d.activity=v;saveData(d);toast("Activity tersimpan 🏃")}
+function saveNotes(){let d=getData();d.notes=document.getElementById("healthNotes").value;saveData(d);toast("Catatan tersimpan 📝")}
+
+function renderHabits(){
+ const d=getData(),box=document.getElementById("habitList");
+ if(!d.habits.length){box.innerHTML='<div class="empty">Belum ada habit. Tambahkan habit pertamamu.</div>';return}
+ box.innerHTML=d.habits.map((h,i)=>`
+ <div class="check">
+   <input type="checkbox" ${h.done?"checked":""} onchange="toggleHabit(${i},this.checked)">
+   <span style="flex:1">${escapeHTML(h.name)}</span>
+   <button class="danger-btn" onclick="deleteHabit(${i})">Hapus</button>
+ </div>`).join("");
+}
+function toggleHabit(i,value){let d=getData();d.habits[i].done=value;saveData(d)}
+function openHabitModal(){document.getElementById("newHabit").value="";document.getElementById("habitModal").classList.add("show");setTimeout(()=>document.getElementById("newHabit").focus(),50)}
+function addHabit(){
+ const name=document.getElementById("newHabit").value.trim();if(!name){toast("Nama habit belum diisi");return}
+ let d=getData();d.habits.push({name,done:false});saveData(d);closeModal("habitModal");toast("Habit ditambahkan 🎯");
+}
+function deleteHabit(i){if(!confirm("Hapus habit ini?"))return;let d=getData();d.habits.splice(i,1);saveData(d);toast("Habit dihapus")}
+function closeModal(id){document.getElementById(id).classList.remove("show")}
+function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+const symptomData={
+ stomach:{
+  title:"Keluhan Perut",
+  questions:[
+   ["Di bagian mana keluhannya paling terasa?",["Bagian atas","Bagian bawah","Sekitar pusar","Tidak yakin"]],
+   ["Sudah berapa lama?",["Kurang dari 1 hari","Beberapa hari","Lebih dari 1 minggu","Datang dan pergi"]],
+   ["Ada gejala lain?",["Mual/muntah","Diare","Demam","Tidak ada"]],
+   ["Seberapa berat sekarang?",["Ringan","Sedang","Berat","Sangat berat / memburuk"]]
+  ]
+ },
+ headache:{
+  title:"Sakit Kepala",
+  questions:[
+   ["Bagaimana rasanya?",["Berdenyut","Terasa ditekan/berat","Tajam","Tidak yakin"]],
+   ["Sudah berapa lama?",["Kurang dari 1 hari","Beberapa hari","Lebih dari 1 minggu","Berulang"]],
+   ["Ada gejala lain?",["Mual","Sensitif terhadap cahaya/suara","Demam","Tidak ada"]],
+   ["Seberapa berat?",["Ringan","Sedang","Berat","Sangat berat / memburuk"]]
+  ]
+ },
+ cough:{
+  title:"Batuk",
+  questions:[
+   ["Batuknya seperti apa?",["Kering","Berdahak","Campuran","Tidak yakin"]],
+   ["Sudah berapa lama?",["Kurang dari 1 minggu","1–2 minggu","Lebih lama","Berulang"]],
+   ["Ada gejala lain?",["Demam","Sesak napas","Nyeri dada","Tidak ada"]],
+   ["Seberapa mengganggu?",["Ringan","Sedang","Berat","Memburuk"]]
+  ]
+ },
+ fatigue:{
+  title:"Mudah Lelah",
+  questions:[
+   ["Seberapa sering merasa lelah?",["Sesekali","Hampir setiap hari","Setiap hari","Tidak yakin"]],
+   ["Sudah berapa lama?",["Beberapa hari","Beberapa minggu","Lebih lama","Datang dan pergi"]],
+   ["Ada gejala lain?",["Kurang tidur","Pusing","Demam","Tidak ada"]],
+   ["Seberapa mengganggu aktivitas?",["Ringan","Sedang","Berat","Sangat mengganggu"]]
+  ]
+ }
+};
+let currentSymptom=null,currentStep=0,currentAnswers=[];
+
+function showCategories(){
+ document.getElementById("symptomCategory").innerHTML=`
+ <h3>Pilih keluhan utama</h3>
+ <div class="grid g2">
+  <button class="option" onclick="startSymptom('stomach')">🫃 Keluhan perut</button>
+  <button class="option" onclick="startSymptom('headache')">🤕 Sakit kepala</button>
+  <button class="option" onclick="startSymptom('cough')">🤧 Batuk</button>
+  <button class="option" onclick="startSymptom('fatigue')">😴 Mudah lelah</button>
+ </div>`;
+ document.getElementById("symptomFlow").innerHTML="";
+}
+function startSymptom(key){currentSymptom=key;currentStep=0;currentAnswers=[];renderSymptomQuestion()}
+function renderSymptomQuestion(){
+ const box=document.getElementById("symptomFlow"),cat=document.getElementById("symptomCategory"),data=symptomData[currentSymptom];
+ cat.innerHTML=`<button class="ghost" onclick="showCategories()">← Ganti keluhan</button><h3>${data.title}</h3><div class="stepbar"><span style="width:${currentStep/data.questions.length*100}%"></span></div>`;
+ if(currentStep>=data.questions.length){renderSymptomResult();return}
+ const q=data.questions[currentStep];
+ box.innerHTML=`<div class="card" style="margin-top:15px"><h3>${currentStep+1}. ${q[0]}</h3>${q[1].map((o,i)=>`<button class="option" onclick="answerSymptom(${i})">${o}</button>`).join("")}<p class="muted">Langkah ${currentStep+1} dari ${data.questions.length}</p></div>`;
+}
+function answerSymptom(i){currentAnswers[currentStep]=symptomData[currentSymptom].questions[currentStep][1][i];currentStep++;renderSymptomQuestion()}
+function renderSymptomResult(){
+ const a=currentAnswers, severe=a[3]&&(/berat|memburuk|mengganggu/i.test(a[3]));
+ let title=symptomData[currentSymptom].title;
+ let possible={
+  stomach:"Keluhan perut dapat berkaitan dengan banyak hal, misalnya gangguan pencernaan sementara, iritasi saluran cerna, atau infeksi. Jawaban ini tidak cukup untuk menentukan penyebab.",
+  headache:"Sakit kepala memiliki banyak kemungkinan penyebab. Pola, durasi, gejala penyerta, dan kondisi seseorang perlu dinilai bersama.",
+  cough:"Batuk dapat muncul pada berbagai kondisi saluran pernapasan. Lama batuk dan gejala penyerta membantu menentukan apakah perlu dinilai lebih lanjut.",
+  fatigue:"Rasa lelah dapat dipengaruhi banyak faktor seperti kurang tidur, aktivitas, stres, atau kondisi kesehatan tertentu. Penilaian lebih lanjut mungkin diperlukan bila menetap."
+ }[currentSymptom];
+ let extra=severe?`<div class="warning"><b>Perhatikan kondisi yang memburuk.</b><br>Karena kamu memilih tingkat yang berat/memburuk, pertimbangkan untuk mencari bantuan medis, terutama bila keluhan semakin berat atau disertai tanda bahaya.</div>`:"";
+ document.getElementById("symptomFlow").innerHTML=`
+ <div class="card" style="margin-top:15px">
+  <span class="pill">HASIL EDUKATIF</span><h3>${title}</h3>
+  <p>${possible}</p>
+  <div class="info"><b>Yang bisa dicatat:</b><br>kapan mulai, seberapa sering muncul, apa yang membuatnya membaik/memburuk, serta gejala lain yang menyertai.</div>
+  ${extra}
+  <div class="warning"><b>Tanda bahaya:</b> jika ada kondisi yang sangat berat, memburuk cepat, sulit bernapas, pingsan, kebingungan, perdarahan, atau keadaan darurat lainnya, cari pertolongan medis segera.</div>
+  <div style="margin-top:15px"><button class="primary" onclick="startSymptom('${currentSymptom}')">Ulangi</button> <button class="secondary" onclick="showCategories()">Pilih keluhan lain</button></div>
+ </div>`;
+}
+
+const articles={
+ nutrition:["Balanced Nutrition","Pola makan yang beragam dapat membantu memenuhi kebutuhan nutrisi. Fokus pada variasi, kecukupan, dan kebiasaan yang realistis; hindari pembatasan ekstrem tanpa alasan medis."],
+ sleep:["Sleep","Rutinitas tidur yang konsisten, lingkungan yang nyaman, dan kebiasaan sebelum tidur yang tenang dapat mendukung istirahat. Bila masalah tidur menetap dan mengganggu aktivitas, pertimbangkan berkonsultasi dengan tenaga kesehatan."],
+ movement:["Movement","Aktivitas fisik dapat mendukung kebugaran dan kesehatan secara umum. Pilih aktivitas yang sesuai kemampuan dan tingkatkan secara bertahap bila diperlukan."],
+ hydration:["Hydration","Kebutuhan cairan berbeda antarindividu dan dipengaruhi aktivitas, cuaca, makanan, dan kondisi kesehatan. Perhatikan rasa haus dan kondisi tubuh."],
+ hygiene:["Hygiene","Kebiasaan seperti mencuci tangan pada waktu yang tepat dan menjaga keamanan makanan merupakan bagian dari kebersihan sehari-hari."],
+ wellbeing:["Well-being","Istirahat, hubungan sosial, aktivitas yang menyenangkan, dan rutinitas yang seimbang dapat membantu menjaga kesejahteraan sehari-hari."]
+};
+function openArticle(key){
+ document.getElementById("articleTitle").textContent=articles[key][0];
+ document.getElementById("articleBody").innerHTML=`<p>${articles[key][1]}</p><div class="info"><b>Catatan:</b> informasi ini bersifat edukatif dan tidak dimaksudkan sebagai diagnosis atau pengganti nasihat tenaga kesehatan.</div>`;
+ document.getElementById("articleModal").classList.add("show");
+}
 
 const topics=[
-["🫃","Stomach discomfort","Stomach discomfort can have many causes. Duration, location and accompanying symptoms matter."],
-["🤧","Cold symptoms","Runny nose, congestion, cough and sore throat can occur with several respiratory infections."],
-["😴","Sleep","Sleep supports physical and mental functioning. Consistent routines can support good sleep habits."],
-["💧","Hydration","Fluid needs vary by person and situation. Thirst, activity and heat can affect needs."],
-["🥗","Balanced eating","A varied diet can provide essential nutrients. Avoid unnecessary extreme restriction."],
-["🏃","Physical activity","Regular activity can support cardiovascular fitness, strength and general well-being."],
-["🧼","Hand hygiene","Hand washing at appropriate times is a simple way to reduce spread of many infections."],
-["🧘","Stress & well-being","Breaks, social connection and healthy routines can support everyday well-being."],
-["🚨","Warning signs","Severe, rapidly worsening or unusual symptoms should not be ignored."]
+ ["🫃","Keluhan Perut","Keluhan perut dapat memiliki banyak penyebab. Durasi, lokasi, dan gejala penyerta penting untuk diperhatikan.","stomach"],
+ ["🤕","Sakit Kepala","Sakit kepala memiliki banyak kemungkinan penyebab dan pola yang berbeda.","headache"],
+ ["🤧","Batuk","Batuk dapat terjadi pada berbagai kondisi saluran pernapasan.","cough"],
+ ["😴","Mudah Lelah","Kelelahan dapat dipengaruhi tidur, aktivitas, stres, atau kondisi kesehatan tertentu.","fatigue"],
+ ["💧","Hydration","Kebutuhan cairan berbeda sesuai orang dan kondisi.","hydration"],
+ ["🥗","Balanced Eating","Variasi dan kecukupan makanan merupakan bagian dari pola makan sehat.","nutrition"],
+ ["🏃","Physical Activity","Aktivitas yang sesuai kemampuan dapat mendukung kebugaran.","movement"],
+ ["🧼","Hand Hygiene","Kebersihan tangan merupakan kebiasaan sederhana untuk membantu mengurangi penyebaran infeksi.","hygiene"],
+ ["🧘","Well-being","Rutinitas seimbang dan koneksi sosial dapat mendukung kesejahteraan.","wellbeing"],
+ ["🚨","Warning Signs","Gejala berat, memburuk cepat, atau kondisi darurat perlu mendapat perhatian medis.","warning"]
 ];
-function renderLib(){let q=(document.getElementById("libSearch").value||"").toLowerCase();document.getElementById("libGrid").innerHTML=topics.filter(t=>(t[1]+" "+t[2]).toLowerCase().includes(q)).map(t=>"<div class='card library'><div class='icon'>"+t[0]+"</div><h3>"+t[1]+"</h3><p>"+t[2]+"</p></div>").join("")||"<div class='card'><h3>No topic found</h3><p>Try another keyword.</p></div>"}
-function searchLib(){go("library");document.getElementById("libSearch").value=document.getElementById("homeSearch").value;renderLib()}
+function renderLibrary(){
+ const q=(document.getElementById("librarySearch").value||"").toLowerCase();
+ const list=topics.filter(t=>(t[1]+" "+t[2]).toLowerCase().includes(q));
+ document.getElementById("libraryGrid").innerHTML=list.length?list.map(t=>`
+ <div class="card library-card"><div class="icon">${t[0]}</div><h3>${t[1]}</h3><p>${t[2]}</p>
+ <button class="ghost read" onclick="${["stomach","headache","cough","fatigue"].includes(t[3])?`startFromLibrary('${t[3]}')`:`openArticle('${t[3]}')`}">Pelajari →</button></div>`).join(""):`<div class="card empty">Topik tidak ditemukan. Coba kata kunci lain.</div>`;
+}
+function startFromLibrary(key){go("symptoms");setTimeout(()=>startSymptom(key),50)}
+function searchLibrary(){go("library");document.getElementById("librarySearch").value=document.getElementById("homeSearch").value;renderLibrary()}
 
-function data(){return JSON.parse(localStorage.getItem("healthly")||'{"water":0,"sleep":0,"activity":0,"habits":[false,false,false]}')}
-function save(d){localStorage.setItem("healthly",JSON.stringify(d));update()}
-function toast(m){let t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
-function water(){let d=data();d.water++;save(d);toast("Water logged 💧")}
-function saveSleep(){let v=parseFloat(document.getElementById("sleep").value);if(!isNaN(v)){let d=data();d.sleep=v;save(d);toast("Sleep saved 😴")}}
-function saveActivity(){let v=parseInt(document.getElementById("activity").value);if(!isNaN(v)){let d=data();d.activity=v;save(d);toast("Activity saved 🏃")}}
-function update(){let d=data(),n=d.habits.filter(Boolean).length;document.getElementById("ws").textContent=d.water+" / 8";document.getElementById("wb").style.width=Math.min(100,d.water/8*100)+"%";document.getElementById("ss").textContent=d.sleep+" h";document.getElementById("as").textContent=d.activity+" min";document.getElementById("hs").textContent=n+" / 3";document.getElementById("wv").textContent=d.water;document.getElementById("hb").textContent=n+" / 3";document.getElementById("hbar").style.width=n/3*100+"%";document.getElementById("hm").textContent=n===3?"All three completed today! 🎉":n===0?"Start with one small action.":(3-n)+" habit(s) left today.";document.querySelectorAll(".habit").forEach((x,i)=>x.checked=!!d.habits[i])}
-document.querySelectorAll(".habit").forEach((x,i)=>x.onchange=()=>{let d=data();d.habits[i]=x.checked;save(d)});
-renderLib();update();
+function resetApp(){
+ if(!confirm("Reset semua data prototype di browser ini?"))return;
+ localStorage.removeItem("healthlyData");updateAll();toast("Semua data di-reset");
+}
+
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){document.querySelectorAll(".modal.show").forEach(m=>m.classList.remove("show"))}});
+document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("show")}));
+
+renderLibrary();updateAll();showCategories();
 </script>
 </body>
 </html>
