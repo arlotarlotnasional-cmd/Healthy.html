@@ -95,6 +95,26 @@ body{overflow-x:hidden}.mobile-menu{display:none}
  .mini-grid{gap:8px}.footer{font-size:11px;padding-bottom:env(safe-area-inset-bottom)}
 }
 @media(max-width:360px){.hero h1{font-size:25px}.main{padding-top:66px}.card{padding:14px}.topbar h2{font-size:19px}}
+
+/* Polesan akhir Healthly */
+:focus-visible{outline:3px solid rgba(47,125,109,.28);outline-offset:2px}
+::selection{background:#cfe9e1;color:#173b34}
+.page{animation:pageIn .18s ease}
+@keyframes pageIn{from{opacity:.55;transform:translateY(4px)}to{opacity:1;transform:none}}
+.hero{position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:-80px;bottom:-110px;background:rgba(255,255,255,.08);pointer-events:none}
+.action{height:100%}
+.card h2{line-height:1.2}
+.chat-log{scrollbar-width:thin}
+.message-meta{font-size:11px;color:var(--muted);margin-top:8px}
+.response-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.response-card{background:#fbfcfc;border:1px solid var(--line);border-radius:12px;padding:12px}
+.response-card b{display:block;margin-bottom:5px}
+.topic-badge{display:inline-flex;align-items:center;gap:5px;background:#f2f7f5;border:1px solid #dbe9e4;color:var(--primary-dark);padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800;margin:2px 4px 2px 0}
+.source-note{font-size:11px;color:var(--muted);line-height:1.5}
+.health-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.health-grid .result-item{height:100%}
+@media(max-width:700px){.response-grid,.health-grid{grid-template-columns:1fr}.hero:after{display:none}}
 </style>
 </head>
 <body>
@@ -141,9 +161,9 @@ body{overflow-x:hidden}.mobile-menu{display:none}
 
   <div class="section"><h3>Ringkasan Hari Ini</h3><button class="secondary" onclick="go('tracker')">Perbarui data</button></div>
   <div class="grid g4">
-    <div class="card"><span class="muted">💧 Air Minum</span><div class="stat" id="homeAir Minum">0 / 8</div><div class="progress"><span id="homeAir MinumBar" style="width:0%"></span></div></div>
-    <div class="card"><span class="muted">😴 Tidur</span><div class="stat" id="homeTidur">0 h</div><p>Catatan terakhir</p></div>
-    <div class="card"><span class="muted">🏃 Aktivitas</span><div class="stat" id="homeAktivitas">0 min</div><p>Aktivitas hari ini</p></div>
+    <div class="card"><span class="muted">💧 Air Minum</span><div class="stat" id="homeAirMinum">0 / 8</div><div class="progress"><span id="homeAirMinumBar" style="width:0%"></span></div></div>
+    <div class="card"><span class="muted">😴 Tidur</span><div class="stat" id="homeTidur">0 jam</div><p>Catatan terakhir yang disimpan</p></div>
+    <div class="card"><span class="muted">🏃 Aktivitas</span><div class="stat" id="homeAktivitas">0 menit</div><p>Aktivitas hari ini</p></div>
     <div class="card"><span class="muted">🎯 Kebiasaan</span><div class="stat" id="homeKebiasaan">0 / 3</div><p>Selesai hari ini</p></div>
   </div>
 
@@ -158,21 +178,29 @@ body{overflow-x:hidden}.mobile-menu{display:none}
   <div class="card" style="margin-bottom:15px">
     <span class="pill">ASISTEN DEMO • EDUKASI</span>
     <h2 style="margin:10px 0 6px">Tanya Healthly 💬</h2>
-    <p>Ketik keluhanmu dengan bahasa sehari-hari. Contoh: <b>“Aku sering sakit kepala dan kurang tidur, kira-kira apa yang perlu diperhatikan?”</b></p>
+    <p>Ketik keluhanmu dengan bahasa sehari-hari. Kamu tidak perlu memakai istilah medis. Contoh: <b>“Mata aku berair dan perih sejak tadi pagi”</b> atau <b>“Aku punya asma dan sekarang napas terasa sesak”</b>.</p>
     <div class="info"><b>Penting:</b> versi GitHub Pages ini memakai mesin respons demo berbasis aturan, bukan AI medis sungguhan. Jawaban bersifat edukatif, tidak mendiagnosis, dan tidak menggantikan tenaga kesehatan.</div>
+  </div>
+  <div class="card" style="margin-bottom:15px">
+    <h3 style="margin-top:0">Contoh topik yang bisa dipahami</h3>
+    <div class="chips" style="margin-bottom:0">
+      <span class="topic-badge">🫁 Asma & sesak</span><span class="topic-badge">👁️ Mata berair / perih</span><span class="topic-badge">🤧 Flu / pilek</span><span class="topic-badge">🍽️ Maag / mual</span><span class="topic-badge">🌡️ Demam</span><span class="topic-badge">🌿 Alergi</span><span class="topic-badge">😴 Sulit tidur</span><span class="topic-badge">💧 Dehidrasi</span>
+    </div>
   </div>
   <div class="chat-wrap">
     <div class="chat-box">
       <div class="chat-head"><div><b>Asisten Kesehatan</b><div class="ai-note">Membantu memahami kemungkinan faktor, langkah aman, dan tanda bahaya.</div></div><button class="secondary" onclick="clearChat()">Bersihkan</button></div>
       <div id="chatLog" class="chat-log"></div>
       <div class="chips">
-        <button class="chip" onclick="usePrompt('Perut saya mual setelah makan')">Perut mual</button>
-        <button class="chip" onclick="usePrompt('Saya sering sakit kepala dan kurang tidur')">Sakit kepala</button>
-        <button class="chip" onclick="usePrompt('Saya batuk beberapa hari')">Batuk</button>
-        <button class="chip" onclick="usePrompt('Saya gampang capek')">Mudah lelah</button>
-        <button class="chip" onclick="usePrompt('Saya diare dan takut dehidrasi')">Diare</button>
+        <button class="chip" onclick="usePrompt('Perut saya mual setelah makan')">🫃 Mual / perut</button>
+        <button class="chip" onclick="usePrompt('Saya sering sakit kepala dan kurang tidur')">🤕 Sakit kepala</button>
+        <button class="chip" onclick="usePrompt('Saya batuk dan pilek beberapa hari')">🤧 Flu / batuk</button>
+        <button class="chip" onclick="usePrompt('Saya punya asma dan sekarang agak sesak')">🫁 Asma / sesak</button>
+        <button class="chip" onclick="usePrompt('Mata saya berair dan perih')">👁️ Mata berair / perih</button>
+        <button class="chip" onclick="usePrompt('Saya gampang capek dan kurang tidur')">😴 Mudah lelah</button>
+        <button class="chip" onclick="usePrompt('Saya diare dan takut dehidrasi')">💧 Diare</button>
       </div>
-      <div class="chat-input"><textarea id="chatInput" placeholder="Ceritakan keluhanmu dengan bahasa sehari-hari..."></textarea><button class="primary" onclick="sendChat()">Kirim</button></div><div class="ai-note" style="padding:0 12px 12px">Tips: tulis keluhan + sejak kapan + seberapa mengganggu + gejala lain jika ada.</div>
+      <div class="chat-input"><textarea id="chatInput" placeholder="Ceritakan keluhanmu dengan bahasa sehari-hari..."></textarea><button class="primary" onclick="sendChat()">Kirim</button></div><div class="ai-note" style="padding:0 12px 12px">Saran: tulis keluhan + sejak kapan + seberapa mengganggu + gejala lain jika ada.</div>
     </div>
     <div class="card">
       <h3>Bagaimana Healthly menjawab?</h3>
@@ -184,10 +212,12 @@ body{overflow-x:hidden}.mobile-menu{display:none}
       </div>
       <h4>Sumber rujukan</h4>
       <div class="source-list">
-        <a href="https://www.who.int/health-topics/diarrhoea" target="_blank" rel="noopener">WHO — Diarrhoeal disease</a>
-        <a href="https://medlineplus.gov/symptoms.html" target="_blank" rel="noopener">MedlinePlus — Symptoms</a>
-        <a href="https://www.nhs.uk/symptoms/stomach-ache/" target="_blank" rel="noopener">NHS — Stomach ache</a>
-        <a href="https://www.who.int/news-room/fact-sheets/detail/drinking-water" target="_blank" rel="noopener">WHO — Drinking-water</a>
+        <a href="https://www.who.int/health-topics/diarrhoea" target="_blank" rel="noopener">WHO — Diare</a>
+        <a href="https://medlineplus.gov/symptoms.html" target="_blank" rel="noopener">MedlinePlus — Gejala</a>
+        <a href="https://medlineplus.gov/ency/article/000141.htm" target="_blank" rel="noopener">MedlinePlus — Asma</a>
+        <a href="https://medlineplus.gov/ency/article/003036.htm" target="_blank" rel="noopener">MedlinePlus — Mata berair</a>
+        <a href="https://www.cdc.gov/flu/signs-symptoms/" target="_blank" rel="noopener">CDC — Gejala influenza</a>
+        <a href="https://www.who.int/news-room/fact-sheets/detail/drinking-water" target="_blank" rel="noopener">WHO — Air minum</a>
       </div>
     </div>
   </div>
@@ -238,7 +268,7 @@ body{overflow-x:hidden}.mobile-menu{display:none}
 <section id="tracker" class="page">
   <div class="grid g3">
     <div class="card">
-      <h3>💧 Air Minum</h3><p class="muted">Target demo: 8 gelas.</p>
+      <h3>💧 Air Minum</h3><p class="muted">Target contoh: 8 gelas.</p>
       <div class="stat" id="waterValue">0</div>
       <button class="primary" onclick="addWater()">+ Tambah gelas</button>
       <button class="secondary" onclick="resetWater()" style="margin-left:5px">Atur ulang</button>
@@ -260,7 +290,7 @@ body{overflow-x:hidden}.mobile-menu{display:none}
     <textarea id="healthNotes" placeholder="Contoh: hari ini merasa lebih segar setelah tidur cukup..."></textarea>
     <button class="primary" onclick="saveNotes()" style="margin-top:10px">Simpan catatan</button>
   </div>
-  <div class="info"><b>Privasi prototipe:</b> data tracker dan notes menggunakan localStorage di perangkat/browser ini. Belum ada server account atau database.</div>
+  <div class="info"><b>Privasi prototipe:</b> data tracker dan catatan menggunakan localStorage di perangkat/browser ini. Belum ada akun, server, atau database. Hindari memasukkan informasi identitas atau data kesehatan yang sangat sensitif ke dalam prototipe ini.<br><button class="danger-btn" onclick="resetApp()" style="margin-top:10px">Atur ulang semua data lokal</button></div>
 </section>
 
 <section id="library" class="page">
@@ -269,6 +299,16 @@ body{overflow-x:hidden}.mobile-menu{display:none}
   </div>
   <div id="libraryGrid" class="grid g3" style="margin-top:15px"></div>
 </section>
+
+<div class="card" style="margin:30px auto 0;max-width:1180px">
+  <div class="section" style="margin-top:0"><h3>Sumber & batasan Healthly</h3></div>
+  <div class="health-grid">
+    <div class="result-item"><b>Basis informasi</b><br><span class="muted">Konten edukatif dirancang dengan rujukan organisasi kesehatan dan sumber medis publik yang tercantum di halaman Tanya Healthly.</span></div>
+    <div class="result-item"><b>Bukan alat diagnosis</b><br><span class="muted">Mesin demo hanya mengelompokkan bahasa pengguna ke topik edukasi. Tidak melakukan pemeriksaan fisik, tes laboratorium, atau diagnosis.</span></div>
+    <div class="result-item"><b>Utamakan keselamatan</b><br><span class="muted">Jika muncul tanda bahaya atau kondisi memburuk cepat, pengguna diarahkan untuk mencari bantuan medis dan melibatkan orang dewasa tepercaya.</span></div>
+  </div>
+  <p class="source-note" style="margin-bottom:0">Sumber utama yang digunakan sebagai rujukan konten: WHO, MedlinePlus, dan CDC. Tautan tersedia pada panel sumber di Tanya Healthly.</p>
+</div>
 
 <div class="footer">Healthly adalah prototipe edukasi. Informasi di dalamnya bukan diagnosis dan bukan pengganti tenaga kesehatan profesional.</div>
 </main>
@@ -326,22 +366,35 @@ function toast(msg){
  setTimeout(()=>el.classList.remove("show"),1800);
 }
 function getData(){
- return JSON.parse(localStorage.getItem("healthlyData")||JSON.stringify({
+ const saved=localStorage.getItem("healthlyData");
+ if(saved){
+   try{
+     const d=JSON.parse(saved);
+     if(!Array.isArray(d.habits)) d.habits=[];
+     d.water=Number.isFinite(Number(d.water))?Number(d.water):0;
+     d.sleep=Number.isFinite(Number(d.sleep))?Number(d.sleep):0;
+     d.activity=Number.isFinite(Number(d.activity))?Number(d.activity):0;
+     d.notes=typeof d.notes==='string'?d.notes:'';
+     d.habits=d.habits.map(h=>({name:h.name||"Kebiasaan",done:!!h.done}));
+     return d;
+   }catch(e){}
+ }
+ return JSON.parse(JSON.stringify({
    water:0,sleep:0,activity:0,notes:"",
    habits:[
-    {name:"Drink water regularly",done:false},
-    {name:"Move your body today",done:false},
-    {name:"Keep a consistent sleep routine",done:false}
+    {name:"Minum air secara teratur",done:false},
+    {name:"Bergerak aktif hari ini",done:false},
+    {name:"Jaga jadwal tidur yang konsisten",done:false}
    ]
  }));
 }
 function saveData(d){localStorage.setItem("healthlyData",JSON.stringify(d));updateAll();}
 function updateAll(){
  const d=getData(),done=d.habits.filter(h=>h.done).length,total=d.habits.length;
- document.getElementById("homeAir Minum").textContent=d.water+" / 8";
- document.getElementById("homeAir MinumBar").style.width=Math.min(100,d.water/8*100)+"%";
- document.getElementById("homeTidur").textContent=d.sleep+" h";
- document.getElementById("homeAktivitas").textContent=d.activity+" min";
+ document.getElementById("homeAirMinum").textContent=d.water+" / 8";
+ document.getElementById("homeAirMinumBar").style.width=Math.min(100,d.water/8*100)+"%";
+ document.getElementById("homeTidur").textContent=d.sleep+" jam";
+ document.getElementById("homeAktivitas").textContent=d.activity+" menit";
  document.getElementById("homeKebiasaan").textContent=done+" / "+total;
  document.getElementById("waterValue").textContent=d.water;
  document.getElementById("habitBig").textContent=done+" / "+total;
@@ -379,91 +432,87 @@ function closeModal(id){document.getElementById(id).classList.remove("show")}
 function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 
 const demoResponses=[
- {keys:['perut','mual','maag','kembung','begah'],title:'Keluhan perut / mual',summary:'Mual, kembung, atau rasa tidak nyaman di perut bisa berkaitan dengan beberapa hal. Dari chat saja penyebab pastinya tidak bisa dipastikan.',factors:['pola makan atau makanan tertentu yang memicu keluhan','gangguan pencernaan sementara','infeksi saluran cerna, terutama bila disertai diare atau muntah'],steps:['minum sedikit-sedikit tetapi lebih sering bila terasa mual','pilih makanan yang lebih ringan jika lebih mudah ditoleransi','catat kapan keluhan muncul dan apa yang terjadi sebelum keluhan'],red:['nyeri perut sangat berat atau muncul mendadak','muntah darah atau tinja berdarah/hitam','sulit bernapas, pingsan, atau kondisi memburuk cepat']},
- {keys:['diare','mencret','berak cair','buang air cair'],title:'Diare',summary:'Diare dapat berkaitan dengan gangguan atau infeksi saluran cerna. Hal yang penting diperhatikan adalah kehilangan cairan dan tanda dehidrasi.',factors:['infeksi saluran cerna','makanan atau air yang terkontaminasi','faktor lain yang memengaruhi pencernaan'],steps:['utamakan cairan; oralit dapat digunakan sesuai petunjuk kemasan','tetap perhatikan makanan yang dapat ditoleransi tubuh','perhatikan frekuensi buang air dan apakah muncul tanda dehidrasi'],red:['darah pada tinja','sulit minum atau tanda dehidrasi','keluhan menetap atau kondisi memburuk']},
- {keys:['sembelit','susah bab','susah buang air besar','susah berak'],title:'Sembelit',summary:'Sembelit bisa berkaitan dengan perubahan pola makan, kurang bergerak, kurang cairan, atau perubahan rutinitas.',factors:['asupan serat atau cairan yang kurang','kurang bergerak','perubahan rutinitas atau kebiasaan buang air besar'],steps:['perhatikan kecukupan cairan dan makanan berserat','tetap bergerak sesuai kemampuan','jangan membiasakan menahan keinginan buang air besar'],red:['darah pada tinja','nyeri perut berat','keluhan menetap atau disertai perubahan kondisi yang mengkhawatirkan']},
- {keys:['sakit kepala','pusing','kepala terasa'],title:'Sakit kepala / pusing',summary:'Sakit kepala atau pusing memiliki banyak kemungkinan penyebab. Durasi, pola, tidur, cairan, dan gejala penyerta perlu diperhatikan.',factors:['kurang tidur atau perubahan rutinitas','kurang cairan','stres atau ketegangan'],steps:['istirahat di tempat yang nyaman','perhatikan cairan dan pola tidur','catat kapan keluhan muncul, berapa lama, dan gejala lain yang menyertai'],red:['sakit kepala muncul sangat tiba-tiba dan sangat berat','disertai gangguan bicara, penglihatan, gerakan, keseimbangan, atau kebingungan','disertai demam tinggi dan leher kaku atau muntah berulang']},
- {keys:['batuk','pilek','flu','tenggorokan','serak'],title:'Batuk / keluhan saluran napas',summary:'Batuk dan keluhan saluran napas dapat muncul pada berbagai kondisi. Lama keluhan dan gejala penyerta membantu menentukan apakah perlu dinilai lebih lanjut.',factors:['infeksi saluran pernapasan','iritasi dari asap atau lingkungan','alergi pada sebagian orang'],steps:['cukup istirahat dan perhatikan asupan cairan','hindari asap rokok dan iritan yang memperburuk batuk','catat lama keluhan serta ada tidaknya demam atau sesak'],red:['sulit bernapas','nyeri dada berat','batuk berdarah atau kondisi memburuk cepat']},
- {keys:['capek','lelah','kelelahan','ngantuk','tidak bertenaga'],title:'Mudah lelah',summary:'Rasa lelah bisa dipengaruhi banyak faktor dan tidak otomatis berarti ada penyakit tertentu.',factors:['kurang tidur atau jadwal tidur tidak teratur','beban kegiatan atau aktivitas','stres dan kualitas istirahat'],steps:['usahakan jadwal tidur yang cukup dan konsisten','beri jeda istirahat di antara aktivitas','catat apakah rasa lelah menetap dan apakah ada gejala lain'],red:['kelelahan sangat berat dengan pingsan, sesak, nyeri dada, kebingungan, atau kondisi memburuk cepat']},
- {keys:['demam','panas tinggi','suhu badan naik'],title:'Demam / suhu tubuh meningkat',summary:'Demam adalah tanda bahwa tubuh sedang merespons sesuatu. Penyebabnya beragam dan tidak dapat dipastikan hanya dari percakapan.',factors:['infeksi','respons tubuh terhadap kondisi tertentu','lingkungan atau faktor lain pada sebagian situasi'],steps:['istirahat dan perhatikan asupan cairan','pantau suhu dan perubahan gejala','perhatikan apakah muncul keluhan lain seperti batuk, nyeri, muntah, atau diare'],red:['sulit bernapas','kebingungan, pingsan, atau kondisi umum memburuk cepat','demam yang mengkhawatirkan terutama bila disertai gejala berat']},
- {keys:['susah tidur','sulit tidur','insomnia','tidak bisa tidur'],title:'Kesulitan tidur',summary:'Sulit tidur dapat berkaitan dengan kebiasaan, jadwal, lingkungan, stres, atau faktor lain. Satu kali tidur kurang belum tentu menunjukkan masalah tidur menetap.',factors:['jadwal tidur tidak konsisten','penggunaan gawai atau aktivitas yang membuat sulit rileks menjelang tidur','stres atau pikiran yang sedang penuh'],steps:['coba pertahankan waktu tidur dan bangun yang konsisten','buat lingkungan tidur lebih tenang dan nyaman','catat pola tidur dan hal yang tampak membuat tidur lebih sulit'],red:['kesulitan tidur sangat mengganggu aktivitas sehari-hari atau disertai keluhan lain yang mengkhawatirkan']},
- {keys:['alergi','gatal','bersin'],title:'Keluhan yang mungkin berkaitan dengan alergi',summary:'Gatal, bersin, atau hidung berair dapat muncul pada alergi maupun penyebab lain. Pola dan pemicu membantu memberikan konteks.',factors:['paparan zat tertentu yang memicu alergi pada sebagian orang','iritasi lingkungan','infeksi atau penyebab lain yang gejalanya mirip'],steps:['perhatikan apakah keluhan muncul setelah paparan tertentu','kurangi paparan yang jelas memperburuk keluhan bila aman dilakukan','catat pola dan gejala penyerta'],red:['bengkak pada wajah atau bibir, sulit bernapas, atau kondisi memburuk cepat']}
+ {id:'stomach',keys:['perut','mual','maag','kembung','begah','mules','mulas','asam lambung','heartburn','perih di lambung'],title:'Keluhan perut / mual',summary:'Mual, kembung, rasa begah, atau tidak nyaman di perut dapat berkaitan dengan berbagai hal. Percakapan ini tidak cukup untuk memastikan penyebab.',factors:['pola makan atau makanan tertentu yang memicu keluhan','gangguan pencernaan sementara','infeksi saluran cerna, terutama bila disertai diare atau muntah','iritasi atau keluhan lambung pada sebagian orang'],steps:['minum sedikit-sedikit tetapi lebih sering bila terasa mual','pilih makanan yang lebih ringan jika lebih mudah ditoleransi','catat makanan, waktu makan, dan kapan keluhan muncul','perhatikan apakah keluhan membaik atau justru semakin berat'],red:['nyeri perut sangat berat atau muncul mendadak','muntah darah atau tinja berdarah/hitam','sulit bernapas, pingsan, atau kondisi memburuk cepat'],follow:'Apakah keluhannya lebih terasa setelah makan, saat perut kosong, atau tidak terkait waktu makan?'} ,
+ {id:'diarrhea',keys:['diare','mencret','berak cair','buang air cair','bab cair'],title:'Diare',summary:'Diare sering berkaitan dengan gangguan atau infeksi saluran cerna. Hal penting yang perlu diperhatikan adalah kehilangan cairan dan tanda dehidrasi.',factors:['infeksi saluran cerna','makanan atau air yang terkontaminasi','perubahan atau gangguan pencernaan lainnya'],steps:['utamakan cairan; larutan oralit dapat digunakan sesuai petunjuk kemasan','tetap makan sesuai kemampuan dan toleransi tubuh','perhatikan frekuensi buang air dan tanda kekurangan cairan'],red:['darah pada tinja','sulit minum atau tanda dehidrasi','keluhan menetap, sangat berat, atau kondisi memburuk'],follow:'Seberapa sering kamu buang air hari ini, dan apakah kamu masih bisa minum dengan baik?'},
+ {id:'constipation',keys:['sembelit','susah bab','susah buang air besar','susah berak','jarang bab'],title:'Sembelit',summary:'Sembelit dapat berkaitan dengan perubahan pola makan, kurang cairan, kurang bergerak, perubahan rutinitas, atau faktor lain.',factors:['asupan serat atau cairan yang kurang','kurang bergerak','perubahan rutinitas atau kebiasaan buang air besar'],steps:['perhatikan kecukupan cairan dan makanan berserat','tetap bergerak sesuai kemampuan','jangan membiasakan menahan keinginan buang air besar','catat perubahan pola buang air besar'],red:['darah pada tinja','nyeri perut berat atau muntah','keluhan menetap atau kondisi memburuk'],follow:'Kapan terakhir kali kamu buang air besar dan apakah ada nyeri perut atau muntah?'},
+ {id:'headache',keys:['sakit kepala','pusing','kepala terasa','migrain','berkunang'],title:'Sakit kepala / pusing',summary:'Sakit kepala atau pusing memiliki banyak kemungkinan penyebab. Durasi, pola, tidur, cairan, dan gejala penyerta perlu diperhatikan.',factors:['kurang tidur atau perubahan rutinitas','kurang cairan','stres atau ketegangan','infeksi atau kondisi lain yang gejalanya dapat mirip'],steps:['istirahat di tempat yang nyaman','perhatikan cairan dan pola tidur','kurangi pemicu yang jelas memperburuk keluhan bila aman','catat kapan keluhan muncul, berapa lama, dan gejala lain yang menyertai'],red:['sakit kepala muncul sangat tiba-tiba dan sangat berat','disertai gangguan bicara, penglihatan, gerakan, keseimbangan, atau kebingungan','disertai demam tinggi dan leher kaku atau muntah berulang'],follow:'Apakah pusingnya terasa seperti berputar, melayang, atau lebih seperti sakit/tekanan di kepala?'} ,
+ {id:'respiratory',keys:['batuk','pilek','flu','hidung mampet','hidung tersumbat','tenggorokan','sakit tenggorokan','serak','bersin'],title:'Keluhan flu / saluran pernapasan',summary:'Batuk, pilek, bersin, sakit tenggorokan, atau hidung tersumbat dapat muncul pada infeksi saluran pernapasan, alergi, atau iritasi. Gejala saja tidak cukup untuk memastikan penyebab.',factors:['infeksi saluran pernapasan','alergi pada sebagian orang','paparan asap, debu, atau iritan lingkungan'],steps:['cukup istirahat dan perhatikan asupan cairan','hindari asap rokok dan iritan yang memperburuk keluhan','perhatikan suhu tubuh dan perubahan gejala','bila sedang sakit, kurangi kontak dekat dengan orang lain dan jaga kebersihan tangan'],red:['sulit bernapas atau sesak berat','nyeri/tekanan dada yang menetap','kondisi memburuk cepat atau sempat membaik lalu memburuk kembali'],follow:'Apakah kamu juga mengalami demam, sesak, nyeri dada, atau hanya gejala hidung/tenggorokan?'} ,
+ {id:'asthma',keys:['asma','bengek','ngik','mengi','wheezing','sesak napas','susah napas','napas sesak','dada terasa ketat'],title:'Asma / keluhan sesak napas',summary:'Asma dapat menimbulkan batuk, mengi, sesak, atau rasa tertekan di dada. Namun, sesak napas juga memiliki banyak penyebab lain sehingga tidak dapat dipastikan hanya lewat chat.',factors:['asma yang sedang kambuh pada orang yang memang memiliki asma','paparan pemicu seperti asap atau iritan tertentu','infeksi saluran pernapasan dapat memperburuk gejala pada sebagian orang','penyebab lain di luar asma juga mungkin terjadi'],steps:['hentikan aktivitas dan cari tempat yang lebih tenang jika sesak muncul','jika kamu memang memiliki rencana penanganan asma dari tenaga kesehatan, ikuti rencana tersebut','beri tahu orang tua/wali atau orang dewasa tepercaya bila sesak mengganggu','jangan mengandalkan chat ini untuk menangani sesak berat'],red:['sangat sulit bernapas','sulit berbicara karena sesak','bibir atau wajah tampak kebiruan','kesadaran menurun, kebingungan, atau kondisi memburuk cepat'],follow:'Apakah kamu memang sudah pernah didiagnosis asma, dan apakah sekarang sesaknya ringan atau sampai mengganggu bicara/aktivitas?'},
+ {id:'eye',keys:['mata berair','mata perih','mata sakit','mata merah','mata gatal','mata kering','mata pedih','kelilipan','ada sesuatu di mata'],title:'Keluhan mata',summary:'Mata berair, perih, merah, gatal, atau terasa kering dapat berkaitan dengan iritasi, alergi, mata kering, infeksi, atau masalah lain. Penyebabnya perlu dinilai dari konteks dan gejala penyerta.',factors:['debu, asap, angin, atau iritan lingkungan','alergi','mata kering atau kelelahan mata','infeksi atau peradangan','benda asing atau cedera pada mata'],steps:['jangan menggosok mata','istirahatkan mata dan jauhi pemicu yang jelas bila aman','jika memakai lensa kontak dan mata terasa bermasalah, jangan memaksakan pemakaian','catat apakah ada kemerahan, kotoran mata, nyeri, atau perubahan penglihatan'],red:['nyeri mata berat','penglihatan menurun/berubah','cedera berat pada mata','bahan kimia masuk ke mata','mata sangat merah disertai keluhan berat'],follow:'Apakah matanya merah, gatal, mengeluarkan kotoran, atau penglihatannya ikut berubah?'} ,
+ {id:'fatigue',keys:['capek','lelah','kelelahan','ngantuk','tidak bertenaga','badan lemas','lemas'],title:'Mudah lelah / badan terasa lemas',summary:'Rasa lelah atau lemas dapat dipengaruhi tidur, aktivitas, pola makan, stres, infeksi, atau kondisi kesehatan lain. Keluhan yang menetap perlu diperhatikan lebih lanjut.',factors:['kurang tidur atau jadwal tidur tidak teratur','beban aktivitas atau kurang istirahat','stres','sedang mengalami infeksi atau kondisi kesehatan tertentu'],steps:['usahakan jadwal tidur yang cukup dan konsisten','beri jeda istirahat di antara aktivitas','perhatikan makan dan minum secara teratur','catat apakah rasa lelah menetap dan apakah ada gejala lain'],red:['kelelahan sangat berat dengan pingsan, sesak, nyeri dada, kebingungan, atau kondisi memburuk cepat'],follow:'Sudah berapa lama kamu merasa lelah, dan apakah tidur cukup membuatnya membaik?'} ,
+ {id:'fever',keys:['demam','panas tinggi','suhu badan naik','meriang','menggigil'],title:'Demam / tubuh terasa panas',summary:'Demam adalah tanda tubuh sedang merespons sesuatu. Penyebabnya beragam dan tidak dapat dipastikan hanya dari percakapan.',factors:['infeksi','respons tubuh terhadap kondisi tertentu','faktor lingkungan atau penyebab lain'],steps:['istirahat dan perhatikan asupan cairan','jika tersedia, catat suhu dan perubahan gejala','perhatikan apakah muncul batuk, nyeri, muntah, diare, atau keluhan lain'],red:['sulit bernapas','kebingungan, pingsan, atau kondisi umum memburuk cepat','demam disertai gejala berat atau tidak membaik sesuai perjalanan penyakit'],follow:'Kalau kamu mengukur suhu, berapa hasilnya dan sejak kapan demam terasa?'} ,
+ {id:'sleep',keys:['susah tidur','sulit tidur','insomnia','tidak bisa tidur','begadang','tidur tidak nyenyak'],title:'Kesulitan tidur',summary:'Sulit tidur dapat berkaitan dengan jadwal, kebiasaan, lingkungan, stres, atau faktor lain. Satu malam kurang tidur belum tentu berarti gangguan tidur.',factors:['jadwal tidur tidak konsisten','paparan gawai atau aktivitas yang membuat sulit rileks menjelang tidur','stres atau pikiran yang sedang penuh','lingkungan tidur yang kurang nyaman'],steps:['coba pertahankan waktu tidur dan bangun yang konsisten','buat lingkungan tidur lebih tenang dan nyaman','kurangi aktivitas yang membuat terlalu terjaga menjelang tidur','catat pola tidur dan hal yang tampak membuat tidur lebih sulit'],red:['masalah tidur sangat mengganggu aktivitas sehari-hari atau disertai keluhan kesehatan yang mengkhawatirkan'],follow:'Biasanya kamu kesulitan mulai tidur, sering terbangun, atau bangun terlalu cepat?'} ,
+ {id:'allergy',keys:['alergi','gatal','bersin','hidung berair','mata gatal','ruam'],title:'Keluhan yang mungkin berkaitan dengan alergi',summary:'Gatal, bersin, hidung atau mata berair, dan ruam dapat muncul pada alergi maupun penyebab lain. Pola dan pemicu membantu memberi konteks.',factors:['paparan zat tertentu yang memicu alergi pada sebagian orang','iritasi lingkungan','infeksi atau penyebab lain yang gejalanya mirip'],steps:['perhatikan apakah keluhan muncul setelah paparan tertentu','kurangi paparan yang jelas memperburuk keluhan bila aman','catat pola dan gejala penyerta'],red:['bengkak pada wajah atau bibir','sulit bernapas','kondisi memburuk cepat'],follow:'Apakah keluhan muncul setelah terkena debu, makanan, hewan, produk tertentu, atau pemicu lain?'} ,
+ {id:'dehydration',keys:['dehidrasi','kurang cairan','haus banget','jarang kencing','urin sedikit'],title:'Risiko kekurangan cairan',summary:'Kekurangan cairan dapat terjadi ketika asupan cairan tidak menggantikan kehilangan cairan dari aktivitas, cuaca, muntah, diare, atau penyebab lain.',factors:['kurang minum','kehilangan cairan karena diare atau muntah','banyak berkeringat atau aktivitas dalam kondisi panas'],steps:['minum secara bertahap sesuai kemampuan','bila kehilangan cairan karena diare, larutan oralit dapat digunakan sesuai petunjuk kemasan','pantau rasa haus dan perubahan kondisi tubuh'],red:['sulit minum','sangat lemas, bingung, atau pingsan','tanda kekurangan cairan yang berat atau kondisi memburuk cepat'],follow:'Apakah kamu masih bisa minum dengan baik dan apakah ada muntah atau diare?'}
 ];
 
 function detectDetails(q){
  const t=q.toLowerCase();
- const duration=(t.match(/(?:sejak|selama|udah|sudah|dari)\s+([^,.!?]+)/)||[])[1]||'';
- const severe=/(sangat sakit|parah|berat sekali|nggak tahan|tidak tahan|memburuk|makin parah)/.test(t);
- const paired=[];
- for(const r of demoResponses){if(r.keys.some(k=>t.includes(k))) paired.push(r)}
- return {duration:duration.trim(),severe,paired};
+ const duration=(t.match(/(?:sejak|selama|udah|sudah|dari|selama)\s+([^,.!?]+)/)||[])[1]||'';
+ const severe=/(sangat sakit|parah|berat sekali|nggak tahan|tidak tahan|memburuk|makin parah|sangat sesak|susah bernapas|sulit bernapas|tidak bisa bernapas)/.test(t);
+ const paired=demoResponses.filter(r=>r.keys.some(k=>t.includes(k)));
+ const context=[];
+ if(duration.trim()) context.push('durasi');
+ if(/\b(anak|adik|bayi|remaja|dewasa|orang tua)\b/.test(t)) context.push('kelompok usia disebut');
+ if(/\b(sejak|selama|hari|minggu|bulan|jam|menit)\b/.test(t)) context.push('waktu');
+ if(/\b(setelah|habis|sesudah|karena|kena|terpapar)\b/.test(t)) context.push('kemungkinan pemicu');
+ return {duration:duration.trim(),severe,paired,context};
 }
 function getDemoResponse(q){
- const t=q.toLowerCase(); const d=detectDetails(q); let best=null,score=0;
- for(const r of demoResponses){let s=0;for(const k of r.keys){if(t.includes(k))s+=k.length>5?2:1}if(s>score){score=s;best=r}}
- if(!best)return {title:'Aku belum menangkap topiknya',summary:'Aku bisa membantu kalau kamu ceritakan keluhannya dengan sedikit konteks. Aku tidak bisa memastikan diagnosis lewat chat.',factors:['apa keluhan utama yang paling mengganggu','sejak kapan keluhan terasa','gejala lain yang muncul bersamaan'],steps:['contoh: “sejak kemarin aku sakit kepala dan tidur cuma 5 jam”','atau: “aku diare sejak pagi dan susah minum”','kalau ada, tulis juga apa yang membuat keluhan membaik atau memburuk'],red:['sulit bernapas, pingsan, perdarahan, nyeri sangat berat, atau kondisi memburuk cepat'] ,details:d};
- best.details=d; return best;
+ const t=q.toLowerCase(); const d=detectDetails(q);
+ if(d.paired.length===0) return {title:'Aku belum menangkap keluhan utamanya',summary:'Aku bisa membantu lebih baik kalau kamu menyebutkan keluhan yang paling mengganggu dengan bahasa sehari-hari. Aku tidak bisa memastikan diagnosis lewat chat.',factors:['keluhan utama yang paling mengganggu','sejak kapan keluhan terasa','gejala lain yang muncul bersamaan'],steps:['contoh: “mata aku berair dan perih sejak pagi”','contoh: “aku punya asma dan sekarang agak sesak”','kalau ada, tulis juga apa yang membuat keluhan membaik atau memburuk'],red:['sulit bernapas, pingsan, perdarahan, nyeri sangat berat, gangguan penglihatan, atau kondisi memburuk cepat'],follow:'Apa keluhan utama yang paling ingin kamu pahami sekarang?',details:d};
+ let ranked=d.paired.map(r=>({r,score:r.keys.reduce((n,k)=>n+(t.includes(k)?(k.length>5?3:1):0),0)})).sort((a,b)=>b.score-a.score);
+ const best=ranked[0].r;
+ return {...best,details:d,related:ranked.slice(1,3).map(x=>x.r)};
 }
 function formatResponse(r){
- const d=r.details||{}; let context='';
- if(d.duration)context+=`<div class="info"><b>Konteks yang tertangkap:</b> kamu menyebut “${escapeHTML(d.duration)}”. Durasi membantu memberi konteks, tetapi belum cukup untuk menentukan penyebab.</div>`;
- if(d.severe)context+=`<div class="warning"><b>Catatan:</b> kamu menyebut keluhannya terasa berat. Jika memang berat atau memburuk cepat, jangan hanya mengandalkan chat ini dan segera beri tahu orang dewasa tepercaya/tenaga kesehatan.</div>`;
- return `<b>${r.title}</b><p>${r.summary}</p>${context}<h4>Kemungkinan faktor</h4><ul>${r.factors.map(x=>`<li>${x}</li>`).join('')}</ul><h4>Yang bisa diperhatikan</h4><ul>${r.steps.map(x=>`<li>${x}</li>`).join('')}</ul><div class="warning"><b>Cari bantuan medis segera jika:</b><ul>${r.red.map(x=>`<li>${x}</li>`).join('')}</ul></div><p class="ai-note">Ini adalah penjelasan edukatif, bukan diagnosis. Jika keluhan menetap, berulang, atau mengganggu aktivitas, pertimbangkan konsultasi dengan tenaga kesehatan. Jika kamu masih di bawah umur dan keluhan terasa mengkhawatirkan, ceritakan kepada orang tua/wali atau orang dewasa tepercaya.</p>`;
+ const d=r.details||{};
+ let context='';
+ if(d.paired?.length) context+=`<div class="info"><b>Yang aku tangkap:</b> ${d.paired.slice(0,3).map(x=>`<span class="topic-badge">${escapeHTML(x.title)}</span>`).join(' ')}${d.paired.length>3?`<span class="topic-badge">+${d.paired.length-3} topik lain</span>`:''}</div>`;
+ if(d.duration)context+=`<div class="info"><b>Durasi yang tertangkap:</b> “${escapeHTML(d.duration)}”. Durasi membantu memberi konteks, tetapi belum cukup untuk menentukan penyebab.</div>`;
+ if(d.severe)context+=`<div class="warning"><b>Perhatian:</b> kamu menggunakan kata yang menunjukkan keluhan terasa berat atau memburuk. Jika memang berat, jangan hanya mengandalkan chat ini; beri tahu orang dewasa tepercaya dan cari bantuan tenaga kesehatan sesuai tingkat kegawatannya.</div>`;
+ const related=(r.related||[]).map(x=>`<span class="topic-badge">${escapeHTML(x.title)}</span>`).join('');
+ return `<b>${r.title}</b><p>${r.summary}</p>${context}<div class="response-grid"><div class="response-card"><b>Kemungkinan faktor</b><ul>${r.factors.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="response-card"><b>Yang bisa diperhatikan</b><ul>${r.steps.map(x=>`<li>${x}</li>`).join('')}</ul></div></div><div class="warning"><b>Cari bantuan medis segera jika:</b><ul>${r.red.map(x=>`<li>${x}</li>`).join('')}</ul></div>${r.follow?`<div class="info"><b>Pertanyaan lanjutan:</b> ${r.follow}</div>`:''}${related?`<div class="message-meta">Keluhan terkait yang juga terdeteksi: ${related}</div>`:''}<p class="ai-note">Ini adalah penjelasan edukatif, bukan diagnosis. Healthly tidak dapat memastikan penyakit hanya dari teks. Jika keluhan menetap, berulang, mengganggu aktivitas, atau membuatmu khawatir, pertimbangkan konsultasi dengan tenaga kesehatan. Jika kamu masih di bawah umur, ceritakan keluhan yang mengkhawatirkan kepada orang tua/wali atau orang dewasa tepercaya.</p>`;
 }
 function addBubble(text,type){const log=document.getElementById('chatLog');const div=document.createElement('div');div.className='bubble '+type;div.innerHTML=text;log.appendChild(div);log.scrollTop=log.scrollHeight}
-function sendChat(){const el=document.getElementById('chatInput');const q=el.value.trim();if(!q)return;addBubble(escapeHTML(q),'user');el.value='';setTimeout(()=>addBubble(formatResponse(getDemoResponse(q)),'bot'),220)}
+function sendChat(){
+ const el=document.getElementById('chatInput');const q=el.value.trim();if(!q)return;
+ addBubble(escapeHTML(q),'user');el.value='';
+ setTimeout(()=>addBubble(formatResponse(getDemoResponse(q)),'bot'),220);
+}
 function usePrompt(q){document.getElementById('chatInput').value=q;sendChat()}
 function clearChat(){document.getElementById('chatLog').innerHTML='';welcomeChat()}
 function welcomeChat(){addBubble('Halo! Aku Healthly 👋<br><br>Ceritakan keluhanmu dengan bahasa sehari-hari. Supaya jawabannya lebih berguna, kamu bisa menulis <b>keluhan + sejak kapan + seberapa mengganggu + gejala lain</b> jika ada.<br><br>Aku membantu menjelaskan kemungkinan faktor dan langkah aman — <b>bukan mendiagnosis</b>.','bot')}
 
 const symptomData={
- stomach:{
-  title:"Keluhan Perut",
-  questions:[
-   ["Di bagian mana keluhannya paling terasa?",["Bagian atas","Bagian bawah","Sekitar pusar","Tidak yakin"]],
-   ["Sudah berapa lama?",["Kurang dari 1 hari","Beberapa hari","Lebih dari 1 minggu","Datang dan pergi"]],
-   ["Ada gejala lain?",["Mual/muntah","Diare","Demam","Tidak ada"]],
-   ["Seberapa berat sekarang?",["Ringan","Sedang","Berat","Sangat berat / memburuk"]]
-  ]
- },
- headache:{
-  title:"Sakit Kepala",
-  questions:[
-   ["Bagaimana rasanya?",["Berdenyut","Terasa ditekan/berat","Tajam","Tidak yakin"]],
-   ["Sudah berapa lama?",["Kurang dari 1 hari","Beberapa hari","Lebih dari 1 minggu","Berulang"]],
-   ["Ada gejala lain?",["Mual","Sensitif terhadap cahaya/suara","Demam","Tidak ada"]],
-   ["Seberapa berat?",["Ringan","Sedang","Berat","Sangat berat / memburuk"]]
-  ]
- },
- cough:{
-  title:"Batuk",
-  questions:[
-   ["Batuknya seperti apa?",["Kering","Berdahak","Campuran","Tidak yakin"]],
-   ["Sudah berapa lama?",["Kurang dari 1 minggu","1–2 minggu","Lebih lama","Berulang"]],
-   ["Ada gejala lain?",["Demam","Sesak napas","Nyeri dada","Tidak ada"]],
-   ["Seberapa mengganggu?",["Ringan","Sedang","Berat","Memburuk"]]
-  ]
- },
- fatigue:{
-  title:"Mudah Lelah",
-  questions:[
-   ["Seberapa sering merasa lelah?",["Sesekali","Hampir setiap hari","Setiap hari","Tidak yakin"]],
-   ["Sudah berapa lama?",["Beberapa hari","Beberapa minggu","Lebih lama","Datang dan pergi"]],
-   ["Ada gejala lain?",["Kurang tidur","Pusing","Demam","Tidak ada"]],
-   ["Seberapa mengganggu aktivitas?",["Ringan","Sedang","Berat","Sangat mengganggu"]]
-  ]
- }
+ stomach:{title:"Keluhan Perut",questions:[["Di bagian mana keluhannya paling terasa?",["Bagian atas","Bagian bawah","Sekitar pusar","Tidak yakin"]],["Sudah berapa lama?",["Kurang dari 1 hari","Beberapa hari","Lebih dari 1 minggu","Datang dan pergi"]],["Ada gejala lain?",["Mual/muntah","Diare","Demam","Tidak ada"]],["Seberapa berat sekarang?",["Ringan","Sedang","Berat","Sangat berat / memburuk"]]]},
+ headache:{title:"Sakit Kepala / Pusing",questions:[["Bagaimana rasanya?",["Berdenyut","Terasa ditekan/berat","Seperti berputar","Tidak yakin"]],["Sudah berapa lama?",["Kurang dari 1 hari","Beberapa hari","Lebih dari 1 minggu","Berulang"]],["Ada gejala lain?",["Mual","Sensitif cahaya/suara","Demam","Tidak ada"]],["Seberapa berat?",["Ringan","Sedang","Berat","Sangat berat / memburuk"]]]},
+ respiratory:{title:"Flu / Batuk / Saluran Napas",questions:[["Keluhan utama?",["Batuk","Pilek/hidung tersumbat","Sakit tenggorokan","Campuran"]],["Sudah berapa lama?",["Kurang dari 1 minggu","1–2 minggu","Lebih lama","Berulang"]],["Ada gejala lain?",["Demam","Sesak napas","Nyeri dada","Tidak ada"]],["Seberapa mengganggu?",["Ringan","Sedang","Berat","Memburuk"]]]},
+ asthma:{title:"Asma / Sesak Napas",questions:[["Apakah kamu pernah didiagnosis asma?",["Ya","Tidak","Tidak yakin","Belum pernah diperiksa"]],["Saat ini sesaknya bagaimana?",["Ringan","Sedang","Berat","Sangat sulit bernapas"]],["Ada gejala lain?",["Mengi/bengek","Batuk","Dada terasa ketat","Tidak ada"]],["Apakah bisa bicara normal?",["Ya","Agak sulit","Sulit","Tidak bisa bicara dengan normal"]]]},
+ eye:{title:"Keluhan Mata",questions:[["Keluhan utama?",["Berair","Perih/sakit","Gatal","Merah"]],["Ada perubahan penglihatan?",["Tidak","Sedikit buram","Penglihatan berubah jelas","Tidak yakin"]],["Ada pemicu?",["Debu/asap","Layar/kelelahan","Alergi","Tidak tahu"]],["Seberapa berat?",["Ringan","Sedang","Berat","Sangat berat / memburuk"]]]},
+ fatigue:{title:"Mudah Lelah",questions:[["Seberapa sering merasa lelah?",["Sesekali","Hampir setiap hari","Setiap hari","Tidak yakin"]],["Sudah berapa lama?",["Beberapa hari","Beberapa minggu","Lebih lama","Datang dan pergi"]],["Ada gejala lain?",["Kurang tidur","Pusing","Demam","Tidak ada"]],["Seberapa mengganggu aktivitas?",["Ringan","Sedang","Berat","Sangat mengganggu"]]]},
+ fever:{title:"Demam",questions:[["Apakah suhu tubuh diukur?",["Ya","Tidak","Tidak punya termometer","Tidak yakin"]],["Sudah berapa lama?",["Kurang dari 1 hari","Beberapa hari","Lebih lama","Datang dan pergi"]],["Ada gejala lain?",["Batuk/pilek","Mual/diare","Nyeri tubuh","Tidak ada"]],["Kondisinya bagaimana?",["Masih cukup baik","Cukup mengganggu","Berat","Memburuk cepat"]]]},
+ allergy:{title:"Alergi / Gatal / Bersin",questions:[["Keluhan utama?",["Gatal","Bersin/hidung berair","Mata gatal/berair","Ruam"]],["Ada pemicu yang dicurigai?",["Debu","Makanan","Hewan","Tidak tahu"]],["Ada gejala lain?",["Bengkak","Sesak","Hidung tersumbat","Tidak ada"]],["Seberapa berat?",["Ringan","Sedang","Berat","Memburuk"]]]},
+ sleep:{title:"Kesulitan Tidur",questions:[["Masalah utamanya?",["Sulit mulai tidur","Sering terbangun","Bangun terlalu cepat","Tidur tidak nyenyak"]],["Sudah berapa lama?",["Beberapa hari","Beberapa minggu","Lebih lama","Datang dan pergi"]],["Ada faktor yang terasa terkait?",["Gawai/aktivitas malam","Stres","Jadwal tidak teratur","Tidak yakin"]],["Seberapa mengganggu?",["Ringan","Sedang","Berat","Sangat mengganggu"]]]},
+ hydration:{title:"Kekurangan Cairan",questions:[["Apa yang dirasakan?",["Haus","Mulut kering","Lemas","Jarang buang air kecil"]],["Ada kehilangan cairan?",["Diare","Muntah","Banyak berkeringat","Tidak ada"]],["Masih bisa minum?",["Ya","Sedikit","Sulit","Tidak bisa"]],["Kondisi sekarang?",["Masih cukup baik","Cukup lemas","Sangat lemas/pusing","Memburuk"]]]}
 };
 let currentSymptom=null,currentStep=0,currentAnswers=[];
 
 function showCategories(){
  document.getElementById("symptomCategory").innerHTML=`
  <h3>Pilih keluhan utama</h3>
+ <p class="muted">Pilih yang paling mendekati. Hasilnya bersifat edukatif dan tidak menentukan diagnosis.</p>
  <div class="grid g2">
   <button class="option" onclick="startSymptom('stomach')">🫃 Keluhan perut</button>
-  <button class="option" onclick="startSymptom('headache')">🤕 Sakit kepala</button>
-  <button class="option" onclick="startSymptom('cough')">🤧 Batuk</button>
+  <button class="option" onclick="startSymptom('headache')">🤕 Sakit kepala / pusing</button>
+  <button class="option" onclick="startSymptom('respiratory')">🤧 Flu / batuk</button>
+  <button class="option" onclick="startSymptom('asthma')">🫁 Asma / sesak</button>
+  <button class="option" onclick="startSymptom('eye')">👁️ Keluhan mata</button>
   <button class="option" onclick="startSymptom('fatigue')">😴 Mudah lelah</button>
+  <button class="option" onclick="startSymptom('fever')">🌡️ Demam</button>
+  <button class="option" onclick="startSymptom('allergy')">🌿 Alergi / gatal</button>
+  <button class="option" onclick="startSymptom('sleep')">🛌 Sulit tidur</button>
+  <button class="option" onclick="startSymptom('hydration')">💧 Kekurangan cairan</button>
  </div>`;
  document.getElementById("symptomFlow").innerHTML="";
 }
@@ -477,33 +526,42 @@ function renderSymptomQuestion(){
 }
 function answerSymptom(i){currentAnswers[currentStep]=symptomData[currentSymptom].questions[currentStep][1][i];currentStep++;renderSymptomQuestion()}
 function renderSymptomResult(){
- const a=currentAnswers, severe=a[3]&&(/berat|memburuk|mengganggu/i.test(a[3]));
- let title=symptomData[currentSymptom].title;
- let possible={
-  stomach:"Keluhan perut dapat berkaitan dengan banyak hal, misalnya gangguan pencernaan sementara, iritasi saluran cerna, atau infeksi. Jawaban ini tidak cukup untuk menentukan penyebab.",
-  headache:"Sakit kepala memiliki banyak kemungkinan penyebab. Pola, durasi, gejala penyerta, dan kondisi seseorang perlu dinilai bersama.",
-  cough:"Batuk dapat muncul pada berbagai kondisi saluran pernapasan. Lama batuk dan gejala penyerta membantu menentukan apakah perlu dinilai lebih lanjut.",
-  fatigue:"Rasa lelah dapat dipengaruhi banyak faktor seperti kurang tidur, aktivitas, stres, atau kondisi kesehatan tertentu. Penilaian lebih lanjut mungkin diperlukan bila menetap."
+ const a=currentAnswers;
+ const severe=a.some(x=>/sangat|berat|memburuk|sulit|tidak bisa/i.test(x));
+ const data=symptomData[currentSymptom];
+ const possible={
+  stomach:"Keluhan perut dapat berkaitan dengan gangguan pencernaan sementara, iritasi saluran cerna, infeksi, atau faktor lain.",
+  headache:"Sakit kepala atau pusing memiliki banyak kemungkinan penyebab. Pola, durasi, dan gejala penyerta penting untuk diperhatikan.",
+  respiratory:"Keluhan flu dan saluran napas dapat muncul pada infeksi, alergi, atau iritasi. Gejala saja tidak cukup untuk memastikan penyebab.",
+  asthma:"Sesak dan mengi dapat muncul pada asma, tetapi sesak juga punya penyebab lain. Jika berat, prioritasnya adalah mendapatkan bantuan medis.",
+  eye:"Keluhan mata dapat berkaitan dengan iritasi, alergi, mata kering, infeksi, atau masalah lain. Nyeri berat dan perubahan penglihatan perlu perhatian segera.",
+  fatigue:"Rasa lelah dapat dipengaruhi tidur, aktivitas, stres, infeksi, atau kondisi kesehatan lain.",
+  fever:"Demam merupakan tanda tubuh sedang merespons sesuatu. Penyebabnya beragam dan tidak dapat dipastikan dari kuesioner singkat.",
+  allergy:"Gatal, bersin, hidung atau mata berair dapat muncul pada alergi maupun penyebab lain.",
+  sleep:"Kesulitan tidur dapat berkaitan dengan jadwal, kebiasaan, lingkungan, stres, atau faktor lain.",
+  hydration:"Kekurangan cairan dapat terjadi saat asupan tidak menggantikan cairan yang hilang karena aktivitas, cuaca, muntah, diare, atau penyebab lain."
  }[currentSymptom];
- let extra=severe?`<div class="warning"><b>Perhatikan kondisi yang memburuk.</b><br>Karena kamu memilih tingkat yang berat/memburuk, pertimbangkan untuk mencari bantuan medis, terutama bila keluhan semakin berat atau disertai tanda bahaya.</div>`:"";
+ let extra=severe?`<div class="warning"><b>Perhatikan tingkat keluhan.</b><br>Jawabanmu mengandung kondisi yang dapat berarti cukup berat. Jika keluhan memang berat, memburuk cepat, atau muncul tanda bahaya, cari bantuan medis dan beri tahu orang dewasa tepercaya.</div>`:"";
  document.getElementById("symptomFlow").innerHTML=`
  <div class="card" style="margin-top:15px">
-  <span class="pill">HASIL EDUKATIF</span><h3>${title}</h3>
+  <span class="pill">HASIL EDUKATIF</span><h3>${data.title}</h3>
   <p>${possible}</p>
-  <div class="info"><b>Yang bisa dicatat:</b><br>kapan mulai, seberapa sering muncul, apa yang membuatnya membaik/memburuk, serta gejala lain yang menyertai.</div>
+  <div class="info"><b>Jawabanmu:</b><ul>${a.map((x,i)=>`<li>${data.questions[i][0]}: <b>${escapeHTML(x||'-')}</b></li>`).join('')}</ul></div>
   ${extra}
-  <div class="warning"><b>Tanda bahaya:</b> jika ada kondisi yang sangat berat, memburuk cepat, sulit bernapas, pingsan, kebingungan, perdarahan, atau keadaan darurat lainnya, cari pertolongan medis segera.</div>
+  <div class="warning"><b>Tanda bahaya:</b> bila ada sulit bernapas, pingsan/kebingungan, perdarahan, nyeri sangat berat, perubahan penglihatan yang jelas, cedera berat, atau kondisi memburuk cepat, cari pertolongan medis segera.</div>
+  <p class="ai-note">Panduan ini membantu mengorganisasi informasi, bukan menentukan penyakit. Jika keluhan menetap, berulang, atau mengganggu aktivitas, konsultasikan dengan tenaga kesehatan.</p>
   <div style="margin-top:15px"><button class="primary" onclick="startSymptom('${currentSymptom}')">Ulangi</button> <button class="secondary" onclick="showCategories()">Pilih keluhan lain</button></div>
  </div>`;
 }
 
 const articles={
- nutrition:["Nutrisi Seimbang","Pola makan yang beragam dapat membantu memenuhi kebutuhan nutrisi. Fokus pada variasi, kecukupan, dan kebiasaan yang realistis; hindari pembatasan ekstrem tanpa alasan medis."],
+ nutrition:["Nutrisi Seimbang","Pola makan yang beragam dan cukup membantu memenuhi kebutuhan tubuh. Utamakan variasi makanan, makan secara teratur sesuai kebutuhan, dan hindari pembatasan ekstrem tanpa arahan tenaga kesehatan."],
  sleep:["Tidur","Rutinitas tidur yang konsisten, lingkungan yang nyaman, dan kebiasaan sebelum tidur yang tenang dapat mendukung istirahat. Bila masalah tidur menetap dan mengganggu aktivitas, pertimbangkan berkonsultasi dengan tenaga kesehatan."],
- movement:["Aktivitas Fisik","Aktivitas fisik dapat mendukung kebugaran dan kesehatan secara umum. Pilih aktivitas yang sesuai kemampuan dan tingkatkan secara bertahap bila diperlukan."],
+ movement:["Aktivitas Fisik","Aktivitas fisik yang sesuai kemampuan dapat mendukung kebugaran dan kesejahteraan. Mulai dari aktivitas yang realistis, beri waktu istirahat, dan hentikan aktivitas bila muncul keluhan yang mengkhawatirkan."],
  hydration:["Hidrasi","Kebutuhan cairan berbeda antarindividu dan dipengaruhi aktivitas, cuaca, makanan, dan kondisi kesehatan. Perhatikan rasa haus dan kondisi tubuh."],
  hygiene:["Kebersihan","Kebiasaan seperti mencuci tangan pada waktu yang tepat dan menjaga keamanan makanan merupakan bagian dari kebersihan sehari-hari."],
- wellbeing:["Kesejahteraan","Istirahat, hubungan sosial, aktivitas yang menyenangkan, dan rutinitas yang seimbang dapat membantu menjaga kesejahteraan sehari-hari."]
+ wellbeing:["Kesejahteraan","Istirahat, hubungan sosial, aktivitas yang menyenangkan, dan rutinitas yang seimbang dapat membantu menjaga kesejahteraan sehari-hari."],
+ warning:["Tanda Bahaya","Jika muncul sulit bernapas, pingsan atau kebingungan, perdarahan, nyeri sangat berat, perubahan penglihatan yang jelas, cedera berat, atau kondisi memburuk cepat, cari pertolongan medis segera."]
 };
 function openArticle(key){
  document.getElementById("articleTitle").textContent=articles[key][0];
@@ -512,23 +570,28 @@ function openArticle(key){
 }
 
 const topics=[
- ["🫃","Keluhan Perut","Keluhan perut dapat memiliki banyak penyebab. Durasi, lokasi, dan gejala penyerta penting untuk diperhatikan.","stomach"],
- ["🤕","Sakit Kepala","Sakit kepala memiliki banyak kemungkinan penyebab dan pola yang berbeda.","headache"],
- ["🤧","Batuk","Batuk dapat terjadi pada berbagai kondisi saluran pernapasan.","cough"],
- ["😴","Mudah Lelah","Kelelahan dapat dipengaruhi tidur, aktivitas, stres, atau kondisi kesehatan tertentu.","fatigue"],
- ["💧","Hidrasi","Kebutuhan cairan berbeda sesuai orang dan kondisi.","hydration"],
- ["🥗","Balanced Eating","Variasi dan kecukupan makanan merupakan bagian dari pola makan sehat.","nutrition"],
- ["🏃","Physical Aktivitas","Aktivitas yang sesuai kemampuan dapat mendukung kebugaran.","movement"],
- ["🧼","Hand Kebersihan","Kebersihan tangan merupakan kebiasaan sederhana untuk membantu mengurangi penyebaran infeksi.","hygiene"],
- ["🧘","Kesejahteraan","Rutinitas seimbang dan koneksi sosial dapat mendukung kesejahteraan.","wellbeing"],
- ["🚨","Warning Signs","Gejala berat, memburuk cepat, atau kondisi darurat perlu mendapat perhatian medis.","warning"]
+ ["🫃","Keluhan Perut","Mual, kembung, nyeri, atau rasa tidak nyaman di perut dapat memiliki banyak kemungkinan penyebab.","stomach"],
+ ["🤕","Sakit Kepala & Pusing","Pola, durasi, tidur, cairan, dan gejala penyerta penting diperhatikan.","headache"],
+ ["🤧","Flu, Pilek & Batuk","Keluhan saluran napas dapat muncul pada infeksi, alergi, atau iritasi.","respiratory"],
+ ["🫁","Asma & Sesak","Sesak perlu diperhatikan dengan serius, terutama bila berat atau mengganggu bicara.","asthma"],
+ ["👁️","Keluhan Mata","Mata berair, perih, merah, gatal, atau kering dapat memiliki banyak penyebab.","eye"],
+ ["😴","Mudah Lelah","Kelelahan dapat dipengaruhi tidur, aktivitas, stres, infeksi, atau kondisi kesehatan lain.","fatigue"],
+ ["🌡️","Demam","Demam adalah tanda tubuh sedang merespons sesuatu dan perlu dilihat bersama gejala lain.","fever"],
+ ["🌿","Alergi & Gatal","Bersin, gatal, ruam, atau mata/hidung berair dapat berkaitan dengan alergi maupun penyebab lain.","allergy"],
+ ["🛌","Kesulitan Tidur","Kebiasaan, jadwal, lingkungan, dan stres dapat memengaruhi kualitas tidur.","sleep"],
+ ["💧","Kekurangan Cairan","Kehilangan cairan karena aktivitas, panas, muntah, atau diare perlu diperhatikan.","hydration"],
+ ["🥗","Pola Makan Seimbang","Variasi dan kecukupan makanan merupakan bagian dari pola makan yang sehat.","nutrition"],
+ ["🏃","Aktivitas Fisik","Aktivitas sesuai kemampuan dapat mendukung kebugaran dan kesejahteraan.","movement"],
+ ["🧼","Kebersihan Tangan","Cuci tangan pada waktu yang tepat membantu mengurangi penyebaran banyak infeksi.","hygiene"],
+ ["🧘","Kesejahteraan","Istirahat, koneksi sosial, dan rutinitas seimbang mendukung kesejahteraan sehari-hari.","wellbeing"],
+ ["🚨","Tanda Bahaya","Keluhan berat, memburuk cepat, atau kondisi darurat memerlukan perhatian medis.","warning"]
 ];
 function renderLibrary(){
  const q=(document.getElementById("librarySearch").value||"").toLowerCase();
  const list=topics.filter(t=>(t[1]+" "+t[2]).toLowerCase().includes(q));
  document.getElementById("libraryGrid").innerHTML=list.length?list.map(t=>`
  <div class="card library-card"><div class="icon">${t[0]}</div><h3>${t[1]}</h3><p>${t[2]}</p>
- <button class="ghost read" onclick="${["stomach","headache","cough","fatigue"].includes(t[3])?`startFromLibrary('${t[3]}')`:`openArticle('${t[3]}')`}">Pelajari →</button></div>`).join(""):`<div class="card empty">Topik tidak ditemukan. Coba kata kunci lain.</div>`;
+ <button class="ghost read" onclick="${["stomach","headache","respiratory","asthma","eye","fatigue","fever","allergy","sleep","hydration"].includes(t[3])?`startFromLibrary('${t[3]}')`:`openArticle('${t[3]}')`}">Pelajari →</button></div>`).join(""):`<div class="card empty">Topik tidak ditemukan. Coba kata kunci lain.</div>`;
 }
 function startFromLibrary(key){go("symptoms");setTimeout(()=>startSymptom(key),50)}
 function searchLibrary(){go("library");document.getElementById("librarySearch").value=document.getElementById("homeSearch").value;renderLibrary()}
