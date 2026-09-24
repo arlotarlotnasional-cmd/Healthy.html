@@ -25,6 +25,17 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .nav{display:grid;gap:5px}
 .nav button{width:100%;border:0;background:transparent;color:#596477;text-align:left;padding:12px 13px;border-radius:11px;display:flex;align-items:center;gap:10px}
 .nav button:hover,.nav button.active{background:var(--soft);color:var(--primary-dark)}
+.nav-group{margin:14px 8px 6px;font-size:10px;font-weight:800;letter-spacing:.08em;color:#98a39f;text-transform:uppercase}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--primary)}
+.feature{display:flex;gap:14px;align-items:flex-start}.feature .icon{margin:0;flex:none}
+.service{display:flex;align-items:center;gap:13px;padding:14px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.service .icon{margin:0;font-size:25px}
+.drug-card{position:relative;overflow:hidden}.drug-card:after{content:"";position:absolute;right:-28px;top:-28px;width:90px;height:90px;border-radius:50%;background:var(--soft);z-index:0}.drug-card>*{position:relative;z-index:1}
+.badge-safe{display:inline-flex;align-items:center;gap:5px;background:#edf8f3;color:#216b55;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800}
+.compare-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}.compare-table th,.compare-table td{border-bottom:1px solid var(--line);padding:11px;text-align:left;vertical-align:top}.compare-table th{background:#f7faf8}
+.notice-strip{display:flex;gap:10px;align-items:flex-start;padding:13px 15px;border-radius:14px;background:#fff8e8;border:1px solid #f2dfb0;color:#6b5421}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+@media(max-width:520px){.compare-table{font-size:12px}.compare-table th,.compare-table td{padding:8px}.hero-actions>*{width:100%}}
 .main{margin-left:250px;width:calc(100% - 250px);padding:25px}
 .topbar{max-width:1180px;margin:auto auto 23px;display:flex;align-items:center;justify-content:space-between}
 .topbar h2{margin:0;font-size:25px}.topbar p{margin:5px 0 0;color:var(--muted)}
@@ -126,7 +137,12 @@ body{overflow-x:hidden}.mobile-menu{display:none}
     <button class="active" data-page="home">🏠 <span>Beranda</span></button>
     <button data-page="assistant">💬 <span>Tanya Healthly</span></button>
     <button data-page="symptoms">🔎 <span>Pahami Gejala</span></button>
+    <div class="nav-group">Pahami & rawat</div>
+    <button data-page="medicines">💊 <span>Kenali Obat</span></button>
+    <button data-page="natural">🌿 <span>Pendekatan Alami</span></button>
     <button data-page="life">🥗 <span>Hidup Sehat</span></button>
+    <div class="nav-group">Pantau & akses</div>
+    <button data-page="services">🏥 <span>Layanan Kesehatan</span></button>
     <button data-page="habits">🎯 <span>Kebiasaan Saya</span></button>
     <button data-page="tracker">📊 <span>Catatan Kesehatan</span></button>
     <button data-page="library">📚 <span>Perpustakaan</span></button>
@@ -157,6 +173,13 @@ body{overflow-x:hidden}.mobile-menu{display:none}
     <div class="card action" onclick="go('life')"><div class="icon">🥗</div><h3>Hidup Sehat</h3><p>Pelajari pola hidup sehat yang realistis.</p></div>
     <div class="card action" onclick="go('habits')"><div class="icon">🎯</div><h3>Bangun Kebiasaan</h3><p>Buat kebiasaan sendiri dan pantau progres.</p></div>
     <div class="card action" onclick="go('library')"><div class="icon">📚</div><h3>Perpustakaan Kesehatan</h3><p>Cari dan baca topik kesehatan.</p></div>
+  </div>
+
+  <div class="section"><h3>Jalur Bantuan Healthly</h3></div>
+  <div class="grid g3">
+    <div class="card action" onclick="go('medicines')"><div class="feature"><div class="icon">💊</div><div><h3>Kenali Obat</h3><p>Cari kegunaan umum, kelompok, dan perhatian penting.</p></div></div></div>
+    <div class="card action" onclick="go('natural')"><div class="feature"><div class="icon">🌿</div><div><h3>Pendekatan Alami</h3><p>Pelajari perawatan suportif tanpa menganggap semua bahan alami pasti aman.</p></div></div></div>
+    <div class="card action" onclick="go('services')"><div class="feature"><div class="icon">🏥</div><div><h3>Layanan Kesehatan</h3><p>Kenali kapan dan ke mana mencari bantuan kesehatan.</p></div></div></div>
   </div>
 
   <div class="section"><h3>Ringkasan Hari Ini</h3><button class="secondary" onclick="go('tracker')">Perbarui data</button></div>
@@ -265,6 +288,61 @@ body{overflow-x:hidden}.mobile-menu{display:none}
   </div>
 </section>
 
+<section id="medicines" class="page">
+  <div class="card">
+    <span class="pill">EDUKASI OBAT • BUKAN RESEP</span>
+    <h2 style="margin:10px 0 6px">Kenali Obat 💊</h2>
+    <p>Pahami fungsi umum obat atau zat aktif, perbedaannya, dan hal yang perlu diperhatikan. Healthly tidak menentukan obat yang harus diminum dan tidak menghitung dosis pribadi.</p>
+    <div class="notice-strip" style="margin-top:15px"><b>⚠️ Penting:</b><span>Nama merek bisa berbeda, sementara zat aktifnya dapat sama. Selalu cek label produk dan tanyakan kepada orang tua/wali atau apoteker jika ragu.</span></div>
+  </div>
+  <div class="section"><h3>Contoh informasi obat</h3><span class="badge-safe">✓ Edukatif</span></div>
+  <div class="grid g2">
+    <div class="card drug-card"><span class="pill">ANALGESIK / ANTIPIRETIK</span><h3>Paracetamol</h3><p><b>Kegunaan umum:</b> membantu meredakan nyeri dan menurunkan demam.</p><h4>Perhatian</h4><p>Ikuti petunjuk produk. Perhatikan kandungan obat kombinasi agar tidak tanpa sengaja menggandakan zat aktif yang sama.</p><div class="source-note" style="margin-top:12px">Sumber: MedlinePlus & FDA.</div></div>
+    <div class="card drug-card"><span class="pill">NSAID</span><h3>Ibuprofen</h3><p><b>Kegunaan umum:</b> membantu meredakan nyeri, demam, dan peradangan tertentu.</p><h4>Perhatian</h4><p>NSAID memiliki perhatian dan kontraindikasi tertentu. Ikuti label produk dan tanyakan kepada apoteker/tenaga kesehatan bila ragu.</p><div class="source-note" style="margin-top:12px">Sumber: MedlinePlus.</div></div>
+  </div>
+  <div class="section"><h3>🔄 Contoh perbandingan</h3></div>
+  <div class="card" style="overflow:auto">
+    <table class="compare-table"><thead><tr><th>Aspek</th><th>Paracetamol</th><th>Ibuprofen</th></tr></thead><tbody>
+      <tr><td>Kelompok</td><td>Analgesik/antipiretik</td><td>NSAID</td></tr>
+      <tr><td>Kegunaan umum</td><td>Nyeri & demam</td><td>Nyeri, demam & peradangan tertentu</td></tr>
+      <tr><td>Catatan</td><td>Perhatikan produk kombinasi yang juga mengandung paracetamol.</td><td>Memiliki perhatian/kontraindikasi tertentu dan tidak cocok untuk semua orang.</td></tr>
+      <tr><td>Healthly</td><td colspan="2">Membandingkan informasi bukan berarti memilihkan obat. Kecocokan penggunaan bergantung pada pengguna dan produk.</td></tr>
+    </tbody></table>
+  </div>
+  <div class="info"><b>Untuk pengguna remaja:</b> jangan menentukan dosis berdasarkan chat. Ikuti label produk dan libatkan orang tua/wali atau apoteker bila ingin menggunakan obat.</div>
+</section>
+
+<section id="natural" class="page">
+  <div class="card">
+    <span class="pill">PERAWATAN SUPORTIF</span>
+    <h2 style="margin:10px 0 6px">Pendekatan Alami 🌿</h2>
+    <p>“Alami” tidak otomatis berarti aman atau terbukti menyembuhkan. Healthly hanya membahas pendekatan yang masuk akal untuk kenyamanan atau kebiasaan sehat, dan tetap menunjukkan batasannya.</p>
+  </div>
+  <div class="grid g2" style="margin-top:15px">
+    <div class="card"><h3>🍯 Madu</h3><p>Dapat dibahas sebagai bahan makanan yang digunakan untuk membantu kenyamanan pada batuk tertentu. Bukan pengganti pemeriksaan atau terapi bila ada tanda bahaya.</p><div class="source-note" style="margin-top:12px">Rujukan: sumber kesehatan resmi seperti CDC/NCCIH sesuai topik.</div></div>
+    <div class="card"><h3>🫖 Cairan & minuman hangat</h3><p>Cairan yang cukup dan minuman hangat bila terasa nyaman dapat menjadi bagian dari perawatan suportif saat mengalami keluhan ringan tertentu.</p><div class="source-note" style="margin-top:12px">Catatan: kebutuhan cairan berbeda antarorang dan kondisi.</div></div>
+    <div class="card"><h3>🛌 Istirahat</h3><p>Istirahat dan menjaga rutinitas dapat membantu tubuh menghadapi keluhan ringan serta mendukung pemulihan.</p></div>
+    <div class="card"><h3>🥗 Pola makan yang sesuai toleransi</h3><p>Pilih makanan yang dapat ditoleransi tubuh dan tetap perhatikan kecukupan gizi. Hindari klaim bahwa satu bahan makanan dapat menyembuhkan penyakit tertentu.</p></div>
+  </div>
+  <div class="warning"><b>Hindari klaim “pasti sembuh”.</b><br>Produk herbal dan suplemen dapat memiliki efek samping atau interaksi. Untuk remaja, jangan menggunakan suplemen/herbal untuk tujuan pengobatan tanpa melibatkan orang tua/wali dan tenaga kesehatan.</div>
+</section>
+
+<section id="services" class="page">
+  <div class="card">
+    <span class="pill">AKSES BANTUAN</span>
+    <h2 style="margin:10px 0 6px">Layanan Kesehatan 🏥</h2>
+    <p>Healthly membantu menjelaskan pilihan layanan secara umum. Healthly tidak terhubung ke rekam medis, kepesertaan, atau sistem klaim.</p>
+  </div>
+  <div class="grid g2" style="margin-top:15px">
+    <div class="card"><div class="service"><div class="icon">🏪</div><div><h3>Puskesmas</h3><p>Tempat layanan kesehatan tingkat pertama untuk banyak kebutuhan kesehatan masyarakat.</p></div></div></div>
+    <div class="card"><div class="service"><div class="icon">🩺</div><div><h3>Klinik</h3><p>Dapat menjadi pilihan untuk konsultasi dan pemeriksaan sesuai layanan yang tersedia.</p></div></div></div>
+    <div class="card"><div class="service"><div class="icon">🏥</div><div><h3>Rumah Sakit</h3><p>Digunakan untuk layanan yang membutuhkan fasilitas atau penanganan lebih lanjut.</p></div></div></div>
+    <div class="card"><div class="service"><div class="icon">🚨</div><div><h3>Keadaan darurat</h3><p>Jika ada kesulitan bernapas berat, penurunan kesadaran, atau tanda bahaya lain, cari pertolongan darurat segera.</p></div></div></div>
+  </div>
+  <div class="section"><h3>🇮🇩 Informasi JKN / BPJS Kesehatan</h3></div>
+  <div class="card"><p>Healthly dapat menjadi halaman edukasi yang mengarahkan pengguna ke sumber resmi. Untuk informasi kepesertaan, layanan, dan ketentuan JKN, gunakan kanal resmi BPJS Kesehatan.</p><div class="hero-actions"><a class="primary" href="https://www.bpjs-kesehatan.go.id/" target="_blank" rel="noopener" style="text-decoration:none">Buka situs resmi BPJS Kesehatan ↗</a><button class="secondary" onclick="go('library')">Kembali ke perpustakaan</button></div></div>
+</section>
+
 <section id="tracker" class="page">
   <div class="grid g3">
     <div class="card">
@@ -307,10 +385,10 @@ body{overflow-x:hidden}.mobile-menu{display:none}
     <div class="result-item"><b>Bukan alat diagnosis</b><br><span class="muted">Mesin demo hanya mengelompokkan bahasa pengguna ke topik edukasi. Tidak melakukan pemeriksaan fisik, tes laboratorium, atau diagnosis.</span></div>
     <div class="result-item"><b>Utamakan keselamatan</b><br><span class="muted">Jika muncul tanda bahaya atau kondisi memburuk cepat, pengguna diarahkan untuk mencari bantuan medis dan melibatkan orang dewasa tepercaya.</span></div>
   </div>
-  <p class="source-note" style="margin-bottom:0">Sumber utama yang digunakan sebagai rujukan konten: WHO, MedlinePlus, dan CDC. Tautan tersedia pada panel sumber di Tanya Healthly.</p>
+  <p class="source-note" style="margin-bottom:0">Sumber rujukan utama: WHO, Kemenkes RI, MedlinePlus, CDC, FDA, dan NCCIH sesuai topik. Tautan rujukan ditampilkan pada materi terkait.</p>
 </div>
 
-<div class="footer">Healthly adalah prototipe edukasi. Informasi di dalamnya bukan diagnosis dan bukan pengganti tenaga kesehatan profesional.</div>
+<div class="footer">Healthly adalah prototipe edukasi kesehatan. Informasi bukan diagnosis, bukan resep, dan bukan pengganti tenaga kesehatan profesional.</div>
 </main>
 </div>
 
@@ -339,7 +417,10 @@ const pageMeta={
  life:["Hidup Sehat","Informasi praktis untuk keseharian."],
  habits:["Kebiasaan Saya","Bangun dan pantau kebiasaan sehat."],
  tracker:["Catatan Kesehatan","Catat beberapa data sederhana secara lokal."],
- library:["Perpustakaan Kesehatan","Jelajahi topik kesehatan edukatif."]
+ library:["Perpustakaan Kesehatan","Jelajahi topik kesehatan edukatif."],
+ medicines:["Kenali Obat","Pahami fungsi obat dan zat aktif secara edukatif."],
+ natural:["Pendekatan Alami","Pelajari langkah suportif dan bahan alami dengan hati-hati."],
+ services:["Layanan Kesehatan","Pahami pilihan bantuan dan jalur layanan kesehatan."]
 };
 
 const mobileMenu=document.getElementById('mobileMenu');
@@ -350,6 +431,7 @@ mobileMenu?.addEventListener('click',()=>{sidebar.classList.toggle('open');navOv
 navOverlay?.addEventListener('click',closeMobileNav);
 
 function go(id){
+ if(!pageMeta[id]) return;
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
  document.getElementById(id).classList.add("active");
  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
@@ -360,6 +442,8 @@ function go(id){
 }
 document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
 document.getElementById("chatInput")?.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendChat()}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){document.querySelectorAll(".modal.show").forEach(m=>m.classList.remove("show"));closeMobileNav();}});
+document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("show")}));
 
 function toast(msg){
  const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");
