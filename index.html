@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Healthly — Health Companion Prototype</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#6f7a8f;--p:#2f7d6d;--pd:#225f53;--soft:#e8f4f0;--line:#e5e9ef;--danger:#c94c4c}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text)}
+button,input{font:inherit}.app{min-height:100vh;display:flex}.side{position:fixed;width:245px;inset:0 auto 0 0;background:#fff;border-right:1px solid var(--line);padding:22px 14px}.brand{display:flex;gap:10px;align-items:center;padding:5px 10px 25px}.logo{width:42px;height:42px;border-radius:14px;background:var(--p);color:#fff;display:grid;place-items:center;font-size:22px}.brand h1{font-size:20px;margin:0}.brand small{color:var(--muted)}nav{display:grid;gap:5px}nav button{border:0;background:transparent;text-align:left;padding:12px 14px;border-radius:11px;color:#596477}nav button:hover,nav button.active{background:var(--soft);color:var(--pd)}
+.main{margin-left:245px;width:calc(100% - 245px);padding:27px}.top{max-width:1150px;margin:auto;display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.top h2{margin:0}.top p{margin:5px 0;color:var(--muted)}.tag{background:var(--soft);color:var(--pd);padding:7px 11px;border-radius:99px;font-size:12px;font-weight:700}
+.page{display:none;max-width:1150px;margin:auto}.page.active{display:block}.hero{background:linear-gradient(135deg,#205f53,#41927e);color:#fff;border-radius:23px;padding:35px;display:grid;grid-template-columns:1.5fr 1fr;align-items:center}.hero h1{font-size:40px;line-height:1.08;margin:0 0 12px}.hero p{line-height:1.7;color:#e5f5f1;max-width:650px}.search{display:flex;background:#fff;border-radius:12px;padding:5px;margin-top:18px}.search input{border:0;outline:0;flex:1;padding:12px}.search button,.primary{border:0;background:var(--p);color:#fff;padding:11px 16px;border-radius:10px;font-weight:700}.hero .search button{background:#173f37}.hero-art{text-align:center;font-size:100px}.section{display:flex;justify-content:space-between;margin:28px 0 13px}.section h3{margin:0}.grid{display:grid;gap:15px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:0 7px 25px #1720330a}.action{cursor:pointer;transition:.2s}.action:hover{transform:translateY(-3px);box-shadow:0 14px 35px #17203312}.icon{font-size:28px;margin-bottom:10px}.card h3{margin:4px 0 8px}.card p{color:var(--muted);line-height:1.6;margin:0}.stat{font-size:28px;font-weight:800;margin:7px 0}.progress{height:8px;background:#edf0f4;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;background:var(--p)}.muted{color:var(--muted)}.check{display:flex;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}.check input{accent-color:var(--p)}.sym{max-width:800px;margin:auto}.option{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;padding:14px;border-radius:11px;margin:9px 0}.option:hover{border-color:var(--p);background:var(--soft)}.info{background:var(--soft);border-left:4px solid var(--p);padding:14px;border-radius:9px;margin:14px 0}.warning{background:#fff2f2;border-left:4px solid var(--danger);padding:14px;border-radius:9px;margin:14px 0}.pill{display:inline-block;background:#f0f3f5;padding:5px 9px;border-radius:99px;font-size:12px}.library{min-height:155px}.footer{text-align:center;color:var(--muted);font-size:12px;margin:28px}.toast{position:fixed;right:20px;bottom:20px;background:#172033;color:#fff;padding:12px 16px;border-radius:11px;opacity:0;transition:.2s}.toast.show{opacity:1}
+@media(max-width:850px){.side{width:70px}.brand div:not(.logo),nav button span{display:none}.brand{justify-content:center}.main{margin-left:70px;width:calc(100% - 70px)}.hero{grid-template-columns:1fr}.hero-art{display:none}.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.main{padding:13px}.g4,.g3,.g2{grid-template-columns:1fr}.hero{padding:25px}.hero h1{font-size:31px}.top{align-items:flex-start}.tag{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+  <div class="brand"><div class="logo">♥</div><div><h1>Healthly</h1><small>Health Companion</small></div></div>
+  <nav>
+    <button class="active" data-page="home">🏠 <span>Home</span></button>
+    <button data-page="symptoms">🔎 <span>Symptom Guide</span></button>
+    <button data-page="life">🥗 <span>Healthy Living</span></button>
+    <button data-page="habits">🎯 <span>My Habits</span></button>
+    <button data-page="tracker">📊 <span>My Health</span></button>
+    <button data-page="library">📚 <span>Health Library</span></button>
+  </nav>
+</aside>
+<main class="main">
+<div class="top"><div><h2 id="title">Health Dashboard</h2><p id="sub">Small healthy choices can add up.</p></div><div class="tag">PROTOTYPE • EDUCATIONAL</div></div>
+
+<section id="home" class="page active">
+<div class="hero"><div><h1>Understand your health.<br>Build healthier habits.</h1><p>Healthly is a prototype that helps people explore common health topics, understand symptoms educationally, and track simple healthy habits.</p><div class="search"><input id="homeSearch" placeholder="Search a health topic..."><button onclick="searchLib()">Search</button></div></div><div class="hero-art">🌿</div></div>
+<div class="section"><h3>What do you want to do?</h3></div>
+<div class="grid g4">
+<div class="card action" onclick="go('symptoms')"><div class="icon">🔎</div><h3>Understand Symptoms</h3><p>Explore common symptoms in an educational way.</p></div>
+<div class="card action" onclick="go('life')"><div class="icon">🥗</div><h3>Healthy Living</h3><p>Learn practical everyday health habits.</p></div>
+<div class="card action" onclick="go('habits')"><div class="icon">🎯</div><h3>Build a Habit</h3><p>Track small daily actions.</p></div>
+<div class="card action" onclick="go('library')"><div class="icon">📚</div><h3>Learn</h3><p>Browse health education topics.</p></div>
+</div>
+<div class="section"><h3>Today's snapshot</h3></div>
+<div class="grid g4">
+<div class="card"><span class="muted">Water</span><div class="stat" id="ws">0 / 8</div><div class="progress"><span id="wb" style="width:0%"></span></div></div>
+<div class="card"><span class="muted">Sleep</span><div class="stat" id="ss">0 h</div><p>Last recorded</p></div>
+<div class="card"><span class="muted">Activity</span><div class="stat" id="as">0 min</div><p>Today's movement</p></div>
+<div class="card"><span class="muted">Habits</span><div class="stat" id="hs">0 / 3</div><p>Completed today</p></div>
+</div>
+</section>
+
+<section id="symptoms" class="page"><div class="card sym"><span class="pill">Educational symptom guide</span><h2>Let's understand what you're experiencing</h2><p class="muted">This prototype does not diagnose illness. It gives general educational information.</p><div id="flow" style="margin-top:20px"></div></div></section>
+
+<section id="life" class="page"><div class="section"><h3>Healthy Living</h3></div><div class="grid g3">
+<div class="card library"><div class="icon">🥗</div><h3>Balanced Nutrition</h3><p>A varied eating pattern can help provide nutrients your body needs. Avoid extreme restrictions.</p></div>
+<div class="card library"><div class="icon">😴</div><h3>Sleep</h3><p>Consistent sleep routines and a comfortable environment can support everyday well-being.</p></div>
+<div class="card library"><div class="icon">🏃</div><h3>Movement</h3><p>Regular physical activity can support cardiovascular health, strength and general well-being.</p></div>
+<div class="card library"><div class="icon">💧</div><h3>Hydration</h3><p>Drink fluids regularly and consider thirst, activity and environmental conditions.</p></div>
+<div class="card library"><div class="icon">🧼</div><h3>Hygiene</h3><p>Good hand and food hygiene can reduce exposure to some infections.</p></div>
+<div class="card library"><div class="icon">🧘</div><h3>Well-being</h3><p>Breaks, social connection and healthy routines can support everyday emotional well-being.</p></div>
+</div></section>
+
+<section id="habits" class="page"><div class="grid g2">
+<div class="card"><h3>Today's Healthy Checklist</h3><p class="muted">Start small and keep track.</p>
+<label class="check"><input class="habit" type="checkbox">Drink water regularly</label>
+<label class="check"><input class="habit" type="checkbox">Move your body today</label>
+<label class="check"><input class="habit" type="checkbox">Keep a consistent sleep routine</label></div>
+<div class="card"><h3>Habit Progress</h3><div class="stat" id="hb">0 / 3</div><div class="progress"><span id="hbar" style="width:0%"></span></div><p class="muted" id="hm">Start with one small action.</p></div>
+</div></section>
+
+<section id="tracker" class="page"><div class="grid g3">
+<div class="card"><h3>💧 Water</h3><p class="muted">Prototype target: 8 glasses.</p><div class="stat" id="wv">0</div><button class="primary" onclick="water()">+ Add glass</button></div>
+<div class="card"><h3>😴 Sleep</h3><p class="muted">Record your latest duration.</p><input id="sleep" type="number" min="0" max="24" step=".5" placeholder="Hours" style="width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;margin:10px 0"><button class="primary" onclick="saveSleep()">Save sleep</button></div>
+<div class="card"><h3>🏃 Activity</h3><p class="muted">Record movement minutes.</p><input id="activity" type="number" min="0" placeholder="Minutes" style="width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;margin:10px 0"><button class="primary" onclick="saveActivity()">Save activity</button></div>
+</div><div class="info"><b>Privacy:</b> prototype values are stored only in your browser with localStorage.</div></section>
+
+<section id="library" class="page"><div class="card"><input id="libSearch" oninput="renderLib()" placeholder="Search topics..." style="width:100%;padding:13px;border:1px solid var(--line);border-radius:10px"></div><div id="libGrid" class="grid g3" style="margin-top:15px"></div></section>
+<div class="footer">Healthly is an educational prototype and does not diagnose illness or replace qualified healthcare advice.</div>
+</main></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const meta={home:["Health Dashboard","Small healthy choices can add up."],symptoms:["Symptom Guide","Explore symptoms through an educational flow."],life:["Healthy Living","Practical information for everyday well-being."],habits:["My Habits","Track small healthy actions."],tracker:["My Health","Record simple personal metrics locally."],library:["Health Library","Browse educational health topics."]};
+function go(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===id));document.getElementById("title").textContent=meta[id][0];document.getElementById("sub").textContent=meta[id][1];if(id==="symptoms")startSymptoms();window.scrollTo(0,0)}
+document.querySelectorAll("nav button").forEach(x=>x.onclick=()=>go(x.dataset.page));
+
+const qs=[
+["Where is the main discomfort?",["Upper abdomen","Lower abdomen","Around the navel","Not sure"]],
+["How long has it been happening?",["Less than a day","A few days","More than a week","It comes and goes"]],
+["Do you have other symptoms?",["Nausea or vomiting","Diarrhea","Fever","None of these"]],
+["How severe is it right now?",["Mild","Moderate","Severe","Very severe / getting worse"]]
+];let step=0,ans=[];
+function startSymptoms(){step=0;ans=[];question()}
+function question(){if(step>=qs.length)return result();let q=qs[step];document.getElementById("flow").innerHTML="<div class='question'><h3>"+(step+1)+". "+q[0]+"</h3></div>"+q[1].map(o=>"<button class='option' onclick="answer('"+o.replaceAll("'","")+"")">"+o+"</button>").join("")+"<p class='muted'>Step "+(step+1)+" of "+qs.length+"</p>"}
+function answer(v){ans[step++]=v;question()}
+function result(){let severe=ans[3]==="Severe"||ans[3]==="Very severe / getting worse", fever=ans[2]==="Fever";document.getElementById("flow").innerHTML="<h3>What your answers may suggest</h3><p>Abdominal discomfort can have many causes. These answers are not enough to identify a specific condition.</p><div class='info'><b>Educational possibilities:</b><br>Temporary digestive upset, irritation of the digestive tract, or an infection can all cause abdominal symptoms. The exact cause depends on the full clinical picture.</div>"+((severe||fever)?"<div class='warning'><b>Pay attention to warning signs.</b><br>Because you reported "+(severe?"significant or worsening pain":"fever")+", consider getting medical advice, especially if symptoms are severe, persistent or worsening.</div>":"")+"<h4>What you can do</h4><ul><li>Monitor how symptoms change.</li><li>Note when symptoms occur and what other symptoms appear.</li><li>Maintain normal fluids and meals as tolerated.</li><li>Seek professional medical advice if symptoms persist or concern you.</li></ul><button class='primary' onclick='startSymptoms()'>Start again</button>"}
+
+const topics=[
+["🫃","Stomach discomfort","Stomach discomfort can have many causes. Duration, location and accompanying symptoms matter."],
+["🤧","Cold symptoms","Runny nose, congestion, cough and sore throat can occur with several respiratory infections."],
+["😴","Sleep","Sleep supports physical and mental functioning. Consistent routines can support good sleep habits."],
+["💧","Hydration","Fluid needs vary by person and situation. Thirst, activity and heat can affect needs."],
+["🥗","Balanced eating","A varied diet can provide essential nutrients. Avoid unnecessary extreme restriction."],
+["🏃","Physical activity","Regular activity can support cardiovascular fitness, strength and general well-being."],
+["🧼","Hand hygiene","Hand washing at appropriate times is a simple way to reduce spread of many infections."],
+["🧘","Stress & well-being","Breaks, social connection and healthy routines can support everyday well-being."],
+["🚨","Warning signs","Severe, rapidly worsening or unusual symptoms should not be ignored."]
+];
+function renderLib(){let q=(document.getElementById("libSearch").value||"").toLowerCase();document.getElementById("libGrid").innerHTML=topics.filter(t=>(t[1]+" "+t[2]).toLowerCase().includes(q)).map(t=>"<div class='card library'><div class='icon'>"+t[0]+"</div><h3>"+t[1]+"</h3><p>"+t[2]+"</p></div>").join("")||"<div class='card'><h3>No topic found</h3><p>Try another keyword.</p></div>"}
+function searchLib(){go("library");document.getElementById("libSearch").value=document.getElementById("homeSearch").value;renderLib()}
+
+function data(){return JSON.parse(localStorage.getItem("healthly")||'{"water":0,"sleep":0,"activity":0,"habits":[false,false,false]}')}
+function save(d){localStorage.setItem("healthly",JSON.stringify(d));update()}
+function toast(m){let t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
+function water(){let d=data();d.water++;save(d);toast("Water logged 💧")}
+function saveSleep(){let v=parseFloat(document.getElementById("sleep").value);if(!isNaN(v)){let d=data();d.sleep=v;save(d);toast("Sleep saved 😴")}}
+function saveActivity(){let v=parseInt(document.getElementById("activity").value);if(!isNaN(v)){let d=data();d.activity=v;save(d);toast("Activity saved 🏃")}}
+function update(){let d=data(),n=d.habits.filter(Boolean).length;document.getElementById("ws").textContent=d.water+" / 8";document.getElementById("wb").style.width=Math.min(100,d.water/8*100)+"%";document.getElementById("ss").textContent=d.sleep+" h";document.getElementById("as").textContent=d.activity+" min";document.getElementById("hs").textContent=n+" / 3";document.getElementById("wv").textContent=d.water;document.getElementById("hb").textContent=n+" / 3";document.getElementById("hbar").style.width=n/3*100+"%";document.getElementById("hm").textContent=n===3?"All three completed today! 🎉":n===0?"Start with one small action.":(3-n)+" habit(s) left today.";document.querySelectorAll(".habit").forEach((x,i)=>x.checked=!!d.habits[i])}
+document.querySelectorAll(".habit").forEach((x,i)=>x.onchange=()=>{let d=data();d.habits[i]=x.checked;save(d)});
+renderLib();update();
+</script>
+</body>
+</html>
