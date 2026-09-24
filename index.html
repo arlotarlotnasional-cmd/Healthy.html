@@ -61,7 +61,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .modal{display:none;position:fixed;z-index:80;inset:0;background:rgba(10,20,25,.5);padding:20px;align-items:center;justify-content:center}.modal.show{display:flex}
 .modal-box{background:#fff;width:min(620px,100%);max-height:90vh;overflow:auto;border-radius:18px;padding:23px}.modal-head{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#eef2f0;border-radius:9px;padding:8px 11px}
 .footer{text-align:center;color:var(--muted);font-size:12px;margin:30px 0 10px}
-.mobile-menu{display:none}
+.mobile-menu{display:none}.chat-wrap{display:grid;grid-template-columns:1.6fr .8fr;gap:16px}.chat-box{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}.chat-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.chat-log{height:430px;overflow:auto;padding:18px;background:#f8faf9}.bubble{max-width:82%;padding:13px 15px;border-radius:15px;margin:9px 0;line-height:1.6}.bubble.user{margin-left:auto;background:var(--primary);color:#fff;border-bottom-right-radius:5px}.bubble.bot{background:#fff;border:1px solid var(--line);border-bottom-left-radius:5px}.chat-input{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}.chat-input textarea{flex:1;resize:none;border:1px solid var(--line);border-radius:11px;padding:11px;min-height:48px;outline:0}.chips{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.chip{border:1px solid var(--line);background:#fff;padding:8px 10px;border-radius:999px;font-size:12px}.source-list{display:grid;gap:8px}.source-list a{color:var(--primary-dark);font-weight:700;text-decoration:none}.ai-note{font-size:12px;color:var(--muted);line-height:1.55}@media(max-width:900px){.chat-wrap{grid-template-columns:1fr}}
 @media(max-width:900px){
  .sidebar{width:72px}.brand div:not(.logo),.nav button span{display:none}.brand{justify-content:center}.nav button{justify-content:center}
  .main{margin-left:72px;width:calc(100% - 72px);padding:18px}.hero{grid-template-columns:1fr}.hero-art{display:none}.g4{grid-template-columns:repeat(2,1fr)}
@@ -76,19 +76,20 @@ button:disabled{opacity:.5;cursor:not-allowed}
 <aside class="sidebar">
   <div class="brand"><div class="logo">♥</div><div><h1>Healthly</h1><small>Health Companion</small></div></div>
   <nav class="nav">
-    <button class="active" data-page="home">🏠 <span>Home</span></button>
-    <button data-page="symptoms">🔎 <span>Symptom Guide</span></button>
-    <button data-page="life">🥗 <span>Healthy Living</span></button>
-    <button data-page="habits">🎯 <span>My Habits</span></button>
-    <button data-page="tracker">📊 <span>My Health</span></button>
-    <button data-page="library">📚 <span>Health Library</span></button>
+    <button class="active" data-page="home">🏠 <span>Beranda</span></button>
+    <button data-page="assistant">💬 <span>Tanya Healthly</span></button>
+    <button data-page="symptoms">🔎 <span>Pahami Gejala</span></button>
+    <button data-page="life">🥗 <span>Hidup Sehat</span></button>
+    <button data-page="habits">🎯 <span>Kebiasaan Saya</span></button>
+    <button data-page="tracker">📊 <span>Catatan Kesehatan</span></button>
+    <button data-page="library">📚 <span>Perpustakaan</span></button>
   </nav>
 </aside>
 
 <main class="main">
 <div class="topbar">
-  <div><h2 id="pageTitle">Health Dashboard</h2><p id="pageSub">Small healthy choices can add up.</p></div>
-  <div class="tag">PROTOTYPE • EDUCATIONAL</div>
+  <div><h2 id="pageTitle">Dasbor Kesehatan</h2><p id="pageSub">Langkah kecil yang konsisten bisa berarti.</p></div>
+  <div class="tag">PROTOTIPE • EDUKASI</div>
 </div>
 
 <section id="home" class="page active">
@@ -104,24 +105,64 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
   <div class="section"><h3>Apa yang ingin kamu lakukan?</h3></div>
   <div class="grid g4">
+    <div class="card action" onclick="go('assistant')"><div class="icon">💬</div><h3>Tanya Healthly</h3><p>Ceritakan keluhan dengan bahasa sehari-hari dan dapatkan penjelasan edukatif.</p></div>
     <div class="card action" onclick="go('symptoms')"><div class="icon">🔎</div><h3>Pahami Gejala</h3><p>Jawab pertanyaan sederhana dan dapatkan informasi edukatif.</p></div>
     <div class="card action" onclick="go('life')"><div class="icon">🥗</div><h3>Healthy Living</h3><p>Pelajari pola hidup sehat yang realistis.</p></div>
     <div class="card action" onclick="go('habits')"><div class="icon">🎯</div><h3>Bangun Kebiasaan</h3><p>Buat kebiasaan sendiri dan pantau progres.</p></div>
-    <div class="card action" onclick="go('library')"><div class="icon">📚</div><h3>Health Library</h3><p>Cari dan baca topik kesehatan.</p></div>
+    <div class="card action" onclick="go('library')"><div class="icon">📚</div><h3>Perpustakaan Kesehatan</h3><p>Cari dan baca topik kesehatan.</p></div>
   </div>
 
-  <div class="section"><h3>Today's Snapshot</h3><button class="secondary" onclick="go('tracker')">Update data</button></div>
+  <div class="section"><h3>Ringkasan Hari Ini</h3><button class="secondary" onclick="go('tracker')">Perbarui data</button></div>
   <div class="grid g4">
-    <div class="card"><span class="muted">💧 Water</span><div class="stat" id="homeWater">0 / 8</div><div class="progress"><span id="homeWaterBar" style="width:0%"></span></div></div>
-    <div class="card"><span class="muted">😴 Sleep</span><div class="stat" id="homeSleep">0 h</div><p>Catatan terakhir</p></div>
-    <div class="card"><span class="muted">🏃 Activity</span><div class="stat" id="homeActivity">0 min</div><p>Aktivitas hari ini</p></div>
-    <div class="card"><span class="muted">🎯 Habits</span><div class="stat" id="homeHabits">0 / 3</div><p>Selesai hari ini</p></div>
+    <div class="card"><span class="muted">💧 Air Minum</span><div class="stat" id="homeWater">0 / 8</div><div class="progress"><span id="homeWaterBar" style="width:0%"></span></div></div>
+    <div class="card"><span class="muted">😴 Tidur</span><div class="stat" id="homeSleep">0 h</div><p>Catatan terakhir</p></div>
+    <div class="card"><span class="muted">🏃 Aktivitas</span><div class="stat" id="homeActivity">0 min</div><p>Aktivitas hari ini</p></div>
+    <div class="card"><span class="muted">🎯 Kebiasaan</span><div class="stat" id="homeHabits">0 / 3</div><p>Selesai hari ini</p></div>
   </div>
 
-  <div class="section"><h3>Quick Health Check</h3></div>
+  <div class="section"><h3>Cek Kesehatan Cepat</h3></div>
   <div class="card">
     <p>Kalau kamu sedang mengalami keluhan, gunakan Symptom Guide untuk memahami informasi umum terlebih dahulu.</p>
     <div style="margin-top:13px"><button class="primary" onclick="go('symptoms')">Mulai Symptom Guide →</button></div>
+  </div>
+</section>
+
+<section id="assistant" class="page">
+  <div class="card" style="margin-bottom:15px">
+    <span class="pill">ASISTEN DEMO • EDUKASI</span>
+    <h2 style="margin:10px 0 6px">Tanya Healthly 💬</h2>
+    <p>Ketikan keluhanmu dengan bahasa sehari-hari. Contoh: <b>“Aku sering sakit kepala dan kurang tidur, kira-kira apa yang perlu diperhatikan?”</b></p>
+    <div class="info"><b>Penting:</b> versi GitHub Pages ini memakai mesin respons demo berbasis aturan, bukan AI medis sungguhan. Jawaban bersifat edukatif, tidak mendiagnosis, dan tidak menggantikan tenaga kesehatan.</div>
+  </div>
+  <div class="chat-wrap">
+    <div class="chat-box">
+      <div class="chat-head"><div><b>Asisten Kesehatan</b><div class="ai-note">Membantu menjelaskan kemungkinan faktor, langkah aman, dan tanda bahaya.</div></div><button class="secondary" onclick="clearChat()">Bersihkan</button></div>
+      <div id="chatLog" class="chat-log"></div>
+      <div class="chips">
+        <button class="chip" onclick="usePrompt('Perut saya mual setelah makan')">Perut mual</button>
+        <button class="chip" onclick="usePrompt('Saya sering sakit kepala dan kurang tidur')">Sakit kepala</button>
+        <button class="chip" onclick="usePrompt('Saya batuk beberapa hari')">Batuk</button>
+        <button class="chip" onclick="usePrompt('Saya gampang capek')">Mudah lelah</button>
+        <button class="chip" onclick="usePrompt('Saya diare dan takut dehidrasi')">Diare</button>
+      </div>
+      <div class="chat-input"><textarea id="chatInput" placeholder="Ceritakan keluhanmu dengan bahasa sehari-hari..."></textarea><button class="primary" onclick="sendChat()">Kirim</button></div>
+    </div>
+    <div class="card">
+      <h3>Bagaimana Healthly menjawab?</h3>
+      <div class="result-list">
+        <div class="result-item"><b>1. Kenali topik</b><br><span class="muted">Mencocokkan kata kunci umum dari pesan.</span></div>
+        <div class="result-item"><b>2. Jelaskan kemungkinan</b><br><span class="muted">Bukan diagnosis; hanya faktor yang dapat berkaitan.</span></div>
+        <div class="result-item"><b>3. Beri langkah praktis</b><br><span class="muted">Fokus pada tindakan rendah risiko dan pemantauan.</span></div>
+        <div class="result-item"><b>4. Tanda bahaya</b><br><span class="muted">Jika ada red flag, sarankan mencari bantuan medis.</span></div>
+      </div>
+      <h4>Sumber rujukan</h4>
+      <div class="source-list">
+        <a href="https://www.who.int/health-topics/diarrhoea" target="_blank" rel="noopener">WHO — Diarrhoeal disease</a>
+        <a href="https://medlineplus.gov/symptoms.html" target="_blank" rel="noopener">MedlinePlus — Symptoms</a>
+        <a href="https://www.nhs.uk/symptoms/stomach-ache/" target="_blank" rel="noopener">NHS — Stomach ache</a>
+        <a href="https://www.who.int/news-room/fact-sheets/detail/drinking-water" target="_blank" rel="noopener">WHO — Drinking-water</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -176,23 +217,23 @@ button:disabled{opacity:.5;cursor:not-allowed}
       <button class="secondary" onclick="resetWater()" style="margin-left:5px">Reset</button>
     </div>
     <div class="card">
-      <h3>😴 Sleep</h3><p class="muted">Catat durasi tidur terakhir.</p>
+      <h3>😴 Tidur</h3><p class="muted">Catat durasi tidur terakhir.</p>
       <input class="form-input" id="sleepInput" type="number" min="0" max="24" step=".5" placeholder="Jam tidur">
       <button class="primary" onclick="saveSleep()" style="margin-top:10px">Simpan</button>
     </div>
     <div class="card">
-      <h3>🏃 Activity</h3><p class="muted">Catat durasi aktivitas fisik.</p>
+      <h3>🏃 Aktivitas</h3><p class="muted">Catat durasi aktivitas fisik.</p>
       <input class="form-input" id="activityInput" type="number" min="0" placeholder="Menit">
       <button class="primary" onclick="saveActivity()" style="margin-top:10px">Simpan</button>
     </div>
   </div>
-  <div class="section"><h3>Health Notes</h3></div>
+  <div class="section"><h3>Catatan Kesehatan</h3></div>
   <div class="card">
     <p class="muted">Catatan pribadi (disimpan hanya di browser ini).</p>
     <textarea id="healthNotes" placeholder="Contoh: hari ini merasa lebih segar setelah tidur cukup..."></textarea>
     <button class="primary" onclick="saveNotes()" style="margin-top:10px">Simpan catatan</button>
   </div>
-  <div class="info"><b>Privacy prototype:</b> data tracker dan notes menggunakan localStorage di perangkat/browser ini. Belum ada server account atau database.</div>
+  <div class="info"><b>Privasi prototipe:</b> data tracker dan notes menggunakan localStorage di perangkat/browser ini. Belum ada server account atau database.</div>
 </section>
 
 <section id="library" class="page">
@@ -225,12 +266,13 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 <script>
 const pageMeta={
- home:["Health Dashboard","Small healthy choices can add up."],
- symptoms:["Symptom Guide","Explore symptoms through an educational flow."],
- life:["Healthy Living","Practical information for everyday well-being."],
- habits:["My Habits","Build and track small healthy actions."],
- tracker:["My Health","Record simple personal metrics locally."],
- library:["Health Library","Browse educational health topics."]
+ assistant:['Tanya Healthly','Ceritakan keluhanmu dengan bahasa sehari-hari.'],
+ home:["Dasbor Kesehatan","Langkah kecil yang konsisten bisa berarti."],
+ symptoms:["Pahami Gejala","Eksplorasi gejala melalui panduan edukatif."],
+ life:["Hidup Sehat","Informasi praktis untuk keseharian."],
+ habits:["Kebiasaan Saya","Bangun dan pantau kebiasaan sehat."],
+ tracker:["Catatan Kesehatan","Catat beberapa data sederhana secara lokal."],
+ library:["Perpustakaan Kesehatan","Browse educational health topics."]
 };
 
 function go(id){
@@ -275,10 +317,10 @@ function updateAll(){
  document.getElementById("healthNotes").value=d.notes||"";
  renderHabits();
 }
-function addWater(){let d=getData();d.water++;saveData(d);toast("Water logged 💧")}
-function resetWater(){let d=getData();d.water=0;saveData(d);toast("Water di-reset")}
-function saveSleep(){let v=parseFloat(document.getElementById("sleepInput").value);if(isNaN(v)||v<0||v>24){toast("Masukkan durasi yang valid");return}let d=getData();d.sleep=v;saveData(d);toast("Sleep tersimpan 😴")}
-function saveActivity(){let v=parseInt(document.getElementById("activityInput").value);if(isNaN(v)||v<0){toast("Masukkan menit yang valid");return}let d=getData();d.activity=v;saveData(d);toast("Activity tersimpan 🏃")}
+function addWater(){let d=getData();d.water++;saveData(d);toast("Air minum dicatat 💧")}
+function resetWater(){let d=getData();d.water=0;saveData(d);toast("Air minum di-reset")}
+function saveSleep(){let v=parseFloat(document.getElementById("sleepInput").value);if(isNaN(v)||v<0||v>24){toast("Masukkan durasi yang valid");return}let d=getData();d.sleep=v;saveData(d);toast("Tidur tersimpan 😴")}
+function saveActivity(){let v=parseInt(document.getElementById("activityInput").value);if(isNaN(v)||v<0){toast("Masukkan menit yang valid");return}let d=getData();d.activity=v;saveData(d);toast("Aktivitas tersimpan 🏃")}
 function saveNotes(){let d=getData();d.notes=document.getElementById("healthNotes").value;saveData(d);toast("Catatan tersimpan 📝")}
 
 function renderHabits(){
@@ -300,6 +342,22 @@ function addHabit(){
 function deleteHabit(i){if(!confirm("Hapus habit ini?"))return;let d=getData();d.habits.splice(i,1);saveData(d);toast("Habit dihapus")}
 function closeModal(id){document.getElementById(id).classList.remove("show")}
 function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+const demoResponses=[
+ {keys:['perut','mual','maag','kembung'],title:'Keluhan perut / mual',summary:'Keluhan seperti mual, kembung, atau rasa tidak nyaman di perut bisa berkaitan dengan berbagai hal. Chat saja tidak cukup untuk memastikan penyebab.',factors:['pola makan atau makanan tertentu yang memicu keluhan','gangguan pencernaan sementara','infeksi saluran cerna, terutama bila disertai diare atau muntah'],steps:['cukup minum sedikit-sedikit tetapi sering bila terasa mual','pilih makanan yang lebih ringan dan perhatikan apakah ada makanan tertentu yang memperburuk keluhan','catat kapan keluhan muncul dan gejala penyertanya'],red:['nyeri perut sangat berat atau muncul mendadak','muntah darah, tinja berdarah/hitam','sulit bernapas, pingsan, atau kondisi memburuk cepat']},
+ {keys:['sakit kepala','pusing','kepala'],title:'Sakit kepala / pusing',summary:'Sakit kepala memiliki banyak kemungkinan penyebab. Pola, durasi, gejala penyerta, tidur, dan kondisi tubuh perlu diperhatikan.',factors:['kurang tidur atau perubahan rutinitas','dehidrasi atau kurang asupan cairan','stres atau ketegangan'],steps:['istirahat di tempat yang nyaman','perhatikan asupan cairan dan pola tidur','catat kapan sakit kepala muncul, berapa lama, dan gejala lain yang menyertai'],red:['sakit kepala muncul sangat tiba-tiba dan sangat berat','disertai gangguan bicara, penglihatan, gerakan, keseimbangan, atau kebingungan','disertai demam tinggi dan leher kaku atau muntah berulang']},
+ {keys:['batuk','pilek','tenggorokan'],title:'Batuk / keluhan pernapasan',summary:'Batuk dapat terjadi pada berbagai kondisi saluran pernapasan. Lama batuk dan gejala penyerta membantu menentukan apakah perlu dinilai lebih lanjut.',factors:['infeksi saluran pernapasan','iritasi dari udara, asap, atau lingkungan','alergi pada sebagian orang'],steps:['cukup istirahat dan perhatikan cairan','hindari asap rokok dan iritan yang membuat batuk makin parah','catat lama batuk dan apakah ada demam atau sesak'],red:['sulit bernapas','nyeri dada berat','batuk berdarah atau kondisi memburuk cepat']},
+ {keys:['capek','lelah','kelelahan','ngantuk'],title:'Mudah lelah',summary:'Rasa lelah bisa dipengaruhi banyak faktor dan tidak selalu berarti ada penyakit tertentu.',factors:['kurang tidur atau jadwal tidur tidak teratur','aktivitas fisik atau beban kegiatan','stres dan kualitas istirahat'],steps:['usahakan jadwal tidur yang konsisten','beri jeda istirahat di antara aktivitas','catat apakah rasa lelah menetap dan apakah ada gejala lain'],red:['kelelahan sangat berat dengan pingsan, sesak, nyeri dada, kebingungan, atau kondisi yang memburuk cepat']},
+ {keys:['diare','mencret'],title:'Diare',summary:'Diare sering berkaitan dengan gangguan atau infeksi saluran cerna. Hal yang penting diperhatikan adalah kehilangan cairan dan tanda dehidrasi.',factors:['infeksi saluran cerna','makanan atau air yang terkontaminasi','faktor lain yang memengaruhi pencernaan'],steps:['utamakan penggantian cairan; larutan oralit dapat digunakan sesuai petunjuk kemasan','tetap perhatikan asupan makanan yang dapat ditoleransi tubuh','perhatikan jumlah buang air dan tanda dehidrasi'],red:['darah pada tinja','tanda dehidrasi atau sulit minum','diare menetap atau kondisi memburuk']},
+ {keys:['sembelit','susah bab','susah buang air besar'],title:'Sembelit',summary:'Sembelit dapat berkaitan dengan perubahan pola makan, kurang aktivitas, atau kebiasaan buang air besar.',factors:['kurang asupan serat atau cairan','kurang bergerak','perubahan rutinitas'],steps:['cukupi cairan sesuai kebutuhan tubuh','perhatikan makanan berserat dan aktivitas yang sesuai kemampuan','jangan menahan keinginan buang air besar'],red:['darah pada tinja','nyeri perut berat','perubahan kebiasaan buang air besar yang menetap atau disertai penurunan berat badan tanpa disengaja']}
+];
+function addBubble(text,type){const log=document.getElementById('chatLog');const div=document.createElement('div');div.className='bubble '+type;div.innerHTML=text;log.appendChild(div);log.scrollTop=log.scrollHeight}
+function formatResponse(r){return `<b>${r.title}</b><p>${r.summary}</p><h4>Kemungkinan faktor</h4><ul>${r.factors.map(x=>`<li>${x}</li>`).join('')}</ul><h4>Yang bisa diperhatikan</h4><ul>${r.steps.map(x=>`<li>${x}</li>`).join('')}</ul><div class="warning"><b>Segera cari bantuan medis jika:</b><ul>${r.red.map(x=>`<li>${x}</li>`).join('')}</ul></div><p class="ai-note">Ini bukan diagnosis. Jika keluhan menetap, berulang, atau mengganggu aktivitas, pertimbangkan konsultasi dengan tenaga kesehatan. Jika kamu masih di bawah umur, ceritakan keluhan yang mengkhawatirkan kepada orang tua/wali atau orang dewasa tepercaya.</p>`}
+function getDemoResponse(q){const t=q.toLowerCase();let best=null,score=0;for(const r of demoResponses){const s=r.keys.reduce((n,k)=>n+(t.includes(k)?1:0),0);if(s>score){score=s;best=r}}return best||{title:'Aku belum menemukan topik yang cocok',summary:'Coba jelaskan gejalanya lebih spesifik, misalnya “sakit kepala sejak kemarin”, “batuk beberapa hari”, atau “diare dan sulit minum”.',factors:['durasi keluhan','gejala lain yang menyertai','hal yang membuat keluhan membaik atau memburuk'],steps:['gunakan Pahami Gejala atau Perpustakaan untuk topik yang lebih spesifik'],red:['gejala sangat berat, memburuk cepat, sulit bernapas, pingsan, perdarahan, atau keadaan darurat lainnya']}}
+function sendChat(){const el=document.getElementById('chatInput');const q=el.value.trim();if(!q)return;addBubble(escapeHTML(q),'user');el.value='';setTimeout(()=>addBubble(formatResponse(getDemoResponse(q)),'bot'),180)}
+function usePrompt(q){document.getElementById('chatInput').value=q;sendChat()}
+function clearChat(){document.getElementById('chatLog').innerHTML='';welcomeChat()}
+function welcomeChat(){addBubble('Halo! Aku Healthly 👋<br>Ceritakan keluhanmu dengan bahasa sehari-hari. Aku akan membantu menjelaskan kemungkinan faktor, langkah yang bisa diperhatikan, dan tanda bahaya — bukan mendiagnosis.','bot')}
 
 const symptomData={
  stomach:{
@@ -426,7 +484,7 @@ function resetApp(){
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){document.querySelectorAll(".modal.show").forEach(m=>m.classList.remove("show"))}});
 document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("show")}));
 
-renderLibrary();updateAll();showCategories();
+renderLibrary();updateAll();showCategories();welcomeChat();
 </script>
 </body>
 </html>
