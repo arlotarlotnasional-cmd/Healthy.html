@@ -126,10 +126,77 @@ body{overflow-x:hidden}.mobile-menu{display:none}
 .health-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .health-grid .result-item{height:100%}
 @media(max-width:700px){.response-grid,.health-grid{grid-template-columns:1fr}.hero:after{display:none}}
+
+/* ===== LOGIN GATE ===== */
+body.auth-locked{overflow:hidden}
+.auth-screen{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#edf7f4,#f7faf9)}
+.auth-screen.hidden{display:none}
+.auth-card{width:min(430px,100%);background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:0 20px 60px rgba(23,32,51,.12)}
+.auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}.auth-logo{width:48px;height:48px;border-radius:15px;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:23px}
+.auth-card h2{margin:0 0 7px;font-size:28px}.auth-card>p{margin:0 0 22px;color:var(--muted);line-height:1.55}
+.auth-field{margin:14px 0}.auth-field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}.auth-field input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;outline:0;background:#fbfcfc}.auth-field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(47,125,109,.10)}
+.auth-options{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:13px 0 18px;font-size:12px;color:var(--muted)}.auth-options label{display:flex;align-items:center;gap:7px;cursor:pointer}.auth-options input{accent-color:var(--primary)}
+.auth-button{width:100%;border:0;border-radius:12px;padding:13px 16px;background:var(--primary-dark);color:#fff;font-weight:800}.auth-button:hover{filter:brightness(1.05)}
+.auth-message{min-height:20px;margin:12px 0 0;font-size:12px;text-align:center}.auth-message.error{color:var(--danger)}.auth-message.success{color:var(--primary-dark)}
+.auth-footer{margin-top:18px;text-align:center;font-size:11px;color:var(--muted)}
+.user-actions{display:flex;align-items:center;gap:8px}.user-name{font-size:12px;font-weight:800;background:var(--soft);color:var(--primary-dark);padding:7px 10px;border-radius:999px}.logout-btn{border:1px solid var(--line);background:#fff;color:var(--text);padding:8px 11px;border-radius:10px;font-size:12px;font-weight:800}.logout-btn:hover{background:#f7faf8}
+.app.auth-hidden{display:none}
+@media(max-width:520px){.auth-card{padding:23px;border-radius:20px}.user-name{display:none}.auth-options{align-items:flex-start}}
 </style>
+
+<style id="healthly-v2-polish">
+:focus-visible{outline:3px solid rgba(246,205,41,.9);outline-offset:3px}
+.hly-v2-panel{margin:18px 0;padding:18px;border:1px solid rgba(22,42,78,.12);border-radius:18px;background:linear-gradient(135deg,rgba(246,205,41,.10),rgba(22,42,78,.04))}
+.hly-v2-panel h3{margin:0 0 8px}.hly-v2-meta{font-size:.9rem;opacity:.78;line-height:1.5}
+.hly-v2-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.hly-v2-btn{border:1px solid rgba(22,42,78,.22);background:#fff;color:#162a4e;border-radius:10px;padding:9px 13px;cursor:pointer;font:inherit}
+.hly-v2-note{margin-top:10px;font-size:.82rem;opacity:.72}
+@media(max-width:600px){.hly-v2-actions{display:grid;grid-template-columns:1fr}.hly-v2-btn{width:100%}}
+
+/* ===== MAXIMIZED HEALTH EDUCATION LIBRARY ===== */
+.disease-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.disease-toolbar .filter-btn{border:1px solid var(--line);background:#fff;color:var(--text);padding:9px 12px;border-radius:999px;font-weight:700}
+.disease-toolbar .filter-btn.active,.disease-toolbar .filter-btn:hover{background:var(--soft);color:var(--primary-dark);border-color:#bcded4}
+.disease-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
+.disease-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 7px 25px rgba(23,32,51,.04);transition:.2s}
+.disease-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.disease-card-top{padding:18px 18px 12px}
+.disease-icon{font-size:30px;float:right}
+.disease-card h3{margin:0 0 7px;font-size:18px}
+.disease-card p{color:var(--muted);line-height:1.6;margin:0}
+.disease-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.disease-card-bottom{padding:12px 18px;border-top:1px solid var(--line);background:#fbfcfc}
+.disease-more{border:0;background:transparent;color:var(--primary-dark);font-weight:800;padding:6px 0}
+.disease-modal-title{font-size:26px;margin:4px 0 7px}
+.disease-definition{background:var(--soft);border-left:4px solid var(--primary);padding:15px;border-radius:10px;line-height:1.7;margin:15px 0}
+.detail-section{padding:14px 0;border-top:1px solid var(--line)}
+.detail-section h4{margin:0 0 7px}
+.detail-section p,.detail-section li{line-height:1.7;color:#445064}
+.detail-section ul{padding-left:21px;margin:7px 0}
+.detail-warning{background:var(--danger-soft);border-left:4px solid var(--danger);padding:14px;border-radius:10px;line-height:1.65;margin-top:15px}
+.detail-source{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.55}
+@media(max-width:900px){.disease-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.disease-grid{grid-template-columns:1fr}}
+
+</style>
+
 </head>
-<body>
-<div class="app">
+<body class="auth-locked">
+<div class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div class="auth-brand"><div class="auth-logo">♥</div><div><strong style="font-size:19px">Healthly</strong><div style="font-size:11px;color:var(--muted)">Teman Kesehatan Digital</div></div></div>
+    <h2>Mulai menggunakan Healthly</h2>
+    <p>Masukkan nama kamu untuk membuka dasbor dan menyimpan catatanmu di perangkat ini.</p>
+    <form id="authForm" autocomplete="off">
+      <div class="auth-field"><label for="authName">Nama kamu</label><input id="authName" name="name" autocomplete="name" maxlength="60" placeholder="Masukkan nama kamu" required></div>
+      <div class="auth-options"><label><input type="checkbox" id="authRemember"> Ingat nama di perangkat ini</label><span>Data lokal</span></div>
+      <button class="auth-button" type="submit">Mulai Healthly →</button>
+      <div class="auth-message" id="authMessage" aria-live="polite"></div>
+    </form>
+    <div class="auth-footer">Healthly adalah platform edukasi kesehatan, bukan alat diagnosis.</div>
+  </div>
+</div>
+<div class="app auth-hidden" id="app">
 <button class="mobile-menu" id="mobileMenu" aria-label="Buka menu">☰</button><div class="nav-overlay" id="navOverlay"></div>
 <aside class="sidebar">
   <div class="brand"><div class="logo">♥</div><div><h1>Healthly</h1><small>Teman Kesehatan</small></div></div>
@@ -152,7 +219,7 @@ body{overflow-x:hidden}.mobile-menu{display:none}
 <main class="main">
 <div class="topbar">
   <div><h2 id="pageTitle">Dasbor Kesehatan</h2><p id="pageSub">Langkah kecil yang konsisten bisa berarti.</p></div>
-  <div class="tag">PROTOTIPE • EDUKASI</div>
+  <div class="user-actions"><span class="user-name" id="userName">Pengguna</span><button class="logout-btn" id="logoutBtn" type="button">Keluar</button><div class="tag">EDUKASI KESEHATAN</div></div>
 </div>
 
 <section id="home" class="page active">
@@ -199,10 +266,10 @@ body{overflow-x:hidden}.mobile-menu{display:none}
 
 <section id="assistant" class="page">
   <div class="card" style="margin-bottom:15px">
-    <span class="pill">ASISTEN DEMO • EDUKASI</span>
+    <span class="pill">ASISTEN EDUKASI</span>
     <h2 style="margin:10px 0 6px">Tanya Healthly 💬</h2>
     <p>Ketik keluhanmu dengan bahasa sehari-hari. Kamu tidak perlu memakai istilah medis. Contoh: <b>“Mata aku berair dan perih sejak tadi pagi”</b> atau <b>“Aku punya asma dan sekarang napas terasa sesak”</b>.</p>
-    <div class="info"><b>Penting:</b> versi GitHub Pages ini memakai mesin respons demo berbasis aturan, bukan AI medis sungguhan. Jawaban bersifat edukatif, tidak mendiagnosis, dan tidak menggantikan tenaga kesehatan.</div>
+    <div class="info"><b>Penting:</b> Versi ini menggunakan mesin respons berbasis aturan untuk membantu menjelaskan topik kesehatan secara edukatif; ini bukan diagnosis medis. Jawaban bersifat edukatif, tidak mendiagnosis, dan tidak menggantikan tenaga kesehatan.</div>
   </div>
   <div class="card" style="margin-bottom:15px">
     <h3 style="margin-top:0">Contoh topik yang bisa dipahami</h3>
@@ -250,7 +317,7 @@ body{overflow-x:hidden}.mobile-menu{display:none}
   <div class="card symptom-box">
     <span class="pill">EDUKASI — BUKAN DIAGNOSIS</span>
     <h2>Panduan Gejala</h2>
-    <p class="muted">Pilih kategori keluhan untuk memulai. Healthly memeriksa tanda bahaya lebih dulu, lalu memberikan edukasi. Sistem tidak menetapkan diagnosis.</p><div class="notice-strip" style="margin-top:14px"><b>Knowledge Engine v2:</b><span>10 alur gejala interaktif + master kondisi bertingkat + red flags + sumber rujukan.</span></div>
+    <p class="muted">Pilih kategori keluhan untuk memulai. Prototype ini memberikan kemungkinan umum dan tanda peringatan, bukan diagnosis.</p>
     <div id="symptomCategory" style="margin-top:20px"></div>
     <div id="symptomFlow"></div>
   </div>
@@ -292,90 +359,24 @@ body{overflow-x:hidden}.mobile-menu{display:none}
   <div class="card">
     <span class="pill">EDUKASI OBAT • BUKAN RESEP</span>
     <h2 style="margin:10px 0 6px">Kenali Obat 💊</h2>
-    <p>Bagian ini membantu memahami nama zat aktif, kegunaan umum, cara kerja secara sederhana, perhatian, dan kapan perlu meminta bantuan. Healthly tidak mendiagnosis, memilihkan obat, menghitung dosis pribadi, atau menggantikan dokter/apoteker.</p>
-    <div class="notice-strip" style="margin-top:15px"><b>⚠️ Penting:</b><span>Nama merek dapat berbeda walaupun zat aktifnya sama. Informasi pada kemasan produk tetap menjadi rujukan utama. Untuk pengguna remaja, libatkan orang tua/wali atau apoteker jika ada keraguan.</span></div>
+    <p>Pahami fungsi umum obat atau zat aktif, perbedaannya, dan hal yang perlu diperhatikan. Healthly tidak menentukan obat yang harus diminum dan tidak menghitung dosis pribadi.</p>
+    <div class="notice-strip" style="margin-top:15px"><b>⚠️ Penting:</b><span>Nama merek bisa berbeda, sementara zat aktifnya dapat sama. Selalu cek label produk dan tanyakan kepada orang tua/wali atau apoteker jika ragu.</span></div>
   </div>
-
-  <div class="section"><h3>📖 Cara membaca informasi obat</h3></div>
+  <div class="section"><h3>Contoh informasi obat</h3><span class="badge-safe">✓ Edukatif</span></div>
   <div class="grid g2">
-    <div class="card"><h3>Nama & zat aktif</h3><p>Nama dagang adalah nama produk, sedangkan zat aktif adalah bahan yang memberikan efek obat. Dua merek berbeda dapat memiliki zat aktif yang sama.</p></div>
-    <div class="card"><h3>Kegunaan umum</h3><p>Menjelaskan kondisi atau keluhan yang secara umum berkaitan dengan obat tersebut. Ini bukan berarti obat tersebut pasti cocok untuk setiap orang.</p></div>
-    <div class="card"><h3>Perhatian</h3><p>Setiap obat mempunyai batasan, interaksi, efek samping, atau kondisi tertentu yang perlu diperhatikan. Informasi lengkap ada pada label dan informasi resmi produk.</p></div>
-    <div class="card"><h3>Periksa produk</h3><p>BPOM menyediakan basis data untuk memeriksa produk obat berdasarkan nama, nomor registrasi, komposisi, bentuk sediaan, dan statusnya.</p></div>
+    <div class="card drug-card"><span class="pill">ANALGESIK / ANTIPIRETIK</span><h3>Paracetamol</h3><p><b>Kegunaan umum:</b> membantu meredakan nyeri dan menurunkan demam.</p><h4>Perhatian</h4><p>Ikuti petunjuk produk. Perhatikan kandungan obat kombinasi agar tidak tanpa sengaja menggandakan zat aktif yang sama.</p><div class="source-note" style="margin-top:12px">Sumber: MedlinePlus & FDA.</div></div>
+    <div class="card drug-card"><span class="pill">NSAID</span><h3>Ibuprofen</h3><p><b>Kegunaan umum:</b> membantu meredakan nyeri, demam, dan peradangan tertentu.</p><h4>Perhatian</h4><p>NSAID memiliki perhatian dan kontraindikasi tertentu. Ikuti label produk dan tanyakan kepada apoteker/tenaga kesehatan bila ragu.</p><div class="source-note" style="margin-top:12px">Sumber: MedlinePlus.</div></div>
   </div>
-
-  <div class="section"><h3>🌡️ Demam & nyeri</h3><span class="badge-safe">✓ Edukatif</span></div>
-  <div class="grid g2">
-    <div class="card drug-card"><span class="pill">ANALGESIK / ANTIPIRETIK</span><h3>Paracetamol</h3><p><b>Apa itu?</b> Zat aktif yang termasuk analgesik dan antipiretik.</p><p><b>Kegunaan umum:</b> membantu meredakan nyeri dan menurunkan demam.</p><p><b>Cara kerja sederhana:</b> membantu mengurangi pembentukan sinyal kimia yang berkaitan dengan rasa nyeri dan pengaturan suhu tubuh.</p><p><b>Perhatian:</b> penggunaan berlebihan dapat menyebabkan kerusakan hati. Perhatikan juga obat kombinasi yang mungkin mengandung paracetamol.</p><p><b>Kapan perlu bantuan?</b> Bila demam/nyeri menetap, memburuk, atau disertai tanda bahaya, mintalah bantuan orang dewasa dan tenaga kesehatan.</p><div class="source-note">Sumber edukasi: Kementerian Kesehatan RI, MedlinePlus.</div></div>
-    <div class="card drug-card"><span class="pill">NSAID</span><h3>Ibuprofen</h3><p><b>Apa itu?</b> Obat golongan NSAID (antiinflamasi nonsteroid).</p><p><b>Kegunaan umum:</b> membantu meredakan nyeri, demam, dan peradangan tertentu.</p><p><b>Cara kerja sederhana:</b> menghambat enzim yang berperan dalam pembentukan prostaglandin, yaitu senyawa yang ikut berperan pada nyeri dan peradangan.</p><p><b>Perhatian:</b> dapat memiliki risiko pada lambung, ginjal, dan kondisi tertentu. Tidak semua orang cocok menggunakan NSAID.</p><p><b>Kapan perlu bantuan?</b> Jika muncul keluhan yang berat atau reaksi yang mengkhawatirkan, segera beri tahu orang dewasa dan cari bantuan tenaga kesehatan.</p><div class="source-note">Sumber edukasi: MedlinePlus, Kementerian Kesehatan RI.</div></div>
-    <div class="card drug-card"><span class="pill">NSAID • EDUKASI</span><h3>Asam mefenamat</h3><p><b>Apa itu?</b> Obat antiinflamasi nonsteroid yang digunakan untuk membantu mengurangi nyeri.</p><p><b>Kegunaan umum:</b> pereda nyeri pada kondisi tertentu sesuai penilaian tenaga kesehatan.</p><p><b>Cara kerja sederhana:</b> mengurangi pembentukan prostaglandin yang berperan dalam nyeri dan peradangan.</p><p><b>Perhatian:</b> termasuk obat yang memerlukan perhatian terhadap kondisi pengguna dan interaksi obat. Jangan menjadikannya pilihan sendiri hanya karena keluhannya terasa serupa.</p><p><b>Status edukasi:</b> informasi ini tidak menggantikan pemeriksaan atau arahan tenaga kesehatan.</p><div class="source-note">Sumber edukasi: Kementerian Kesehatan RI; informasi produk resmi.</div></div>
-  </div>
-
-  <div class="section"><h3>🤧 Flu, batuk, pilek & alergi</h3><span class="badge-safe">✓ Edukatif</span></div>
-  <div class="grid g2">
-    <div class="card drug-card"><span class="pill">ANTIHISTAMIN</span><h3>Cetirizine</h3><p><b>Apa itu?</b> Antihistamin yang membantu mengurangi gejala alergi.</p><p><b>Kegunaan umum:</b> gejala seperti bersin, hidung berair, gatal, atau mata berair yang berkaitan dengan alergi.</p><p><b>Cara kerja sederhana:</b> menghambat kerja histamin, zat yang terlibat dalam reaksi alergi.</p><p><b>Perhatian:</b> pada sebagian orang dapat menyebabkan kantuk. Kondisi pengguna dan obat lain yang digunakan perlu diperhatikan.</p><p><b>Catatan:</b> alergi berat memerlukan pertolongan medis dan tidak boleh ditangani hanya dengan membaca informasi obat.</p><div class="source-note">Sumber edukasi: MedlinePlus, Kementerian Kesehatan RI.</div></div>
-    <div class="card drug-card"><span class="pill">ANTIHISTAMIN</span><h3>Loratadine</h3><p><b>Apa itu?</b> Antihistamin yang digunakan untuk membantu mengurangi gejala alergi.</p><p><b>Kegunaan umum:</b> bersin, hidung berair, gatal, dan gejala alergi tertentu.</p><p><b>Cara kerja sederhana:</b> menghambat efek histamin pada tubuh.</p><p><b>Perhatian:</b> tetap perhatikan label produk dan kondisi pengguna. Jangan menganggap semua keluhan pilek sebagai alergi.</p><div class="source-note">Sumber edukasi: MedlinePlus, Kementerian Kesehatan RI.</div></div>
-    <div class="card drug-card"><span class="pill">ANTIHISTAMIN</span><h3>Fexofenadine</h3><p><b>Apa itu?</b> Antihistamin yang digunakan untuk gejala alergi tertentu.</p><p><b>Kegunaan umum:</b> membantu mengurangi gejala seperti bersin, hidung berair, dan gatal yang berhubungan dengan alergi.</p><p><b>Cara kerja sederhana:</b> menghambat efek histamin.</p><p><b>Perhatian:</b> tetap cek label produk dan tanyakan kepada apoteker bila ada keraguan tentang kecocokan.</p><div class="source-note">Sumber edukasi: MedlinePlus.</div></div>
-    <div class="card drug-card"><span class="pill">EKSPEKTORAN</span><h3>Guaifenesin</h3><p><b>Apa itu?</b> Zat aktif yang termasuk ekspektoran.</p><p><b>Kegunaan umum:</b> membantu mengencerkan lendir sehingga lebih mudah dikeluarkan saat batuk berdahak.</p><p><b>Cara kerja sederhana:</b> membantu meningkatkan kandungan air pada lendir saluran napas.</p><p><b>Perhatian:</b> batuk mempunyai banyak penyebab. Bila berlangsung lama, berat, atau disertai tanda bahaya, perlu dinilai tenaga kesehatan.</p><div class="source-note">Sumber edukasi: informasi obat resmi/MedlinePlus.</div></div>
-    <div class="card drug-card"><span class="pill">MUKOLITIK</span><h3>Bromhexine</h3><p><b>Apa itu?</b> Zat aktif mukolitik yang memengaruhi kekentalan lendir.</p><p><b>Kegunaan umum:</b> membantu pengelolaan lendir/dahak pada kondisi saluran napas tertentu.</p><p><b>Cara kerja sederhana:</b> membantu membuat lendir lebih encer sehingga lebih mudah dikeluarkan.</p><p><b>Perhatian:</b> bukan obat untuk semua jenis batuk. Gunakan informasi pada label dan minta bantuan tenaga kesehatan bila gejala menetap.</p><div class="source-note">Sumber edukasi: informasi produk resmi.</div></div>
-    <div class="card drug-card"><span class="pill">MUKOLITIK</span><h3>Acetylcysteine</h3><p><b>Apa itu?</b> Zat aktif yang dapat digunakan sebagai mukolitik pada kondisi tertentu.</p><p><b>Kegunaan umum:</b> membantu mengencerkan dahak yang kental.</p><p><b>Cara kerja sederhana:</b> memecah ikatan tertentu pada komponen lendir sehingga lendir menjadi lebih encer.</p><p><b>Perhatian:</b> keluhan pernapasan dapat mempunyai penyebab yang berbeda. Sesak berat atau memburuk membutuhkan pertolongan medis.</p><div class="source-note">Sumber edukasi: informasi produk resmi.</div></div>
-  </div>
-
-  <div class="section"><h3>🍽️ Lambung</h3><span class="badge-safe">✓ Edukatif</span></div>
-  <div class="grid g2">
-    <div class="card drug-card"><span class="pill">ANTASIDA</span><h3>Antasida</h3><p><b>Apa itu?</b> Kelompok obat yang bekerja dengan menetralkan sebagian asam lambung.</p><p><b>Kegunaan umum:</b> membantu meredakan keluhan yang berkaitan dengan kelebihan asam lambung pada kondisi tertentu.</p><p><b>Cara kerja sederhana:</b> zat basa di dalam antasida bereaksi dengan asam lambung sehingga keasamannya berkurang.</p><p><b>Perhatian:</b> beberapa antasida dapat memengaruhi penyerapan obat lain. Keluhan lambung yang berulang perlu dicari penyebabnya.</p><div class="source-note">Sumber edukasi: informasi produk resmi.</div></div>
-    <div class="card drug-card"><span class="pill">PENEKAN ASAM</span><h3>Omeprazole</h3><p><b>Apa itu?</b> Obat golongan proton pump inhibitor (PPI).</p><p><b>Kegunaan umum:</b> mengurangi produksi asam lambung pada kondisi tertentu.</p><p><b>Cara kerja sederhana:</b> menghambat pompa proton pada sel penghasil asam di lambung.</p><p><b>Perhatian:</b> penggunaannya bergantung pada penyebab keluhan dan kondisi pengguna. Keluhan yang terus berulang sebaiknya dibahas dengan tenaga kesehatan.</p><div class="source-note">Sumber edukasi: MedlinePlus/informasi produk resmi.</div></div>
-    <div class="card drug-card"><span class="pill">PENEKAN ASAM</span><h3>Famotidine</h3><p><b>Apa itu?</b> Obat golongan antagonis reseptor H2.</p><p><b>Kegunaan umum:</b> mengurangi produksi asam lambung pada kondisi tertentu.</p><p><b>Cara kerja sederhana:</b> menghambat reseptor histamin H2 pada sel lambung sehingga produksi asam berkurang.</p><p><b>Perhatian:</b> tidak semua keluhan lambung disebabkan oleh asam. Keluhan berat atau berulang perlu penilaian tenaga kesehatan.</p><div class="source-note">Sumber edukasi: informasi produk resmi/MedlinePlus.</div></div>
-  </div>
-
-  <div class="section"><h3>💧 Diare, cairan & dehidrasi</h3><span class="badge-safe">✓ Edukatif</span></div>
-  <div class="grid g2">
-    <div class="card drug-card"><span class="pill">REHIDRASI ORAL</span><h3>Oralit / ORS</h3><p><b>Apa itu?</b> Larutan rehidrasi oral yang mengandung air dan elektrolit dalam komposisi yang dirancang untuk membantu mengganti cairan yang hilang.</p><p><b>Kegunaan umum:</b> membantu mencegah atau menangani dehidrasi akibat kehilangan cairan, termasuk pada diare.</p><p><b>Cara kerja sederhana:</b> kombinasi glukosa dan elektrolit membantu penyerapan air di usus.</p><p><b>Perhatian:</b> oralit tidak menghilangkan semua penyebab diare. Tanda dehidrasi atau kondisi berat perlu pertolongan tenaga kesehatan.</p><div class="source-note">Sumber edukasi: Kementerian Kesehatan RI/WHO.</div></div>
-    <div class="card drug-card"><span class="pill">MIKRONUTRIEN</span><h3>Zinc</h3><p><b>Apa itu?</b> Mineral yang mempunyai peran penting dalam berbagai fungsi tubuh.</p><p><b>Kegunaan umum:</b> pada tata laksana diare anak dalam konteks tertentu, zinc dapat menjadi bagian dari penanganan yang dianjurkan tenaga kesehatan.</p><p><b>Cara kerja sederhana:</b> mendukung fungsi sel dan sistem tubuh yang terlibat dalam pemulihan.</p><p><b>Perhatian:</b> kebutuhan dan penggunaannya bergantung pada usia, kondisi, dan pedoman yang berlaku. Healthly tidak menentukan dosis.</p><div class="source-note">Sumber edukasi: Kementerian Kesehatan RI/WHO.</div></div>
-    <div class="card drug-card"><span class="pill">ANTIDIARE • PERHATIAN KHUSUS</span><h3>Loperamide</h3><p><b>Apa itu?</b> Obat yang memperlambat gerakan usus.</p><p><b>Kegunaan umum:</b> dapat digunakan pada kondisi diare tertentu, tetapi tidak cocok untuk semua penyebab atau semua usia.</p><p><b>Cara kerja sederhana:</b> mengurangi gerakan usus sehingga waktu kontak isi usus menjadi lebih lama.</p><p><b>Perhatian:</b> jangan menganggap semua diare perlu dihentikan dengan obat. Darah pada tinja, demam tinggi, dehidrasi, atau kondisi berat memerlukan penilaian tenaga kesehatan.</p><div class="source-note">Sumber edukasi: Kementerian Kesehatan RI/WHO.</div></div>
-  </div>
-
-  <div class="section"><h3>🚽 Sembelit</h3><span class="badge-safe">✓ Edukatif</span></div>
-  <div class="grid g2">
-    <div class="card drug-card"><span class="pill">LAXATIVE</span><h3>Bisacodyl</h3><p><b>Apa itu?</b> Obat pencahar yang merangsang gerakan usus.</p><p><b>Kegunaan umum:</b> membantu mengatasi sembelit pada kondisi tertentu.</p><p><b>Cara kerja sederhana:</b> merangsang aktivitas usus sehingga membantu proses buang air besar.</p><p><b>Perhatian:</b> sembelit yang sering terjadi perlu diperhatikan penyebabnya. Penggunaan pencahar bukan pengganti kebiasaan makan, minum, dan aktivitas yang sehat.</p><div class="source-note">Sumber edukasi: informasi produk resmi.</div></div>
-    <div class="card drug-card"><span class="pill">LAXATIVE OSMOTIK</span><h3>Lactulose</h3><p><b>Apa itu?</b> Pencahar osmotik yang menarik air ke dalam usus.</p><p><b>Kegunaan umum:</b> membantu melunakkan tinja pada sembelit tertentu.</p><p><b>Cara kerja sederhana:</b> meningkatkan kandungan air di usus sehingga tinja menjadi lebih lunak.</p><p><b>Perhatian:</b> dapat menimbulkan kembung atau perubahan pola buang air besar. Keluhan menetap perlu dibahas dengan tenaga kesehatan.</p><div class="source-note">Sumber edukasi: informasi produk resmi.</div></div>
-  </div>
-
-  <div class="section"><h3>🧴 Kulit & antiseptik</h3><span class="badge-safe">✓ Edukatif</span></div>
-  <div class="grid g2">
-    <div class="card drug-card"><span class="pill">ANTISEPTIK</span><h3>Povidone-iodine</h3><p><b>Apa itu?</b> Antiseptik yang mengandung kompleks povidone dan iodine.</p><p><b>Kegunaan umum:</b> digunakan pada kulit untuk membantu mengurangi mikroorganisme pada situasi tertentu sesuai petunjuk produk.</p><p><b>Cara kerja sederhana:</b> iodine yang tersedia dapat merusak berbagai komponen mikroorganisme.</p><p><b>Perhatian:</b> penggunaan bergantung pada bentuk produk dan kondisi kulit. Jangan menganggap semua luka atau kelainan kulit dapat ditangani dengan antiseptik.</p><div class="source-note">Sumber edukasi: informasi produk resmi.</div></div>
-    <div class="card drug-card"><span class="pill">ANTISEPTIK</span><h3>Chlorhexidine</h3><p><b>Apa itu?</b> Antiseptik yang bekerja terhadap berbagai mikroorganisme.</p><p><b>Kegunaan umum:</b> membantu mengurangi mikroorganisme pada penggunaan tertentu sesuai formulasi produk.</p><p><b>Cara kerja sederhana:</b> mengganggu membran sel mikroorganisme.</p><p><b>Perhatian:</b> produk chlorhexidine dapat mempunyai penggunaan yang berbeda-beda. Jangan menggunakan suatu formulasi pada bagian tubuh yang tidak tercantum pada label.</p><div class="source-note">Sumber edukasi: informasi produk resmi.</div></div>
-    <div class="card drug-card"><span class="pill">ANTIJAMUR</span><h3>Clotrimazole</h3><p><b>Apa itu?</b> Obat antijamur yang digunakan untuk infeksi jamur tertentu.</p><p><b>Kegunaan umum:</b> menangani beberapa infeksi jamur pada kulit atau lokasi tertentu sesuai formulasi produk.</p><p><b>Cara kerja sederhana:</b> mengganggu pembentukan komponen penting pada membran sel jamur.</p><p><b>Perhatian:</b> kelainan kulit tidak selalu disebabkan jamur. Bila diagnosis tidak jelas atau keluhan memburuk, minta penilaian tenaga kesehatan.</p><div class="source-note">Sumber edukasi: informasi produk resmi.</div></div>
-  </div>
-
-  <div class="section"><h3>🏥 Obat yang memerlukan pengawasan tenaga kesehatan</h3><span class="badge-safe">Materi edukasi saja</span></div>
-  <div class="card info"><b>Catatan penting:</b> bagian ini hanya menjelaskan apa itu kelompok obat dan mengapa pengawasan profesional penting. Healthly tidak memberikan resep, dosis, jadwal penggunaan, atau petunjuk penggunaan untuk obat keras.</div>
-  <div class="grid g2">
-    <div class="card drug-card"><span class="pill">OBAT KERAS</span><h3>Amoxicillin</h3><p><b>Apa itu?</b> Antibiotik golongan penisilin.</p><p><b>Kegunaan umum:</b> digunakan untuk infeksi bakteri tertentu ketika tenaga kesehatan menilai antibiotik tersebut sesuai.</p><p><b>Cara kerja sederhana:</b> mengganggu pembentukan dinding sel bakteri.</p><p><b>Perhatian:</b> antibiotik tidak bekerja untuk virus dan penggunaannya yang tidak tepat dapat berkontribusi pada resistansi antibiotik. Pemilihan antibiotik harus berdasarkan penilaian tenaga kesehatan.</p><div class="source-note">Sumber edukasi: Kementerian Kesehatan RI, informasi produk resmi.</div></div>
-    <div class="card drug-card"><span class="pill">KORTIKOSTEROID</span><h3>Dexamethasone</h3><p><b>Apa itu?</b> Obat kortikosteroid yang memengaruhi respons peradangan dan sistem imun.</p><p><b>Kegunaan umum:</b> digunakan pada kondisi medis tertentu berdasarkan penilaian tenaga kesehatan.</p><p><b>Cara kerja sederhana:</b> memengaruhi ekspresi berbagai zat yang terlibat dalam peradangan dan respons imun.</p><p><b>Perhatian:</b> memiliki banyak pertimbangan penggunaan dan tidak boleh dianggap sebagai obat umum untuk keluhan sehari-hari.</p><div class="source-note">Sumber edukasi: informasi produk resmi.</div></div>
-    <div class="card drug-card"><span class="pill">OBAT KARDIOVASKULAR</span><h3>Amlodipine</h3><p><b>Apa itu?</b> Obat golongan calcium-channel blocker.</p><p><b>Kegunaan umum:</b> digunakan untuk kondisi tekanan darah tinggi dan beberapa kondisi kardiovaskular tertentu berdasarkan penilaian tenaga kesehatan.</p><p><b>Cara kerja sederhana:</b> membantu melemaskan pembuluh darah dengan menghambat masuknya kalsium ke sel otot pembuluh darah.</p><p><b>Perhatian:</b> bukan obat yang digunakan berdasarkan keluhan sesaat. Penggunaan memerlukan pemantauan dan arahan tenaga kesehatan.</p><div class="source-note">Sumber edukasi: informasi produk resmi.</div></div>
-    <div class="card drug-card"><span class="pill">PENURUN LEMAK DARAH</span><h3>Simvastatin</h3><p><b>Apa itu?</b> Obat golongan statin.</p><p><b>Kegunaan umum:</b> membantu menurunkan kadar kolesterol tertentu pada kondisi yang memerlukan terapi.</p><p><b>Cara kerja sederhana:</b> menghambat enzim yang berperan dalam pembentukan kolesterol di hati.</p><p><b>Perhatian:</b> penggunaannya berkaitan dengan kondisi kesehatan dan pemantauan tertentu. Bukan obat untuk keluhan harian yang dipilih sendiri.</p><div class="source-note">Sumber edukasi: informasi produk resmi.</div></div>
-  </div>
-
-  <div class="section"><h3>🔄 Perbandingan edukatif</h3></div>
+  <div class="section"><h3>🔄 Contoh perbandingan</h3></div>
   <div class="card" style="overflow:auto">
     <table class="compare-table"><thead><tr><th>Aspek</th><th>Paracetamol</th><th>Ibuprofen</th></tr></thead><tbody>
       <tr><td>Kelompok</td><td>Analgesik/antipiretik</td><td>NSAID</td></tr>
       <tr><td>Kegunaan umum</td><td>Nyeri & demam</td><td>Nyeri, demam & peradangan tertentu</td></tr>
-      <tr><td>Perhatian</td><td>Perhatikan kandungan obat kombinasi dan risiko penggunaan berlebihan.</td><td>Memiliki perhatian/kontraindikasi tertentu dan tidak cocok untuk semua orang.</td></tr>
-      <tr><td>Healthly</td><td colspan="2">Perbandingan ini hanya untuk memahami perbedaan. Healthly tidak menentukan mana yang harus digunakan seseorang.</td></tr>
+      <tr><td>Catatan</td><td>Perhatikan produk kombinasi yang juga mengandung paracetamol.</td><td>Memiliki perhatian/kontraindikasi tertentu dan tidak cocok untuk semua orang.</td></tr>
+      <tr><td>Healthly</td><td colspan="2">Membandingkan informasi bukan berarti memilihkan obat. Kecocokan penggunaan bergantung pada pengguna dan produk.</td></tr>
     </tbody></table>
   </div>
-
-  <div class="section"><h3>🛡️ Prinsip aman mengenali obat</h3></div>
-  <div class="grid g2">
-    <div class="card"><h3>1. Cek kemasan</h3><p>Pastikan kemasan tidak rusak, bocor, menggembung, atau terbuka secara tidak wajar.</p></div>
-    <div class="card"><h3>2. Cek label</h3><p>Perhatikan nama produk, zat aktif/komposisi, bentuk sediaan, peringatan, kedaluwarsa, dan informasi lain pada label.</p></div>
-    <div class="card"><h3>3. Cek izin edar</h3><p>BPOM menyediakan layanan Cek Produk untuk membantu memeriksa data produk obat yang terdaftar.</p></div>
-    <div class="card"><h3>4. Jangan menebak</h3><p>Jika nama obat, kandungan, atau kegunaannya tidak jelas, jangan membuat keputusan sendiri. Tanyakan kepada orang tua/wali, apoteker, atau tenaga kesehatan.</p></div>
-  </div>
-  <div class="info"><b>Untuk pengguna remaja:</b> halaman ini adalah ensiklopedia edukasi, bukan tempat menentukan obat untuk diri sendiri. Jangan menentukan dosis, menggabungkan obat, atau mengganti terapi berdasarkan chat Healthly. Jika sedang sakit atau ragu tentang obat, libatkan orang tua/wali dan tenaga kesehatan.</div>
-  <div class="source-note" style="margin-top:14px"><b>Referensi utama:</b> Badan POM RI — Cek Produk dan materi edukasi Cek KLIK; Kementerian Kesehatan RI; MedlinePlus; serta informasi resmi produk obat. BPOM menyediakan pencarian berdasarkan nama produk, nomor registrasi, komposisi, bentuk sediaan, dan status. urlCek Produk BPOMhttps://cekbpom.pom.go.id/produk-obat</div>
+  <div class="info"><b>Untuk pengguna remaja:</b> jangan menentukan dosis berdasarkan chat. Ikuti label produk dan libatkan orang tua/wali atau apoteker bila ingin menggunakan obat.</div>
 </section>
 
 <section id="natural" class="page">
@@ -439,10 +440,25 @@ body{overflow-x:hidden}.mobile-menu{display:none}
 
 <section id="library" class="page">
   <div class="card">
-    <input class="form-input" id="librarySearch" oninput="renderLibrary()" placeholder="Cari keluhan, penyakit, gejala, atau topik kesehatan...">
-    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" onclick="setLibraryLevel(0)">Semua</button><button class="secondary" onclick="setLibraryLevel(1)">🟢 Keluhan umum</button><button class="secondary" onclick="setLibraryLevel(2)">🟡 Kondisi umum</button><button class="secondary" onclick="setLibraryLevel(3)">🔴 Perlu perhatian serius</button></div>
+    <span class="pill">PERPUSTAKAAN KESEHATAN</span>
+    <h2 style="margin:10px 0 6px">Pahami Penyakit & Kondisi Kesehatan 📚</h2>
+    <p>Jangan berhenti di nama penyakit. Buka setiap topik untuk membaca pengertian, gejala yang umum, faktor yang dapat berkaitan, perawatan suportif, tanda bahaya, dan kapan perlu mencari bantuan.</p>
+    <div class="disease-toolbar">
+      <input class="form-input" id="diseaseSearch" oninput="renderDiseaseLibrary()" placeholder="Cari penyakit atau kondisi, misalnya asma, diare, anemia..." style="flex:1;min-width:220px">
+      <button class="filter-btn" onclick="clearDiseaseSearch()">Reset</button>
+    </div>
+    <div class="disease-toolbar" id="diseaseFilters"></div>
   </div>
-  <div id="libraryGrid" class="grid g3" style="margin-top:15px"></div>
+  <div id="diseaseGrid" class="disease-grid"></div>
+  <div class="card" style="margin-top:16px">
+    <h3 style="margin-top:0">📖 Materi gaya hidup</h3>
+    <p class="muted">Selain penyakit, Healthly juga menyediakan materi tentang nutrisi, tidur, aktivitas fisik, hidrasi, kebersihan, dan kesejahteraan.</p>
+    <div class="grid g3" style="margin-top:14px">
+      <button class="card action" onclick="openArticle('nutrition')"><div class="icon">🥗</div><h3>Nutrisi Seimbang</h3><p>Mengenal prinsip makan beragam dan cukup.</p></button>
+      <button class="card action" onclick="openArticle('sleep')"><div class="icon">😴</div><h3>Tidur</h3><p>Memahami rutinitas dan kualitas istirahat.</p></button>
+      <button class="card action" onclick="openArticle('movement')"><div class="icon">🏃</div><h3>Aktivitas Fisik</h3><p>Aktivitas yang sesuai kemampuan.</p></button>
+    </div>
+  </div>
 </section>
 
 <div class="card" style="margin:30px auto 0;max-width:1180px">
@@ -474,6 +490,17 @@ body{overflow-x:hidden}.mobile-menu{display:none}
  </div>
 </div>
 
+
+<div class="modal" id="diseaseModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div><span class="pill">MATERI EDUKASI</span><h3 id="diseaseModalTitle" class="disease-modal-title">Topik Kesehatan</h3><div id="diseaseModalMeta" class="muted"></div></div>
+      <button class="close" onclick="closeModal('diseaseModal')">✕</button>
+    </div>
+    <div id="diseaseModalBody"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -490,6 +517,73 @@ const pageMeta={
  services:["Layanan Kesehatan","Pahami pilihan bantuan dan jalur layanan kesehatan."]
 };
 
+/* ===== NAME-ONLY USER GATE ===== */
+const AUTH_KEY="healthlyAuth";
+const REMEMBER_KEY="healthlyRemember";
+const authScreen=document.getElementById("authScreen");
+const app=document.getElementById("app");
+const authForm=document.getElementById("authForm");
+const authName=document.getElementById("authName");
+const authMessage=document.getElementById("authMessage");
+const userName=document.getElementById("userName");
+const logoutBtn=document.getElementById("logoutBtn");
+
+function getCurrentUser(){
+  try{return JSON.parse(localStorage.getItem(AUTH_KEY)||"null")}catch(e){return null}
+}
+function normalizeUserName(name){
+  return name.trim().replace(/\s+/g," ").slice(0,60);
+}
+function getCurrentUserKey(){
+  const u=getCurrentUser();
+  return u&&u.name ? u.name.toLowerCase().replace(/[^a-z0-9_-]/g,"_") : "guest";
+}
+function setAuthMessage(msg,type=""){
+  authMessage.textContent=msg;
+  authMessage.className="auth-message"+(type?" "+type:"");
+}
+function openDashboard(){
+  const user=getCurrentUser();
+  if(!user){lockDashboard();return}
+  authScreen.classList.add("hidden");
+  app.classList.remove("auth-hidden");
+  document.body.classList.remove("auth-locked");
+  userName.textContent="Halo, "+user.name;
+  updateAll();
+}
+function lockDashboard(){
+  app.classList.add("auth-hidden");
+  authScreen.classList.remove("hidden");
+  document.body.classList.add("auth-locked");
+}
+function login(name,remember){
+  const clean=normalizeUserName(name);
+  if(clean.length<2){
+    setAuthMessage("Masukkan nama minimal 2 karakter.","error");
+    return false;
+  }
+  localStorage.setItem(AUTH_KEY,JSON.stringify({name:clean}));
+  if(remember) localStorage.setItem(REMEMBER_KEY,clean);
+  else localStorage.removeItem(REMEMBER_KEY);
+  setAuthMessage("Selamat datang, "+clean+"! Membuka Healthly…","success");
+  setTimeout(openDashboard,180);
+  return true;
+}
+authForm.addEventListener("submit",e=>{
+  e.preventDefault();
+  login(authName.value,document.getElementById("authRemember").checked);
+});
+logoutBtn.addEventListener("click",()=>{
+  localStorage.removeItem(AUTH_KEY);
+  lockDashboard();
+  setAuthMessage("Kamu sudah keluar dari Healthly.","success");
+  authName.value="";
+  authName.focus();
+});
+const rememberedUser=localStorage.getItem(REMEMBER_KEY);
+if(rememberedUser){authName.value=rememberedUser;document.getElementById("authRemember").checked=true;}
+openDashboard();
+
 const mobileMenu=document.getElementById('mobileMenu');
 const sidebar=document.querySelector('.sidebar');
 const navOverlay=document.getElementById('navOverlay');
@@ -504,7 +598,7 @@ function go(id){
  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
  document.getElementById("pageTitle").textContent=pageMeta[id][0];
  document.getElementById("pageSub").textContent=pageMeta[id][1];
- if(id==="symptoms")showCategories();
+ if(id==="symptoms")showCategories(); if(id==="library")renderDiseaseLibrary();
  closeMobileNav(); window.scrollTo({top:0,behavior:"smooth"});
 }
 document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
@@ -512,12 +606,20 @@ document.getElementById("chatInput")?.addEventListener("keydown",e=>{if(e.key===
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){document.querySelectorAll(".modal.show").forEach(m=>m.classList.remove("show"));closeMobileNav();}});
 document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("show")}));
 
+function recordActivity(action){
+  try{
+    const key="healthlyActivity_v2_"+getCurrentUserKey();
+    const list=JSON.parse(localStorage.getItem(key)||"[]");
+    list.push({action,at:new Date().toISOString()});
+    localStorage.setItem(key,JSON.stringify(list.slice(-300)));
+  }catch(e){}
+}
 function toast(msg){
  const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");
  setTimeout(()=>el.classList.remove("show"),1800);
 }
 function getData(){
- const saved=localStorage.getItem("healthlyData");
+ const saved=localStorage.getItem("healthlyData_" + getCurrentUserKey());
  if(saved){
    try{
      const d=JSON.parse(saved);
@@ -539,7 +641,7 @@ function getData(){
    ]
  }));
 }
-function saveData(d){localStorage.setItem("healthlyData",JSON.stringify(d));updateAll();}
+function saveData(d){localStorage.setItem("healthlyData_" + getCurrentUserKey(),JSON.stringify(d));updateAll();}
 function updateAll(){
  const d=getData(),done=d.habits.filter(h=>h.done).length,total=d.habits.length;
  document.getElementById("homeAirMinum").textContent=d.water+" / 8";
@@ -635,80 +737,6 @@ function usePrompt(q){document.getElementById('chatInput').value=q;sendChat()}
 function clearChat(){document.getElementById('chatLog').innerHTML='';welcomeChat()}
 function welcomeChat(){addBubble('Halo! Aku Healthly 👋<br><br>Ceritakan keluhanmu dengan bahasa sehari-hari. Supaya jawabannya lebih berguna, kamu bisa menulis <b>keluhan + sejak kapan + seberapa mengganggu + gejala lain</b> jika ada.<br><br>Aku membantu menjelaskan kemungkinan faktor dan langkah aman — <b>bukan mendiagnosis</b>.','bot')}
 
-
-/* HEALTHLY KNOWLEDGE ENGINE v2 — educational condition layer */
-const conditionDatabase = [
-{id:'common_cold',name:'Common Cold / Pilek',level:2,category:'respiratory',description:'Infeksi saluran napas atas yang umumnya ringan dan dapat membaik sendiri.',features:['pilek atau hidung tersumbat','bersin','sakit tenggorokan','batuk'],selfCare:['istirahat cukup','cukup minum sesuai kebutuhan','jaga kebersihan tangan'],redFlags:['sulit bernapas','kondisi memburuk cepat','dehidrasi atau tidak mampu minum'],sources:['WHO Health Topics','MedlinePlus Common Cold']},
-{id:'influenza',name:'Influenza',level:2,category:'respiratory',description:'Infeksi virus influenza yang dapat menimbulkan demam, batuk, nyeri tubuh, sakit kepala, dan lelah.',features:['demam','batuk','nyeri otot/badan','lelah'],selfCare:['istirahat','cairan yang cukup','hindari kontak dekat saat sedang sakit'],redFlags:['sesak atau sulit bernapas','penurunan kesadaran','gejala berat atau memburuk'],sources:['WHO Influenza','Kemenkes RI']},
-{id:'acute_respiratory_infection',name:'ISPA',level:2,category:'respiratory',description:'Istilah untuk infeksi saluran pernapasan yang dapat mengenai saluran napas atas maupun bawah.',features:['batuk','pilek','sakit tenggorokan','demam dapat muncul'],selfCare:['istirahat','cairan cukup','pantau perubahan gejala'],redFlags:['sesak','nyeri dada','kesulitan bernapas'],sources:['WHO Health Topics','Kemenkes RI']},
-{id:'pharyngitis',name:'Faringitis / Sakit Tenggorokan',level:2,category:'respiratory',description:'Peradangan pada tenggorokan yang dapat disebabkan infeksi atau iritasi.',features:['sakit saat menelan','tenggorokan terasa nyeri/teriritasi','demam dapat menyertai'],selfCare:['cairan cukup','istirahat','hindari iritan seperti asap'],redFlags:['sulit bernapas','sulit menelan berat','air liur terus mengalir karena sulit menelan'],sources:['MedlinePlus','WHO Health Topics']},
-{id:'acute_gastroenteritis',name:'Gastroenteritis Akut',level:2,category:'digestive',description:'Peradangan saluran cerna yang sering menimbulkan diare, muntah, mual, dan kram perut.',features:['diare','mual/muntah','kram perut','demam dapat muncul'],selfCare:['prioritaskan penggantian cairan','makan sesuai toleransi','jaga kebersihan tangan dan makanan'],redFlags:['tanda dehidrasi','darah pada tinja','tidak mampu mempertahankan cairan'],sources:['WHO Diarrhoea','MedlinePlus']},
-{id:'acute_diarrhea',name:'Diare Akut',level:2,category:'digestive',description:'BAB cair/lembek lebih sering dari biasanya dan biasanya berlangsung singkat.',features:['BAB cair','kram perut','mual atau muntah dapat menyertai'],selfCare:['rehidrasi','makan sesuai toleransi','perhatikan tanda dehidrasi'],redFlags:['darah dalam tinja','dehidrasi berat','tidak mampu minum','kondisi memburuk'],sources:['WHO Diarrhoea']},
-{id:'constipation',name:'Konstipasi / Sembelit',level:2,category:'digestive',description:'Kesulitan BAB atau BAB lebih jarang/keras dari pola biasanya.',features:['tinja keras','sulit BAB','rasa belum tuntas'],selfCare:['cukup cairan','serat dari makanan secara bertahap','aktivitas fisik sesuai kemampuan'],redFlags:['nyeri perut berat','muntah','perut sangat membesar','darah dalam tinja'],sources:['MedlinePlus Constipation']},
-{id:'dyspepsia',name:'Dispepsia / Gangguan Pencernaan',level:2,category:'digestive',description:'Sekumpulan keluhan di bagian atas perut seperti cepat kenyang, penuh, atau rasa tidak nyaman.',features:['rasa penuh','cepat kenyang','nyeri/tidak nyaman di perut bagian atas'],selfCare:['catat makanan/pemicu yang memperburuk','makan sesuai toleransi','hindari kebiasaan yang jelas memperburuk gejala'],redFlags:['muntah darah','tinja hitam','penurunan berat badan yang tidak disengaja','nyeri berat'],sources:['MedlinePlus Indigestion']},
-{id:'gerd',name:'GERD',level:2,category:'digestive',description:'Kondisi ketika isi lambung sering naik ke kerongkongan dan menimbulkan gejala seperti rasa terbakar.',features:['heartburn','rasa asam/pahit naik ke mulut','keluhan setelah makan dapat muncul'],selfCare:['perhatikan pemicu pribadi','hindari langsung berbaring setelah makan bila itu memperburuk keluhan','konsultasikan bila sering berulang'],redFlags:['nyeri dada berat','muntah darah','sulit menelan'],sources:['MedlinePlus GERD']},
-{id:'migraine',name:'Migrain',level:2,category:'neurologic',description:'Jenis sakit kepala yang dapat disertai mual serta sensitif terhadap cahaya atau suara.',features:['sakit kepala berdenyut','mual','sensitif cahaya/suara'],selfCare:['istirahat di lingkungan nyaman','cukup tidur dan cairan','catat pola/pemicu'],redFlags:['sakit kepala mendadak sangat hebat','kelemahan satu sisi','gangguan bicara atau kesadaran'],sources:['MedlinePlus Migraine','WHO Health Topics']},
-{id:'allergic_rhinitis',name:'Rinitis Alergi',level:2,category:'allergy',description:'Reaksi alergi pada hidung yang sering memicu bersin, hidung berair/tersumbat, dan gatal.',features:['bersin berulang','hidung berair/tersumbat','gatal pada hidung atau mata'],selfCare:['kurangi paparan pemicu yang diketahui','jaga kebersihan lingkungan','ikuti saran tenaga kesehatan bila gejala mengganggu'],redFlags:['sesak','bengkak pada wajah/bibir/lidah','sulit bernapas'],sources:['MedlinePlus','NIAID/NIH']},
-{id:'dermatitis',name:'Dermatitis',level:2,category:'skin',description:'Peradangan kulit yang dapat menyebabkan gatal, kemerahan, kering, atau iritasi.',features:['gatal','kulit kering/merah','iritasi'],selfCare:['hindari pemicu yang diketahui','gunakan perawatan kulit lembut','jangan menggaruk berlebihan'],redFlags:['bengkak cepat','nyeri berat','demam atau tanda infeksi'],sources:['MedlinePlus Dermatitis']},
-{id:'conjunctivitis',name:'Konjungtivitis',level:2,category:'eye',description:'Peradangan pada selaput mata yang dapat berkaitan dengan infeksi atau alergi.',features:['mata merah','berair atau belekan','gatal/iritasi'],selfCare:['jaga kebersihan tangan','hindari menyentuh/menggosok mata','jangan berbagi handuk'],redFlags:['nyeri mata berat','perubahan penglihatan','cedera atau paparan bahan kimia'],sources:['MedlinePlus Conjunctivitis']},
-{id:'asthma',name:'Asma',level:2,category:'respiratory',description:'Penyakit saluran napas kronis yang dapat menyebabkan mengi, batuk, sesak, atau dada terasa berat.',features:['mengi','batuk','sesak','dada terasa berat'],selfCare:['kenali dan hindari pemicu yang diketahui','ikuti rencana penanganan dari tenaga kesehatan bila sudah didiagnosis'],redFlags:['sulit bernapas berat','sulit bicara karena sesak','gejala memburuk cepat'],sources:['WHO Health Topics','MedlinePlus Asthma']},
-{id:'anemia',name:'Anemia',level:2,category:'blood',description:'Kondisi ketika jumlah/kemampuan sel darah merah membawa oksigen tidak mencukupi kebutuhan tubuh.',features:['lelah','lemah','pusing dapat muncul','pucat dapat muncul'],selfCare:['jangan menyimpulkan penyebab hanya dari gejala','evaluasi tenaga kesehatan diperlukan untuk mencari penyebab'],redFlags:['sesak berat','pingsan','nyeri dada'],sources:['WHO Health Topics','MedlinePlus Anemia']},
-{id:'scabies',name:'Skabies / Kudis',level:2,category:'skin',description:'Infestasi tungau yang biasanya menyebabkan gatal, sering lebih berat pada malam hari, dan ruam tertentu.',features:['gatal intens','ruam','keluhan dapat menyebar ke anggota rumah'],selfCare:['perlu evaluasi dan terapi yang sesuai','perhatikan kontak serumah sesuai arahan tenaga kesehatan'],redFlags:['infeksi kulit sekunder','keluhan sangat luas atau memburuk'],sources:['WHO Health Topics']},
-{id:'hand_foot_mouth',name:'Penyakit Tangan Kaki Mulut (HFMD)',level:2,category:'infection',description:'Infeksi virus yang sering menyerang anak dan dapat menyebabkan demam, sariawan, serta ruam pada tangan/kaki.',features:['demam','sariawan/lepuh mulut','ruam pada tangan/kaki'],selfCare:['cairan cukup','perhatikan kemampuan makan/minum','jaga kebersihan tangan'],redFlags:['tidak mampu minum','dehidrasi','penurunan kesadaran atau gejala berat'],sources:['WHO Health Topics']},
-{id:'typhoid',name:'Demam Tifoid',level:2,category:'infection',description:'Infeksi bakteri Salmonella Typhi yang memerlukan penilaian tenaga kesehatan dan terapi yang sesuai.',features:['demam berkepanjangan','lemah','keluhan pencernaan dapat menyertai'],selfCare:['jangan mengandalkan pengobatan sendiri','ikuti evaluasi dan terapi tenaga kesehatan'],redFlags:['penurunan kesadaran','perdarahan saluran cerna','nyeri perut berat atau memburuk'],sources:['WHO Typhoid','Kemenkes PNPK']},
-{id:'uti',name:'Infeksi Saluran Kemih (ISK)',level:2,category:'urinary',description:'Infeksi pada saluran kemih yang dapat menyebabkan nyeri saat berkemih dan sering ingin berkemih.',features:['nyeri/terbakar saat berkemih','sering ingin berkemih','urin dapat berubah'],selfCare:['cukup cairan sesuai kondisi','evaluasi tenaga kesehatan bila gejala menetap atau berulang'],redFlags:['demam tinggi','nyeri pinggang/samping','muntah atau tampak sangat sakit'],sources:['MedlinePlus UTI']},
-{id:'otitis_media',name:'Otitis Media',level:2,category:'ear',description:'Infeksi/peradangan telinga tengah yang dapat menimbulkan nyeri telinga dan demam.',features:['nyeri telinga','rasa penuh','demam dapat muncul'],selfCare:['evaluasi bila nyeri menetap/berat','hindari memasukkan benda ke telinga'],redFlags:['bengkak/kemerahan di belakang telinga','penurunan kesadaran','nyeri berat atau kondisi memburuk'],sources:['MedlinePlus Ear Infection']},
-
-{id:'dengue',name:'Dengue / Demam Berdarah',level:3,category:'infection',description:'Infeksi virus yang ditularkan nyamuk dan dapat berkembang dari penyakit ringan menjadi dengue berat.',features:['demam','sakit kepala/nyeri belakang mata','nyeri otot/sendi','mual/muntah','ruam'],selfCare:['cukup cairan sesuai kondisi','pantau tanda bahaya','hindari penggunaan aspirin/ibuprofen pada dugaan dengue tanpa arahan tenaga kesehatan'],redFlags:['perdarahan','sesak/napas cepat','penurunan tekanan darah/tanda syok','muntah terus-menerus','kondisi memburuk terutama saat demam mulai turun'],sources:['WHO Dengue and Severe Dengue']},
-{id:'pneumonia',name:'Pneumonia',level:3,category:'respiratory',description:'Infeksi pada paru yang dapat menyebabkan batuk, demam, dan kesulitan bernapas.',features:['batuk','demam','sesak atau napas cepat','nyeri dada dapat muncul'],selfCare:['perlu penilaian tenaga kesehatan bila dicurigai','istirahat dan cairan sesuai kondisi'],redFlags:['sulit bernapas','bibir/kulit tampak kebiruan','penurunan kesadaran','memburuk cepat'],sources:['WHO Pneumonia']},
-{id:'tuberculosis',name:'Tuberkulosis (TBC)',level:3,category:'infection',description:'Penyakit infeksi yang paling sering mengenai paru dan dapat menimbulkan batuk berkepanjangan serta gejala sistemik.',features:['batuk berkepanjangan','berat badan turun dapat terjadi','keringat malam/demam dapat terjadi'],selfCare:['perlu pemeriksaan tenaga kesehatan','ikuti terapi yang diresepkan sampai selesai bila terdiagnosis'],redFlags:['sesak berat','batuk darah dalam jumlah banyak','penurunan kondisi umum yang cepat'],sources:['WHO Tuberculosis','Kemenkes RI']},
-{id:'severe_dehydration',name:'Dehidrasi Berat',level:3,category:'emergency',description:'Kehilangan cairan yang berat dapat mengganggu fungsi tubuh dan membutuhkan pertolongan segera.',features:['sangat lemas','sangat haus atau tidak mampu minum','buang air kecil sangat sedikit','pusing berat'],selfCare:['jangan menunda pertolongan bila tanda berat muncul'],redFlags:['pingsan/kebingungan','tidak mampu minum','penurunan kesadaran','kondisi memburuk cepat'],sources:['WHO Diarrhoea']},
-{id:'meningitis',name:'Meningitis',level:3,category:'infection',description:'Peradangan selaput di sekitar otak dan sumsum tulang belakang; sebagian penyebab dapat menjadi keadaan gawat darurat.',features:['demam','sakit kepala','leher kaku dapat muncul','mual/muntah dapat muncul'],selfCare:['perlu penilaian medis segera bila dicurigai'],redFlags:['penurunan kesadaran','kejang','ruam tertentu disertai kondisi sangat sakit','sakit kepala berat dengan leher kaku'],sources:['WHO Meningitis']},
-{id:'sepsis',name:'Sepsis',level:3,category:'emergency',description:'Respons tubuh yang berat terhadap infeksi yang dapat menyebabkan kegagalan organ dan membutuhkan pertolongan segera.',features:['demam atau suhu tubuh rendah','napas cepat','denyut jantung cepat','kebingungan dapat muncul'],selfCare:['bukan kondisi untuk ditangani sendiri'],redFlags:['kebingungan/penurunan kesadaran','sesak berat','kulit sangat pucat/dingin','memburuk cepat'],sources:['WHO Sepsis']},
-{id:'stroke',name:'Stroke',level:3,category:'neurologic',description:'Gangguan aliran darah ke otak yang dapat menyebabkan kerusakan jaringan otak dan membutuhkan tindakan segera.',features:['kelemahan/kebas mendadak satu sisi','gangguan bicara','gangguan penglihatan','gangguan keseimbangan'],selfCare:['anggap tanda stroke sebagai keadaan darurat dan cari pertolongan segera'],redFlags:['wajah mencong mendadak','lengan/kaki satu sisi lemah','bicara mendadak tidak jelas/sulit','gejala neurologis mendadak lainnya'],sources:['WHO Stroke','Kemenkes PNPK Stroke 2026']},
-{id:'acute_coronary_syndrome',name:'Sindrom Koroner Akut / Serangan Jantung',level:3,category:'cardiovascular',description:'Kondisi akibat gangguan aliran darah ke otot jantung yang membutuhkan penilaian dan penanganan segera.',features:['nyeri/tekanan dada','sesak','keringat dingin','mual dapat menyertai'],selfCare:['bukan kondisi untuk ditangani sendiri'],redFlags:['nyeri/tekanan dada berat atau menetap','sesak berat','pingsan','memburuk cepat'],sources:['WHO Cardiovascular Diseases','Kemenkes PNPK SKA 2026']},
-{id:'heart_failure',name:'Gagal Jantung',level:3,category:'cardiovascular',description:'Kondisi ketika jantung tidak mampu memenuhi kebutuhan tubuh secara efektif; dapat menimbulkan sesak dan pembengkakan.',features:['sesak','mudah lelah','bengkak pada tungkai dapat muncul'],selfCare:['perlu evaluasi dan tindak lanjut tenaga kesehatan'],redFlags:['sesak berat saat istirahat','pingsan','nyeri dada','memburuk cepat'],sources:['WHO Cardiovascular Diseases']},
-{id:'hypertensive_emergency',name:'Krisis Hipertensi / Keadaan Darurat Tekanan Darah',level:3,category:'cardiovascular',description:'Tekanan darah yang sangat tinggi dapat menjadi keadaan darurat bila disertai tanda kerusakan organ.',features:['dapat tanpa gejala','sakit kepala atau keluhan lain dapat muncul'],selfCare:['jangan mengubah atau menggandakan obat sendiri berdasarkan chat'],redFlags:['nyeri dada','sesak','kelemahan satu sisi','gangguan penglihatan/bicara','kebingungan'],sources:['WHO Hypertension','Kemenkes PNPK Hipertensi 2026']},
-{id:'diabetes',name:'Diabetes Melitus',level:3,category:'metabolic',description:'Kondisi kronis dengan kadar glukosa darah tinggi yang memerlukan pemantauan dan tata laksana berkelanjutan.',features:['sering haus','sering berkemih','mudah lelah dapat muncul'],selfCare:['perlu evaluasi tenaga kesehatan dan pemantauan teratur bila terdiagnosis','jangan mengubah obat sendiri'],redFlags:['penurunan kesadaran','muntah terus-menerus','napas tidak normal','kondisi sangat lemah'],sources:['WHO Diabetes','Kemenkes PNPK Diabetes Tipe 2 2026']},
-{id:'chronic_kidney_disease',name:'Penyakit Ginjal Kronis',level:3,category:'kidney',description:'Penurunan fungsi ginjal yang berlangsung lama dan memerlukan pemantauan untuk mencegah komplikasi.',features:['sering tanpa gejala pada awal','bengkak dapat muncul','perubahan buang air kecil dapat terjadi'],selfCare:['perlu pemeriksaan dan pemantauan tenaga kesehatan','jangan mengonsumsi obat/suplemen sembarangan'],redFlags:['sesak berat','penurunan kesadaran','bengkak berat dengan kondisi memburuk'],sources:['WHO Noncommunicable Diseases','MedlinePlus']},
-{id:'copd_exacerbation',name:'PPOK / Eksaserbasi PPOK',level:3,category:'respiratory',description:'Penyakit paru kronis yang dapat mengalami perburukan dengan peningkatan sesak, batuk, atau perubahan dahak.',features:['sesak kronis','batuk berdahak','gejala dapat memburuk'],selfCare:['ikuti rencana terapi yang sudah diberikan tenaga kesehatan bila ada','hindari asap rokok'],redFlags:['sesak berat','sulit bicara karena sesak','kebiruan','penurunan kesadaran'],sources:['WHO Chronic Respiratory Diseases']},
-{id:'severe_asthma_attack',name:'Serangan Asma Berat',level:3,category:'respiratory',description:'Perburukan asma dengan kesulitan bernapas yang dapat menjadi keadaan darurat.',features:['sesak berat','mengi','dada terasa sangat ketat'],selfCare:['ikuti rencana darurat yang sudah diberikan tenaga kesehatan bila ada'],redFlags:['sulit bicara karena sesak','sangat sulit bernapas','penurunan kesadaran','gejala memburuk cepat'],sources:['WHO Chronic Respiratory Diseases','MedlinePlus Asthma']},
-{id:'anaphylaxis',name:'Anafilaksis / Reaksi Alergi Berat',level:3,category:'allergy',description:'Reaksi alergi berat yang dapat mengganggu jalan napas atau sirkulasi dan membutuhkan pertolongan segera.',features:['bengkak bibir/lidah/wajah','sesak','pusing atau lemas mendadak','ruam luas dapat muncul'],selfCare:['keadaan darurat; cari pertolongan segera'],redFlags:['sulit bernapas','bengkak lidah/tenggorokan','pingsan/penurunan kesadaran'],sources:['MedlinePlus Anaphylaxis','WHO Health Topics']},
-{id:'rabies_exposure',name:'Paparan Rabies / Gigitan Hewan Berisiko',level:3,category:'infection',description:'Paparan dari hewan tertentu dapat memerlukan penilaian segera untuk pencegahan rabies.',features:['gigitan/cakaran hewan mamalia berisiko','air liur mengenai luka atau mukosa dapat menjadi paparan'],selfCare:['segera cari evaluasi medis setelah paparan; jangan menunggu muncul gejala'],redFlags:['paparan pada luka/mukosa','hewan berperilaku tidak normal atau tidak dapat diamati'],sources:['WHO Rabies']},
-{id:'malaria',name:'Malaria',level:3,category:'infection',description:'Penyakit parasit yang ditularkan nyamuk dan dapat menjadi berat tanpa pengobatan yang tepat.',features:['demam','menggigil','sakit kepala','lemah'],selfCare:['perlu pemeriksaan dan terapi medis bila dicurigai, terutama setelah berada di daerah berisiko'],redFlags:['kebingungan','sesak','kejang','penurunan kesadaran','memburuk cepat'],sources:['WHO Malaria']},
-{id:'acute_hepatitis',name:'Hepatitis Akut',level:3,category:'liver',description:'Peradangan hati yang dapat disebabkan oleh berbagai faktor, termasuk virus tertentu.',features:['lelah','mual','nyeri perut dapat muncul','kulit/mata kuning dapat muncul'],selfCare:['perlu evaluasi penyebab oleh tenaga kesehatan','hindari penggunaan obat/suplemen sembarangan'],redFlags:['penurunan kesadaran','perdarahan','kuning berat dengan kondisi memburuk'],sources:['WHO Hepatitis']},
-{id:'appendicitis',name:'Apendisitis',level:3,category:'digestive',description:'Peradangan usus buntu yang dapat membutuhkan penanganan segera.',features:['nyeri perut yang dapat berpindah/menetap','mual/muntah','demam dapat muncul'],selfCare:['perlu pemeriksaan medis; jangan mencoba memastikan diagnosis sendiri'],redFlags:['nyeri perut berat atau makin berat','muntah berulang','demam dengan kondisi memburuk'],sources:['MedlinePlus Appendicitis']},
-{id:'gi_bleeding',name:'Perdarahan Saluran Cerna',level:3,category:'digestive',description:'Perdarahan pada saluran pencernaan yang dapat membutuhkan penanganan segera.',features:['muntah darah','tinja hitam atau berdarah','lemas/pusing'],selfCare:['cari pertolongan medis segera bila dicurigai'],redFlags:['muntah darah','tinja hitam/berdarah','pingsan','lemas berat'],sources:['MedlinePlus Gastrointestinal Bleeding']}
-];
-const healthlySources={
-'WHO Health Topics':'https://www.who.int/indonesia/health-topics',
-'WHO Dengue and Severe Dengue':'https://www.who.int/health-topics/dengue-and-severe-dengue',
-'WHO Diarrhoea':'https://www.who.int/health-topics/diarrhoea',
-'WHO Tuberculosis':'https://www.who.int/health-topics/tuberculosis',
-'WHO Pneumonia':'https://www.who.int/health-topics/pneumonia',
-'WHO Meningitis':'https://www.who.int/health-topics/meningitis',
-'WHO Sepsis':'https://www.who.int/health-topics/sepsis',
-'WHO Stroke':'https://www.who.int/health-topics/stroke',
-'WHO Diabetes':'https://www.who.int/health-topics/diabetes',
-'WHO Hypertension':'https://www.who.int/health-topics/hypertension',
-'WHO Malaria':'https://www.who.int/health-topics/malaria',
-'WHO Hepatitis':'https://www.who.int/health-topics/hepatitis',
-'WHO Rabies':'https://www.who.int/health-topics/rabies',
-'WHO Cardiovascular Diseases':'https://www.who.int/health-topics/cardiovascular-diseases',
-'WHO Chronic Respiratory Diseases':'https://www.who.int/health-topics/chronic-respiratory-diseases',
-'Kemenkes PNPK Stroke 2026':'https://www.kemkes.go.id/id/media/list/pedoman/pedoman-nasional-pelayanan-kedokteran-pnpk/kumpulan-pnpk-tahun-2026',
-'Kemenkes PNPK Hipertensi 2026':'https://www.kemkes.go.id/id/media/list/pedoman/pedoman-nasional-pelayanan-kedokteran-pnpk/kumpulan-pnpk-tahun-2026',
-'Kemenkes PNPK Diabetes Tipe 2 2026':'https://www.kemkes.go.id/id/media/list/pedoman/pedoman-nasional-pelayanan-kedokteran-pnpk/kumpulan-pnpk-tahun-2026',
-'Kemenkes PNPK SKA 2026':'https://www.kemkes.go.id/id/media/list/pedoman/pedoman-nasional-pelayanan-kedokteran-pnpk/kumpulan-pnpk-tahun-2026',
-'Kemenkes RI':'https://www.kemkes.go.id/'
-};
-function openCondition(id){
- const c=conditionDatabase.find(x=>x.id===id); if(!c)return;
- document.getElementById('articleTitle').textContent=c.name;
- document.getElementById('articleBody').innerHTML=`<span class="pill">LEVEL ${c.level} • EDUKASI</span><p style="margin-top:12px">${c.description}</p><div class="info"><b>Keluhan/gejala yang dapat muncul</b><ul>${c.features.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="card" style="margin-top:12px"><h4>Yang dapat dilakukan</h4><ul>${c.selfCare.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="warning" style="margin-top:12px"><b>Perhatikan tanda bahaya</b><ul>${c.redFlags.map(x=>`<li>${x}</li>`).join('')}</ul></div><p class="source-note"><b>Sumber:</b> ${c.sources.map(x=>healthlySources[x]?`<a href="${healthlySources[x]}" target="_blank" rel="noopener">${x} ↗</a>`:x).join(' • ')}</p><p class="ai-note">Ini materi edukasi, bukan diagnosis. Jika ada tanda bahaya, kondisi memburuk, atau keluhan menetap, cari bantuan tenaga kesehatan dan libatkan orang dewasa tepercaya.</p>`;
- document.getElementById('articleModal').classList.add('show');
-}
-
 const symptomData={
  stomach:{title:"Keluhan Perut",questions:[["Di bagian mana keluhannya paling terasa?",["Bagian atas","Bagian bawah","Sekitar pusar","Tidak yakin"]],["Sudah berapa lama?",["Kurang dari 1 hari","Beberapa hari","Lebih dari 1 minggu","Datang dan pergi"]],["Ada gejala lain?",["Mual/muntah","Diare","Demam","Tidak ada"]],["Seberapa berat sekarang?",["Ringan","Sedang","Berat","Sangat berat / memburuk"]]]},
  headache:{title:"Sakit Kepala / Pusing",questions:[["Bagaimana rasanya?",["Berdenyut","Terasa ditekan/berat","Seperti berputar","Tidak yakin"]],["Sudah berapa lama?",["Kurang dari 1 hari","Beberapa hari","Lebih dari 1 minggu","Berulang"]],["Ada gejala lain?",["Mual","Sensitif cahaya/suara","Demam","Tidak ada"]],["Seberapa berat?",["Ringan","Sedang","Berat","Sangat berat / memburuk"]]]},
@@ -779,6 +807,148 @@ function renderSymptomResult(){
  </div>`;
 }
 
+
+/* ===== DETAILED HEALTH TOPICS =====
+   Educational summaries. They do not diagnose, prescribe, or replace professional care.
+*/
+const diseaseData=[
+ {id:"flu",cat:"Pernapasan",icon:"🤧",name:"Flu (Influenza)",short:"Infeksi saluran pernapasan yang disebabkan virus influenza dan dapat menimbulkan demam, batuk, nyeri badan, serta rasa lelah.",
+  definition:"Influenza atau flu adalah infeksi saluran pernapasan yang disebabkan oleh virus influenza. Flu berbeda dari sekadar pilek karena gejalanya dapat muncul lebih mendadak dan rasa sakit badan atau lelah bisa lebih terasa.",
+  symptoms:["Demam atau merasa meriang","Batuk, sering kali kering","Sakit tenggorokan","Pilek atau hidung tersumbat","Nyeri otot atau badan","Sakit kepala dan kelelahan"],
+  causes:"Penyebabnya adalah virus influenza. Virus dapat menyebar melalui percikan pernapasan dan kontak dengan permukaan yang terkontaminasi lalu menyentuh hidung, mulut, atau mata.",
+  care:["Istirahat dan cukup minum sesuai kebutuhan.","Perhatikan perkembangan demam dan kondisi umum.","Hindari berbagi alat makan/minum dan terapkan kebersihan tangan.","Jika gejala berat, memburuk, atau ada kondisi khusus, cari nasihat tenaga kesehatan."],
+  warning:"Cari bantuan segera bila muncul kesulitan bernapas, nyeri/tekanan dada yang berat, kebingungan, penurunan kesadaran, atau kondisi memburuk cepat.",
+  source:"CDC — Influenza: Signs and Symptoms; WHO — Influenza."},
+ {id:"common-cold",cat:"Pernapasan",icon:"🤧",name:"Pilek (Common Cold)",short:"Infeksi virus pada saluran pernapasan bagian atas yang umumnya menyebabkan hidung berair/tersumbat, bersin, dan sakit tenggorokan.",
+  definition:"Pilek atau common cold adalah kumpulan gejala akibat infeksi virus pada saluran pernapasan bagian atas. Banyak virus dapat menyebabkan pilek. Kondisi ini umumnya berbeda dari influenza, walaupun beberapa gejalanya dapat tumpang tindih.",
+  symptoms:["Hidung berair atau tersumbat","Bersin","Sakit atau gatal tenggorokan","Batuk","Rasa lelah ringan","Kadang demam ringan"],
+  causes:"Berbagai virus dapat menyebabkan pilek. Penularan terjadi terutama melalui droplet/sekresi pernapasan dan kontak dekat.",
+  care:["Istirahat cukup dan minum sesuai kebutuhan.","Jaga kebersihan tangan dan hindari menyentuh wajah dengan tangan yang belum dicuci.","Gunakan langkah suportif yang membuat tubuh lebih nyaman.","Jika gejala sangat berat atau tidak membaik sebagaimana mestinya, konsultasikan ke tenaga kesehatan."],
+  warning:"Kesulitan bernapas, kondisi sangat lemah, dehidrasi, atau gejala yang memburuk perlu dinilai oleh tenaga kesehatan.",
+  source:"MedlinePlus — Common Cold; CDC — Common Cold."},
+ {id:"asthma",cat:"Pernapasan",icon:"🫁",name:"Asma",short:"Kondisi jangka panjang pada saluran napas yang dapat menyebabkan saluran napas menyempit sehingga muncul batuk, mengi, atau sesak.",
+  definition:"Asma adalah penyakit kronis pada saluran napas. Pada orang dengan asma, saluran napas dapat mengalami peradangan dan menjadi lebih sensitif. Saat kambuh, saluran napas dapat menyempit sehingga aliran udara terasa lebih sulit.",
+  symptoms:["Mengi atau bunyi napas seperti siulan","Batuk, terutama pada malam atau dini hari","Sesak atau terasa sulit bernapas","Dada terasa berat/tertekan","Gejala dapat datang dan pergi"],
+  causes:"Pemicu berbeda pada tiap orang, misalnya asap rokok, alergen tertentu, udara dingin, aktivitas fisik, atau infeksi saluran napas. Pemicu bukan berarti penyebab tunggal penyakitnya.",
+  care:["Kenali dan hindari pemicu yang diketahui bila memungkinkan.","Ikuti rencana penanganan yang diberikan tenaga kesehatan bila sudah pernah didiagnosis.","Jangan mengubah atau menghentikan obat pengontrol tanpa arahan tenaga kesehatan.","Catat pola gejala agar mudah dibicarakan saat konsultasi."],
+  warning:"Sesak berat, sulit berbicara karena napas, bibir/kuku tampak kebiruan, atau kondisi memburuk cepat membutuhkan pertolongan medis segera.",
+  source:"MedlinePlus — Asthma; WHO — Asthma."},
+ {id:"diarrhea",cat:"Pencernaan",icon:"💧",name:"Diare",short:"Buang air besar dengan tinja lebih encer dan/atau lebih sering dari biasanya. Risiko penting yang perlu diperhatikan adalah kehilangan cairan.",
+  definition:"Diare adalah kondisi ketika seseorang buang air besar dengan tinja yang cair atau lebih lembek dari biasanya, biasanya dengan frekuensi yang meningkat. Diare dapat berlangsung singkat atau lebih lama dan penyebabnya beragam.",
+  symptoms:["Tinja cair atau lembek","Buang air besar lebih sering","Kram atau nyeri perut","Mual atau muntah pada sebagian orang","Tanda kekurangan cairan seperti sangat haus atau jarang buang air kecil"],
+  causes:"Penyebab umum termasuk infeksi saluran cerna, makanan atau air yang terkontaminasi, serta kondisi atau obat tertentu. Penyebab tidak dapat dipastikan hanya dari satu gejala.",
+  care:["Utamakan penggantian cairan dan elektrolit sesuai kebutuhan.","Tetap makan sesuai toleransi dan kemampuan.","Jaga kebersihan tangan untuk mengurangi penyebaran infeksi.","Pantau frekuensi diare dan tanda kekurangan cairan."],
+  warning:"Cari pertolongan bila ada tanda dehidrasi berat, darah pada tinja, muntah terus-menerus sehingga sulit minum, nyeri perut berat, penurunan kesadaran, atau kondisi memburuk.",
+  source:"WHO — Diarrhoeal disease; MedlinePlus — Diarrhea."},
+ {id:"constipation",cat:"Pencernaan",icon:"🚽",name:"Sembelit (Konstipasi)",short:"Kesulitan buang air besar, frekuensi buang air besar yang berkurang, atau tinja keras yang sulit dikeluarkan.",
+  definition:"Konstipasi adalah masalah buang air besar yang dapat berupa tinja keras, sulit dikeluarkan, mengejan, atau frekuensi buang air besar yang lebih jarang dari pola normal seseorang. Pola setiap orang berbeda, sehingga tidak hanya jumlah buang air besar yang dinilai.",
+  symptoms:["Tinja keras atau menggumpal","Mengejan saat buang air besar","Merasa belum tuntas","Perut kembung atau tidak nyaman","Buang air besar lebih jarang dari biasanya"],
+  causes:"Dapat berkaitan dengan kurangnya asupan serat, kurang minum, perubahan rutinitas, kurang bergerak, kebiasaan menahan buang air besar, obat tertentu, atau kondisi lain.",
+  care:["Cukupi cairan sesuai kebutuhan.","Tingkatkan makanan berserat secara bertahap bila cocok.","Tetap aktif sesuai kemampuan.","Jangan membiasakan menahan dorongan buang air besar."],
+  warning:"Nyeri perut hebat, muntah berulang, perut sangat membesar, darah dalam tinja, atau perubahan yang menetap perlu dinilai tenaga kesehatan.",
+  source:"NIDDK — Constipation; MedlinePlus — Constipation."},
+ {id:"gastritis",cat:"Pencernaan",icon:"🍽️",name:"Gastritis (Radang Lambung)",short:"Peradangan pada lapisan lambung yang dapat menimbulkan nyeri atau tidak nyaman di perut bagian atas, mual, atau cepat kenyang.",
+  definition:"Gastritis berarti peradangan pada lapisan lambung. Istilah 'maag' sering digunakan sehari-hari untuk berbagai keluhan perut, sehingga 'maag' tidak otomatis berarti gastritis. Penyebab dan penanganannya dapat berbeda.",
+  symptoms:["Nyeri atau rasa tidak nyaman di perut bagian atas","Mual atau muntah","Cepat kenyang","Perut terasa penuh atau kembung","Sebagian orang tidak memiliki gejala jelas"],
+  causes:"Penyebab dapat mencakup infeksi tertentu, penggunaan obat antiinflamasi tertentu, konsumsi alkohol, dan kondisi lain. Tidak semua nyeri lambung disebabkan gastritis.",
+  care:["Catat makanan/minuman atau kebiasaan yang tampaknya memperburuk keluhan.","Hindari penggunaan obat secara sembarangan.","Bila keluhan menetap atau berulang, konsultasikan penyebabnya kepada tenaga kesehatan.","Ikuti saran tenaga kesehatan bila sudah diperiksa."],
+  warning:"Muntah darah, tinja hitam seperti aspal, nyeri hebat, pingsan, atau lemah berat membutuhkan pertolongan medis segera.",
+  source:"NIDDK — Gastritis & Gastropathy; MedlinePlus — Gastritis."},
+ {id:"headache",cat:"Saraf & nyeri",icon:"🤕",name:"Sakit Kepala",short:"Rasa sakit atau tidak nyaman di kepala dengan banyak kemungkinan penyebab, mulai dari kurang tidur hingga kondisi yang membutuhkan penilaian medis.",
+  definition:"Sakit kepala adalah gejala, bukan satu penyakit tunggal. Polanya bisa berbeda-beda dan penyebabnya beragam. Karena itu, nama 'sakit kepala' saja tidak cukup untuk menentukan penyebab seseorang.",
+  symptoms:["Nyeri di satu atau kedua sisi kepala","Rasa berdenyut, tertekan, atau seperti berat","Sensitif terhadap cahaya atau suara pada sebagian jenis sakit kepala","Mual pada sebagian kondisi","Dapat berkaitan dengan kurang tidur, dehidrasi, atau faktor lain"],
+  causes:"Pemicu dapat berupa kurang tidur, stres, dehidrasi, infeksi, perubahan rutinitas, ketegangan otot, migrain, atau penyebab lain. Diagnosis membutuhkan penilaian pola dan konteks.",
+  care:["Perhatikan tidur, makan, minum, dan waktu munculnya keluhan.","Istirahat di lingkungan yang nyaman bila membantu.","Catat frekuensi dan pemicu yang tampak berhubungan.","Jika sering berulang atau mengganggu aktivitas, konsultasikan."],
+  warning:"Sakit kepala yang sangat mendadak dan berat, setelah cedera kepala, disertai penurunan kesadaran, kejang, kelemahan anggota tubuh, gangguan bicara/penglihatan, atau kondisi berat lain memerlukan pertolongan segera.",
+  source:"MedlinePlus — Headache; NHS — Headaches."},
+ {id:"fever",cat:"Gejala umum",icon:"🌡️",name:"Demam",short:"Peningkatan suhu tubuh yang dapat terjadi ketika tubuh merespons infeksi atau kondisi lain. Demam adalah gejala, bukan penyakit tunggal.",
+  definition:"Demam adalah peningkatan suhu tubuh di atas rentang normal yang dapat terjadi sebagai bagian dari respons tubuh terhadap infeksi atau kondisi lain. Suhu dapat berubah menurut waktu, aktivitas, metode pengukuran, dan lokasi pengukuran.",
+  symptoms:["Tubuh terasa panas atau meriang","Menggigil","Berkeringat","Lemas","Sakit kepala atau nyeri badan pada sebagian kondisi"],
+  causes:"Infeksi adalah salah satu penyebab umum, tetapi demam juga dapat berkaitan dengan kondisi lain. Karena itu, penyebab perlu dilihat bersama gejala dan riwayatnya.",
+  care:["Istirahat dan cukup minum sesuai kebutuhan.","Gunakan alat ukur suhu bila tersedia agar tidak hanya mengandalkan rasa panas.","Perhatikan gejala lain dan perkembangan kondisi.","Bila demam menetap, sangat tinggi, atau disertai gejala mengkhawatirkan, cari nasihat tenaga kesehatan."],
+  warning:"Cari pertolongan segera jika demam disertai kesulitan bernapas, penurunan kesadaran, kejang, leher kaku, ruam yang mengkhawatirkan, atau kondisi memburuk cepat.",
+  source:"MedlinePlus — Fever; NHS — High temperature."},
+ {id:"allergy",cat:"Alergi & imun",icon:"🌿",name:"Alergi",short:"Respons sistem kekebalan yang berlebihan terhadap zat yang sebenarnya tidak berbahaya bagi kebanyakan orang, seperti serbuk sari atau bahan tertentu.",
+  definition:"Alergi terjadi ketika sistem kekebalan bereaksi terhadap zat tertentu yang disebut alergen. Reaksi dapat mengenai kulit, hidung, mata, saluran napas, atau sistem tubuh lain.",
+  symptoms:["Bersin dan hidung berair","Mata gatal atau berair","Gatal atau ruam pada kulit","Batuk atau mengi pada sebagian orang","Bengkak pada area tertentu pada reaksi tertentu"],
+  causes:"Pemicu dapat berupa serbuk sari, tungau debu, bulu/dander hewan, makanan, obat, atau bahan lain. Pemicu berbeda antarorang.",
+  care:["Kenali pemicu yang dicurigai dan kurangi paparan bila memungkinkan.","Jangan mencoba menguji alergi berat sendiri.","Jika keluhan berulang, konsultasikan untuk mengetahui pola dan pilihan penanganan yang sesuai."],
+  warning:"Bengkak pada bibir/lidah/tenggorokan, sulit bernapas, pusing berat, atau gejala cepat memburuk dapat menandakan reaksi alergi berat dan membutuhkan pertolongan darurat.",
+  source:"MedlinePlus — Allergies; CDC — Allergy basics."},
+ {id:"dehydration",cat:"Cairan",icon:"💧",name:"Dehidrasi",short:"Kondisi ketika tubuh kehilangan cairan lebih banyak daripada yang masuk sehingga keseimbangan cairan tubuh terganggu.",
+  definition:"Dehidrasi terjadi ketika tubuh kehilangan lebih banyak cairan daripada yang diganti. Hal ini dapat terjadi karena diare, muntah, berkeringat banyak, demam, aktivitas berat, atau asupan cairan yang tidak mencukupi.",
+  symptoms:["Haus","Mulut terasa kering","Buang air kecil lebih sedikit atau urin lebih pekat","Lemas atau pusing","Pada kondisi berat dapat terjadi kebingungan atau penurunan kesadaran"],
+  causes:"Kehilangan cairan melalui muntah, diare, keringat, demam, atau kondisi lain dapat berkontribusi. Kebutuhan cairan juga dipengaruhi lingkungan dan aktivitas.",
+  care:["Minum secara bertahap sesuai kemampuan.","Saat kehilangan cairan cukup banyak, penggantian cairan dan elektrolit dapat diperlukan sesuai kondisi.","Atasi penyebab kehilangan cairan dan pantau kondisi."],
+  warning:"Tidak mampu minum, sangat jarang buang air kecil, kebingungan, pingsan, kelemahan berat, atau kondisi memburuk cepat membutuhkan pertolongan medis.",
+  source:"WHO — Diarrhoeal disease; MedlinePlus — Dehydration."},
+ {id:"insomnia",cat:"Tidur",icon:"😴",name:"Insomnia / Sulit Tidur",short:"Kesulitan memulai tidur, mempertahankan tidur, atau mendapatkan tidur yang terasa cukup dan memengaruhi aktivitas sehari-hari.",
+  definition:"Insomnia adalah masalah tidur yang dapat berupa sulit mulai tidur, sering terbangun, atau bangun terlalu dini dan sulit tidur kembali. Jika berlangsung terus dan mengganggu fungsi sehari-hari, perlu dibicarakan dengan tenaga kesehatan.",
+  symptoms:["Sulit mulai tidur","Sering terbangun di malam hari","Bangun terlalu dini","Merasa tidak segar setelah tidur","Mengantuk atau sulit berkonsentrasi di siang hari"],
+  causes:"Dapat berkaitan dengan stres, jadwal tidur tidak teratur, lingkungan, kebiasaan, kafein, penggunaan perangkat sebelum tidur, atau kondisi kesehatan tertentu.",
+  care:["Buat jadwal tidur dan bangun yang konsisten.","Jaga kamar nyaman dan minim gangguan.","Hindari kafein terlalu dekat dengan waktu tidur bila sensitif.","Jika masalah menetap dan mengganggu aktivitas, konsultasikan."],
+  warning:"Jika masalah tidur disertai sesak saat tidur, pingsan, kebingungan, atau gangguan fungsi yang berat, cari bantuan kesehatan.",
+  source:"MedlinePlus — Insomnia; CDC — Sleep and Sleep Disorders."},
+ {id:"anemia",cat:"Darah & nutrisi",icon:"🩸",name:"Anemia",short:"Kondisi ketika darah memiliki kemampuan membawa oksigen yang tidak mencukupi, sering berkaitan dengan kadar hemoglobin yang rendah.",
+  definition:"Anemia adalah kondisi ketika tubuh tidak memiliki cukup sel darah merah sehat atau hemoglobin untuk membawa oksigen secara memadai. Anemia bukan satu penyakit tunggal; penyebabnya beragam sehingga pemeriksaan dapat diperlukan.",
+  symptoms:["Mudah lelah","Lemas","Pusing","Kulit tampak lebih pucat pada sebagian orang","Sesak saat aktivitas pada sebagian kondisi"],
+  causes:"Penyebab dapat mencakup kekurangan zat besi atau nutrisi tertentu, kehilangan darah, gangguan produksi sel darah, atau kondisi kronis. Tidak semua anemia disebabkan kekurangan zat besi.",
+  care:["Jangan langsung menyimpulkan penyebab dari rasa lelah saja.","Pola makan bergizi dan beragam mendukung kesehatan, tetapi suplemen zat besi tidak sebaiknya digunakan sembarangan.","Jika gejala menetap, konsultasikan agar penyebab dapat dinilai."],
+  warning:"Sesak berat, nyeri dada, pingsan, perdarahan banyak, atau kelemahan berat membutuhkan pertolongan segera.",
+  source:"MedlinePlus — Anemia; WHO — Anaemia."}
+];
+
+function renderDiseaseFilters(){
+  const box=document.getElementById("diseaseFilters"); if(!box)return;
+  const cats=["Semua",...new Set(diseaseData.map(d=>d.cat))];
+  box.innerHTML=cats.map((c,i)=>`<button class="filter-btn ${i===0?"active":""}" data-cat="${escapeHTML(c)}" onclick="filterDisease('${escapeHTML(c).replace(/'/g,"&#39;")}')">${escapeHTML(c)}</button>`).join("");
+}
+let activeDiseaseCategory="Semua";
+function filterDisease(cat){
+  activeDiseaseCategory=cat;
+  document.querySelectorAll("#diseaseFilters .filter-btn").forEach(b=>b.classList.toggle("active",b.dataset.cat===cat));
+  renderDiseaseLibrary();
+}
+function clearDiseaseSearch(){
+  const el=document.getElementById("diseaseSearch"); if(el)el.value="";
+  activeDiseaseCategory="Semua";
+  document.querySelectorAll("#diseaseFilters .filter-btn").forEach((b,i)=>b.classList.toggle("active",i===0));
+  renderDiseaseLibrary();
+}
+function renderDiseaseLibrary(){
+  const box=document.getElementById("diseaseGrid"); if(!box)return;
+  renderDiseaseFilters();
+  const q=(document.getElementById("diseaseSearch")?.value||"").toLowerCase().trim();
+  const list=diseaseData.filter(d=>(activeDiseaseCategory==="Semua"||d.cat===activeDiseaseCategory)&&(!q||(d.name+" "+d.short+" "+d.definition+" "+d.cat).toLowerCase().includes(q)));
+  if(!list.length){box.innerHTML='<div class="card empty" style="grid-column:1/-1">Topik belum ditemukan. Coba kata kunci lain.</div>';return}
+  box.innerHTML=list.map(d=>`
+    <article class="disease-card">
+      <div class="disease-card-top">
+        <span class="disease-icon">${d.icon}</span>
+        <span class="pill">${escapeHTML(d.cat)}</span>
+        <h3>${escapeHTML(d.name)}</h3>
+        <p>${escapeHTML(d.short)}</p>
+        <div class="disease-meta"><span class="topic-badge">📖 Pengertian</span><span class="topic-badge">🔎 Gejala</span><span class="topic-badge">⚠️ Tanda bahaya</span></div>
+      </div>
+      <div class="disease-card-bottom"><button class="disease-more" onclick="openDisease('${d.id}')">Baca penjelasan lengkap →</button></div>
+    </article>`).join("");
+}
+function openDisease(id){
+  const d=diseaseData.find(x=>x.id===id); if(!d)return;
+  document.getElementById("diseaseModalTitle").textContent=d.icon+" "+d.name;
+  document.getElementById("diseaseModalMeta").textContent=d.cat;
+  document.getElementById("diseaseModalBody").innerHTML=`
+    <div class="disease-definition"><b>💡 Apa itu ${escapeHTML(d.name)}?</b><br>${escapeHTML(d.definition)}</div>
+    <div class="detail-section"><h4>🔎 Gejala yang dapat muncul</h4><ul>${d.symptoms.map(x=>`<li>${escapeHTML(x)}</li>`).join("")}</ul></div>
+    <div class="detail-section"><h4>🧩 Penyebab / faktor yang dapat berkaitan</h4><p>${escapeHTML(d.causes)}</p></div>
+    <div class="detail-section"><h4>🌿 Apa yang dapat dilakukan?</h4><ul>${d.care.map(x=>`<li>${escapeHTML(x)}</li>`).join("")}</ul></div>
+    <div class="detail-warning"><b>🚨 Kapan perlu mencari bantuan?</b><br>${escapeHTML(d.warning)}</div>
+    <div class="detail-section"><h4>❗ Penting dipahami</h4><p>Gejala yang sama dapat muncul pada beberapa kondisi. Halaman ini membantu memahami istilah dan informasi umum, bukan memastikan penyakit yang sedang dialami seseorang.</p></div>
+    <div class="detail-source"><b>Rujukan:</b> ${escapeHTML(d.source)}</div>`;
+  document.getElementById("diseaseModal").classList.add("show");
+  recordActivity("library_detail:"+id);
+}
+
 const articles={
  nutrition:["Nutrisi Seimbang","Pola makan yang beragam dan cukup membantu memenuhi kebutuhan tubuh. Utamakan variasi makanan, makan secara teratur sesuai kebutuhan, dan hindari pembatasan ekstrem tanpa arahan tenaga kesehatan."],
  sleep:["Tidur","Rutinitas tidur yang konsisten, lingkungan yang nyaman, dan kebiasaan sebelum tidur yang tenang dapat mendukung istirahat. Bila masalah tidur menetap dan mengganggu aktivitas, pertimbangkan berkonsultasi dengan tenaga kesehatan."],
@@ -811,30 +981,100 @@ const topics=[
  ["🧘","Kesejahteraan","Istirahat, koneksi sosial, dan rutinitas seimbang mendukung kesejahteraan sehari-hari.","wellbeing"],
  ["🚨","Tanda Bahaya","Keluhan berat, memburuk cepat, atau kondisi darurat memerlukan perhatian medis.","warning"]
 ];
-let libraryLevel=0;
-function setLibraryLevel(level){libraryLevel=level;renderLibrary()}
 function renderLibrary(){
  const q=(document.getElementById("librarySearch").value||"").toLowerCase();
- const symptomList=topics.filter(t=>(t[1]+" "+t[2]).toLowerCase().includes(q));
- const conditions=conditionDatabase.filter(c=>(!libraryLevel||c.level===libraryLevel)&&(c.name+" "+c.description+" "+c.features.join(" ")).toLowerCase().includes(q));
- let html=`<div style="grid-column:1/-1"><div class="section" style="margin-top:0"><h3>Keluhan & topik umum</h3></div></div>`;
- html+=symptomList.length?symptomList.map(t=>`<div class="card library-card"><div class="icon">${t[0]}</div><h3>${t[1]}</h3><p>${t[2]}</p><button class="ghost read" onclick="${["stomach","headache","respiratory","asthma","eye","fatigue","fever","allergy","sleep","hydration"].includes(t[3])?`startFromLibrary('${t[3]}')`:`openArticle('${t[3]}')`}">Pelajari →</button></div>`).join(""):'';
- html+=`<div style="grid-column:1/-1"><div class="section"><h3>Master kondisi Healthly</h3><span class="badge-safe">${conditions.length} topik</span></div></div>`;
- html+=conditions.length?conditions.map(c=>`<div class="card library-card"><span class="pill">LEVEL ${c.level}</span><h3>${c.name}</h3><p>${c.description}</p><p class="muted"><b>Contoh:</b> ${c.features.slice(0,3).join(' • ')}</p><button class="ghost read" onclick="openCondition('${c.id}')">Buka materi →</button></div>`).join(""):`<div class="card empty" style="grid-column:1/-1">Topik kondisi tidak ditemukan.</div>`;
- document.getElementById("libraryGrid").innerHTML=html;
+ const list=topics.filter(t=>(t[1]+" "+t[2]).toLowerCase().includes(q));
+ document.getElementById("libraryGrid").innerHTML=list.length?list.map(t=>`
+ <div class="card library-card"><div class="icon">${t[0]}</div><h3>${t[1]}</h3><p>${t[2]}</p>
+ <button class="ghost read" onclick="${["stomach","headache","respiratory","asthma","eye","fatigue","fever","allergy","sleep","hydration"].includes(t[3])?`startFromLibrary('${t[3]}')`:`openArticle('${t[3]}')`}">Pelajari →</button></div>`).join(""):`<div class="card empty">Topik tidak ditemukan. Coba kata kunci lain.</div>`;
 }
 function startFromLibrary(key){go("symptoms");setTimeout(()=>startSymptom(key),50)}
-function searchLibrary(){go("library");document.getElementById("librarySearch").value=document.getElementById("homeSearch").value;renderLibrary()}
-
-function resetApp(){
- if(!confirm("Atur ulang semua data prototype di browser ini?"))return;
- localStorage.removeItem("healthlyData");updateAll();toast("Semua data di-reset");
+function searchLibrary(){
+  const q=(document.getElementById("homeSearch")?.value||"").trim();
+  go("library");
+  const el=document.getElementById("diseaseSearch");
+  if(el){el.value=q;renderDiseaseLibrary();}
 }
-
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){document.querySelectorAll(".modal.show").forEach(m=>m.classList.remove("show"))}});
-document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("show")}));
 
 renderLibrary();updateAll();showCategories();welcomeChat();
 </script>
+
+<script>
+(function(){
+  const REG="healthlyUserRegistry_v2", ACT="healthlyActivity_v2_";
+  const read=(k,f)=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(f))}catch(e){return f}};
+  const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+  const name=()=> (localStorage.getItem("healthlyCurrentUser")||localStorage.getItem("currentUser")||"").trim();
+  const key=n=>(n||"").toLowerCase().replace(/[^a-z0-9]+/g,"_").slice(0,60)||"guest";
+
+  window.healthlyV2={
+    ensureUser(n){
+      n=(n||"").trim(); if(!n)return;
+      const k=key(n), r=read(REG,{}), now=new Date().toISOString(), day=now.slice(0,10);
+      if(!r[k]) r[k]={name:n,firstVisit:now,lastVisit:now,visits:1,activeDays:{}};
+      else {r[k].name=n;r[k].lastVisit=now;r[k].visits=(r[k].visits||0)+1;}
+      r[k].activeDays=r[k].activeDays||{};r[k].activeDays[day]=true;
+      write(REG,r);localStorage.setItem("healthlyCurrentUser",n);
+    },
+    activity(type,detail){
+      const n=name();if(!n)return;
+      const k=ACT+key(n), a=read(k,[]);
+      a.push({time:new Date().toISOString(),type:type||"activity",detail:detail||""});
+      if(a.length>200)a.splice(0,a.length-200);write(k,a);this.ensureUser(n);
+    },
+    stats(){
+      const n=name(),r=n?read(REG,{})[key(n)]||{}:{};
+      return {days:Object.keys(r.activeDays||{}).length,visits:r.visits||0};
+    },
+    activities(){const n=name();return n?read(ACT+key(n),[]):[]},
+    exportData(){
+      const n=name();if(!n)return;
+      const payload={exportedAt:new Date().toISOString(),user:n,
+        profile:read("healthlyData_"+key(n),{}),activity:this.activities()};
+      const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+      const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+      a.download="healthly-"+key(n)+"-backup.json";a.click();
+      setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+    }
+  };
+
+  document.addEventListener("DOMContentLoaded",()=>{
+    const n=name();if(n)healthlyV2.ensureUser(n);
+  });
+
+  document.addEventListener("click",e=>{
+    const b=e.target.closest("button");if(!b)return;
+    const t=(b.innerText||b.textContent||"").trim().replace(/\s+/g," ").slice(0,80);
+    if(/tanya|chat/i.test(t))healthlyV2.activity("chat",t);
+    else if(/gejala|symptom/i.test(t))healthlyV2.activity("symptom",t);
+    else if(/obat|medicine/i.test(t))healthlyV2.activity("medication",t);
+    else if(/tidur|air|aktivitas|kebiasaan|habit/i.test(t))healthlyV2.activity("habit",t);
+    else if(/library|artikel|bacaan/i.test(t))healthlyV2.activity("library",t);
+  },true);
+})();
+</script>
+
+
+<script>
+(function(){
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function add(){
+ if(!window.healthlyV2||document.getElementById("healthlyV2Panel"))return;
+ const n=(localStorage.getItem("healthlyCurrentUser")||localStorage.getItem("currentUser")||"").trim();if(!n)return;
+ const host=document.querySelector("#home")||document.querySelector(".dashboard")||document.querySelector("main");if(!host)return;
+ const s=healthlyV2.stats(),p=document.createElement("section");p.id="healthlyV2Panel";p.className="hly-v2-panel";
+ p.innerHTML='<h3>Profil Healthly</h3><div class="hly-v2-meta">Halo, <strong>'+esc(n)+'</strong> 👋<br>Hari aktif: <strong>'+s.days+'</strong> · Sesi tercatat: <strong>'+s.visits+'</strong></div><div class="hly-v2-actions"><button class="hly-v2-btn" id="hlyExport" type="button">Backup data</button><button class="hly-v2-btn" id="hlyActivity" type="button">Lihat aktivitas</button></div><div class="hly-v2-note">Mode lokal: data tersimpan di browser/perangkat ini, bukan database online.</div>';
+ host.prepend(p);
+ document.getElementById("hlyExport").onclick=()=>{healthlyV2.exportData();healthlyV2.activity("backup","Membuat backup data")};
+ document.getElementById("hlyActivity").onclick=()=>{
+   const a=healthlyV2.activities().slice(-12).reverse();
+   alert(a.length?"Aktivitas terbaru:\n\n"+a.map(x=>new Date(x.time).toLocaleString("id-ID")+" — "+x.type+" — "+x.detail).join("\n"):"Belum ada aktivitas yang tercatat.");
+ };
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(add,400));else setTimeout(add,400);
+})();
+</script>
+
+<div id="healthlyLocalModeNotice" style="margin:18px auto;max-width:980px;padding:12px 16px;border-radius:12px;background:#f7f8fb;border:1px solid rgba(22,42,78,.10);font-size:.84rem;line-height:1.5;color:#162a4e"><strong>Mode lokal:</strong> Healthly versi ini adalah prototipe edukasi. Data akun dan aktivitas disimpan di browser/perangkat ini, bukan database online.</div>
 </body>
 </html>
