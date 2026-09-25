@@ -126,10 +126,43 @@ body{overflow-x:hidden}.mobile-menu{display:none}
 .health-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .health-grid .result-item{height:100%}
 @media(max-width:700px){.response-grid,.health-grid{grid-template-columns:1fr}.hero:after{display:none}}
+
+/* ===== LOGIN GATE ===== */
+body.auth-locked{overflow:hidden}
+.auth-screen{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#edf7f4,#f7faf9)}
+.auth-screen.hidden{display:none}
+.auth-card{width:min(430px,100%);background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:0 20px 60px rgba(23,32,51,.12)}
+.auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}.auth-logo{width:48px;height:48px;border-radius:15px;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:23px}
+.auth-card h2{margin:0 0 7px;font-size:28px}.auth-card>p{margin:0 0 22px;color:var(--muted);line-height:1.55}
+.auth-field{margin:14px 0}.auth-field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}.auth-field input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;outline:0;background:#fbfcfc}.auth-field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(47,125,109,.10)}
+.password-wrap{position:relative}.password-wrap input{padding-right:48px}.password-toggle{position:absolute;right:7px;top:7px;width:38px;height:38px;border:0;background:transparent;border-radius:9px}
+.auth-options{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:13px 0 18px;font-size:12px;color:var(--muted)}.auth-options label{display:flex;align-items:center;gap:7px;cursor:pointer}.auth-options input{accent-color:var(--primary)}
+.auth-button{width:100%;border:0;border-radius:12px;padding:13px 16px;background:var(--primary-dark);color:#fff;font-weight:800}.auth-button:hover{filter:brightness(1.05)}
+.auth-message{min-height:20px;margin:12px 0 0;font-size:12px;text-align:center}.auth-message.error{color:var(--danger)}.auth-message.success{color:var(--primary-dark)}
+.auth-demo{margin-top:20px;padding:12px 14px;border-radius:12px;background:var(--soft);font-size:11px;color:var(--primary-dark);line-height:1.55}.auth-demo b{display:block;margin-bottom:3px}.auth-footer{margin-top:18px;text-align:center;font-size:11px;color:var(--muted)}
+.user-actions{display:flex;align-items:center;gap:8px}.user-name{font-size:12px;font-weight:800;background:var(--soft);color:var(--primary-dark);padding:7px 10px;border-radius:999px}.logout-btn{border:1px solid var(--line);background:#fff;color:var(--text);padding:8px 11px;border-radius:10px;font-size:12px;font-weight:800}.logout-btn:hover{background:#f7faf8}
+.app.auth-hidden{display:none}
+@media(max-width:520px){.auth-card{padding:23px;border-radius:20px}.user-name{display:none}.auth-options{align-items:flex-start}}
 </style>
 </head>
-<body>
-<div class="app">
+<body class="auth-locked">
+<div class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div class="auth-brand"><div class="auth-logo">♥</div><div><strong style="font-size:19px">Healthly</strong><div style="font-size:11px;color:var(--muted)">Teman Kesehatan Digital</div></div></div>
+    <h2>Masuk ke Healthly</h2>
+    <p>Masuk terlebih dahulu untuk membuka dasbor dan menyimpan catatanmu di perangkat ini.</p>
+    <form id="authForm" autocomplete="on">
+      <div class="auth-field"><label for="authUsername">Username</label><input id="authUsername" name="username" autocomplete="username" placeholder="Masukkan username" required></div>
+      <div class="auth-field"><label for="authPassword">Password</label><div class="password-wrap"><input id="authPassword" name="password" type="password" autocomplete="current-password" placeholder="Masukkan password" required><button class="password-toggle" type="button" id="authToggle" aria-label="Tampilkan password">👁️</button></div></div>
+      <div class="auth-options"><label><input type="checkbox" id="authRemember"> Ingat saya</label><span>Prototype lokal</span></div>
+      <button class="auth-button" type="submit">Masuk ke Dashboard →</button>
+      <div class="auth-message" id="authMessage" aria-live="polite"></div>
+    </form>
+    <div class="auth-demo"><b>Akun demo</b>Username: <strong>demo</strong> &nbsp;•&nbsp; Password: <strong>healthly123</strong></div>
+    <div class="auth-footer">Healthly adalah platform edukasi kesehatan, bukan alat diagnosis.</div>
+  </div>
+</div>
+<div class="app auth-hidden" id="app">
 <button class="mobile-menu" id="mobileMenu" aria-label="Buka menu">☰</button><div class="nav-overlay" id="navOverlay"></div>
 <aside class="sidebar">
   <div class="brand"><div class="logo">♥</div><div><h1>Healthly</h1><small>Teman Kesehatan</small></div></div>
@@ -152,7 +185,7 @@ body{overflow-x:hidden}.mobile-menu{display:none}
 <main class="main">
 <div class="topbar">
   <div><h2 id="pageTitle">Dasbor Kesehatan</h2><p id="pageSub">Langkah kecil yang konsisten bisa berarti.</p></div>
-  <div class="tag">PROTOTIPE • EDUKASI</div>
+  <div class="user-actions"><span class="user-name" id="userName">Pengguna</span><button class="logout-btn" id="logoutBtn" type="button">Keluar</button><div class="tag">PROTOTIPE • EDUKASI</div></div>
 </div>
 
 <section id="home" class="page active">
@@ -376,7 +409,6 @@ body{overflow-x:hidden}.mobile-menu{display:none}
     <input class="form-input" id="librarySearch" oninput="renderLibrary()" placeholder="Cari: tidur, batuk, nutrisi, hidrasi, dll.">
   </div>
   <div id="libraryGrid" class="grid g3" style="margin-top:15px"></div>
-  <div class="card" style="margin-top:15px"><div class="section" style="margin-top:0"><h3>Basis Pengetahuan Healthly MAX</h3><span class="badge-safe">Safety-first • Non-diagnostic</span></div><p class="muted">Basis pengetahuan memisahkan keluhan, kondisi, tanda bahaya, edukasi obat, perawatan suportif, dan sumber. Mesin tidak menyimpulkan diagnosis dari satu gejala.</p><div class="mini-grid" style="margin-top:12px"><div class="mini"><b>47+</b><br><span class="muted">keluhan sehari-hari</span></div><div class="mini"><b>40</b><br><span class="muted">topik kondisi bertingkat</span></div><div class="mini"><b>10</b><br><span class="muted">alur panduan gejala</span></div><div class="mini"><b>7</b><br><span class="muted">kelompok sumber rujukan</span></div></div></div>
 </section>
 
 <div class="card" style="margin:30px auto 0;max-width:1180px">
@@ -424,6 +456,53 @@ const pageMeta={
  services:["Layanan Kesehatan","Pahami pilihan bantuan dan jalur layanan kesehatan."]
 };
 
+/* ===== AUTHENTICATION / LOGIN GATE ===== */
+const DEMO_ACCOUNTS={demo:{password:"healthly123",name:"Pengguna Demo"}};
+const AUTH_KEY="healthlyAuth";
+const REMEMBER_KEY="healthlyRemember";
+const authScreen=document.getElementById("authScreen");
+const app=document.getElementById("app");
+const authForm=document.getElementById("authForm");
+const authUsername=document.getElementById("authUsername");
+const authPassword=document.getElementById("authPassword");
+const authToggle=document.getElementById("authToggle");
+const authRemember=document.getElementById("authRemember");
+const authMessage=document.getElementById("authMessage");
+const userName=document.getElementById("userName");
+const logoutBtn=document.getElementById("logoutBtn");
+
+function getCurrentUser(){
+  try{return JSON.parse(localStorage.getItem(AUTH_KEY)||"null")}catch(e){return null}
+}
+function getCurrentUserKey(){
+  const u=getCurrentUser();
+  return u&&u.username?u.username.toLowerCase().replace(/[^a-z0-9_-]/g,"_"):"guest";
+}
+function setAuthMessage(msg,type=""){authMessage.textContent=msg;authMessage.className="auth-message"+(type?" "+type:"")}
+function openDashboard(){
+  const user=getCurrentUser();
+  if(!user){lockDashboard();return}
+  authScreen.classList.add("hidden");app.classList.remove("auth-hidden");document.body.classList.remove("auth-locked");
+  userName.textContent="Halo, "+(user.name||user.username);
+  updateAll();
+}
+function lockDashboard(){
+  app.classList.add("auth-hidden");authScreen.classList.remove("hidden");document.body.classList.add("auth-locked");
+}
+function login(username,password,remember){
+  const key=username.trim().toLowerCase();const account=DEMO_ACCOUNTS[key];
+  if(!account||account.password!==password){setAuthMessage("Username atau password salah.","error");return false}
+  localStorage.setItem(AUTH_KEY,JSON.stringify({username:key,name:account.name}));
+  if(remember)localStorage.setItem(REMEMBER_KEY,key);else localStorage.removeItem(REMEMBER_KEY);
+  setAuthMessage("Login berhasil. Membuka dashboard…","success");
+  setTimeout(openDashboard,180);return true;
+}
+authForm.addEventListener("submit",e=>{e.preventDefault();login(authUsername.value,authPassword.value,authRemember.checked)});
+authToggle.addEventListener("click",()=>{const show=authPassword.type==="password";authPassword.type=show?"text":"password";authToggle.textContent=show?"🙈":"👁️";authToggle.setAttribute("aria-label",show?"Sembunyikan password":"Tampilkan password")});
+logoutBtn.addEventListener("click",()=>{localStorage.removeItem(AUTH_KEY);lockDashboard();authPassword.value="";setAuthMessage("Kamu sudah keluar dari Healthly.","success");authUsername.value=localStorage.getItem(REMEMBER_KEY)||"";authPassword.focus()});
+const rememberedUser=localStorage.getItem(REMEMBER_KEY);if(rememberedUser){authUsername.value=rememberedUser;authRemember.checked=true}
+openDashboard();
+
 const mobileMenu=document.getElementById('mobileMenu');
 const sidebar=document.querySelector('.sidebar');
 const navOverlay=document.getElementById('navOverlay');
@@ -451,7 +530,7 @@ function toast(msg){
  setTimeout(()=>el.classList.remove("show"),1800);
 }
 function getData(){
- const saved=localStorage.getItem("healthlyData");
+ const saved=localStorage.getItem("healthlyData_" + getCurrentUserKey());
  if(saved){
    try{
      const d=JSON.parse(saved);
@@ -473,7 +552,7 @@ function getData(){
    ]
  }));
 }
-function saveData(d){localStorage.setItem("healthlyData",JSON.stringify(d));updateAll();}
+function saveData(d){localStorage.setItem("healthlyData_" + getCurrentUserKey(),JSON.stringify(d));updateAll();}
 function updateAll(){
  const d=getData(),done=d.habits.filter(h=>h.done).length,total=d.habits.length;
  document.getElementById("homeAirMinum").textContent=d.water+" / 8";
@@ -516,99 +595,6 @@ function deleteHabit(i){if(!confirm("Hapus habit ini?"))return;let d=getData();d
 function closeModal(id){document.getElementById(id).classList.remove("show")}
 function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 
-
-/* ================= HEALTHLY MAX — FINAL KNOWLEDGE ENGINE =================
-   Safety-first, educational, non-diagnostic knowledge layer.
-*/
-const HEALTHLY_SOURCES=[
- {org:'WHO',title:'Diarrhoeal disease',url:'https://www.who.int/news-room/fact-sheets/detail/diarrhoeal-disease',topics:['diare','dehidrasi']},
- {org:'WHO',title:'Dengue and severe dengue',url:'https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue',topics:['dengue','tanda bahaya']},
- {org:'MedlinePlus',title:'Medical emergencies',url:'https://medlineplus.gov/medicalemergencies.html',topics:['tanda bahaya','darurat']},
- {org:'Kemenkes RI',title:'Pedoman Nasional Pelayanan Kedokteran',url:'https://www.kemkes.go.id/',topics:['stroke','diabetes','hipertensi','pneumonia','ACS']},
- {org:'CDC',title:'Health information',url:'https://www.cdc.gov/',topics:['infeksi','pencegahan']},
- {org:'FDA',title:'Drug safety information',url:'https://www.fda.gov/drugs',topics:['obat']},
- {org:'NCCIH',title:'Herbs at a Glance',url:'https://www.nccih.nih.gov/health/herbsataglance',topics:['alami','herbal']}
-];
-
-const conditionDatabase=[
- ['common_cold','Common Cold','pernapasan','Pilek biasa umumnya menimbulkan hidung berair/tersumbat, bersin, dan sakit tenggorokan. Gejala dapat tumpang tindih dengan infeksi lain.',['pilek','hidung berair','bersin','common cold']],
- ['influenza','Influenza','pernapasan','Influenza dapat menyebabkan demam, batuk, nyeri tubuh, sakit kepala, dan rasa lelah.',['flu','influenza']],
- ['ispa','ISPA','pernapasan','ISPA adalah kelompok infeksi saluran pernapasan akut. Gejalanya bergantung pada bagian saluran napas dan penyebabnya.',['ispa']],
- ['pharyngitis','Faringitis','pernapasan','Faringitis adalah peradangan pada tenggorokan yang dapat disebabkan infeksi atau iritasi.',['faringitis','radang tenggorokan']],
- ['gastroenteritis','Gastroenteritis','pencernaan','Gastroenteritis dapat menyebabkan diare, mual, muntah, dan kram perut. Risiko utama pada sebagian kasus adalah kehilangan cairan.',['gastroenteritis','muntah diare']],
- ['acute_diarrhea','Diare Akut','pencernaan','Diare akut ditandai BAB cair/lebih sering dan dapat disebabkan infeksi atau faktor lain. Perhatian utama adalah dehidrasi.',['diare akut','diare']],
- ['constipation','Konstipasi','pencernaan','Konstipasi dapat berupa BAB yang jarang atau sulit dengan tinja keras. Pola makan, cairan, aktivitas, dan faktor lain dapat berperan.',['konstipasi','sembelit','susah bab']],
- ['dyspepsia','Dispepsia','pencernaan','Dispepsia adalah kumpulan keluhan seperti rasa penuh, cepat kenyang, nyeri atau tidak nyaman di perut bagian atas.',['dispepsia','begah','cepat kenyang']],
- ['gerd','GERD','pencernaan','GERD terjadi ketika isi lambung berulang naik ke kerongkongan dan dapat menimbulkan rasa panas di dada atau regurgitasi.',['gerd','asam lambung','heartburn','refluks']],
- ['migraine','Migrain','saraf','Migrain dapat menyebabkan sakit kepala berdenyut dan pada sebagian orang disertai mual atau sensitif terhadap cahaya/suara.',['migrain','migraine']],
- ['allergic_rhinitis','Rinitis Alergi','alergi','Rinitis alergi dapat menyebabkan bersin, hidung berair/tersumbat, dan gatal pada hidung atau mata setelah paparan pemicu tertentu.',['rinitis alergi','alergi hidung']],
- ['dermatitis','Dermatitis','kulit','Dermatitis adalah peradangan kulit yang dapat menyebabkan gatal, kering, kemerahan, atau iritasi.',['dermatitis','eksim']],
- ['conjunctivitis','Konjungtivitis','mata','Konjungtivitis adalah peradangan selaput yang melapisi bagian putih mata dan kelopak bagian dalam.',['konjungtivitis','belekan']],
- ['asthma','Asma','pernapasan','Asma dapat menyebabkan mengi, sesak, batuk, dan rasa dada tertekan. Derajat keluhan perlu dinilai secara klinis.',['asma','mengi']],
- ['anemia','Anemia','darah','Anemia adalah kondisi ketika kemampuan darah membawa oksigen berkurang; keluhan dapat berupa lelah atau lemah dan penyebabnya beragam.',['anemia','kurang darah']],
- ['scabies','Skabies','kulit','Skabies adalah infestasi tungau yang biasanya menyebabkan gatal, sering lebih mengganggu pada malam hari.',['skabies','kudis']],
- ['hfmd','HFMD','infeksi','Hand, foot and mouth disease dapat menyebabkan demam dan luka di mulut serta ruam pada tangan/kaki, terutama pada anak.',['hfmd','tangan kaki mulut']],
- ['typhoid','Tifoid','infeksi','Demam tifoid adalah infeksi yang dapat menyebabkan demam dan keluhan pencernaan. Diagnosis memerlukan penilaian tenaga kesehatan.',['tifoid','tipes']],
- ['uti','Infeksi Saluran Kemih','urinaria','ISK dapat menyebabkan nyeri saat buang air kecil, sering ingin berkemih, atau rasa tidak nyaman di area kemih.',['isk','infeksi saluran kemih','anyang-anyangan']],
- ['otitis_media','Otitis Media','telinga','Otitis media adalah infeksi/peradangan telinga tengah dan dapat menimbulkan nyeri telinga, demam, atau gangguan pendengaran sementara.',['otitis','sakit telinga']],
- ['dengue','Dengue/DBD','infeksi','Dengue dapat menyebabkan demam tinggi, sakit kepala, nyeri tubuh, mual/muntah, dan ruam. Tanda bahaya membutuhkan pertolongan segera.',['dengue','dbd','demam berdarah']],
- ['pneumonia','Pneumonia','pernapasan','Pneumonia adalah infeksi paru yang dapat menyebabkan batuk, demam, dan kesulitan bernapas.',['pneumonia','infeksi paru']],
- ['tb','Tuberkulosis (TBC)','infeksi','TBC adalah penyakit infeksi yang paling sering mengenai paru dan dapat menimbulkan batuk berkepanjangan serta gejala umum lain.',['tbc','tuberkulosis','batuk lama']],
- ['severe_dehydration','Dehidrasi Berat','darurat','Kehilangan cairan berat dapat mengganggu fungsi tubuh dan memerlukan penilaian medis segera.',['dehidrasi berat']],
- ['meningitis','Meningitis','darurat','Meningitis adalah peradangan selaput di sekitar otak dan sumsum tulang belakang; kondisi ini dapat menjadi kegawatdaruratan.',['meningitis']],
- ['sepsis','Sepsis','darurat','Sepsis adalah respons tubuh yang mengancam nyawa terhadap infeksi dan memerlukan penanganan segera.',['sepsis']],
- ['stroke','Stroke','saraf','Stroke terjadi ketika aliran darah ke bagian otak terganggu atau terjadi perdarahan. Gejala mendadak memerlukan pertolongan segera.',['stroke','wajah mencong','bicara pelo']],
- ['acs','Sindrom Koroner Akut','jantung','Sindrom koroner akut mencakup kondisi akibat berkurangnya aliran darah ke otot jantung dan memerlukan evaluasi medis segera.',['serangan jantung','nyeri dada','acs']],
- ['heart_failure','Gagal Jantung','jantung','Gagal jantung adalah kondisi ketika jantung tidak mampu memenuhi kebutuhan tubuh secara efektif; dapat menyebabkan sesak dan bengkak.',['gagal jantung']],
- ['hypertensive_crisis','Krisis Hipertensi','jantung','Tekanan darah yang sangat tinggi disertai gejala tertentu dapat menjadi keadaan gawat dan perlu evaluasi segera.',['krisis hipertensi']],
- ['diabetes','Diabetes Melitus','metabolik','Diabetes adalah gangguan kadar glukosa darah yang menetap dan memerlukan pengelolaan serta pemantauan tenaga kesehatan.',['diabetes','gula darah']],
- ['ckd','Penyakit Ginjal Kronis','ginjal','Penyakit ginjal kronis adalah penurunan fungsi/kerusakan ginjal yang menetap dan perlu pemantauan medis.',['penyakit ginjal kronis','gagal ginjal kronis']],
- ['copd','PPOK','pernapasan','PPOK menyebabkan hambatan aliran udara yang menetap dan dapat menimbulkan batuk serta sesak.',['ppok','copd']],
- ['severe_asthma','Serangan Asma Berat','darurat','Serangan asma berat dapat menyebabkan kesulitan bernapas yang nyata dan membutuhkan pertolongan medis segera.',['serangan asma berat']],
- ['anaphylaxis','Anafilaksis','darurat','Anafilaksis adalah reaksi alergi berat yang dapat berkembang cepat dan mengganggu pernapasan atau sirkulasi.',['anafilaksis','alergi berat']],
- ['rabies_exposure','Paparan Rabies','infeksi','Paparan hewan yang berpotensi membawa rabies perlu dinilai segera karena pencegahan setelah pajanan bergantung pada penilaian medis.',['rabies','digigit anjing','digigit kucing']],
- ['malaria','Malaria','infeksi','Malaria adalah penyakit akibat parasit yang ditularkan nyamuk tertentu dan dapat menjadi berat.',['malaria']],
- ['acute_hepatitis','Hepatitis Akut','hati','Hepatitis akut adalah peradangan hati yang dapat disebabkan beberapa virus atau penyebab lain.',['hepatitis']],
- ['appendicitis','Apendisitis','pencernaan','Apendisitis adalah peradangan usus buntu yang dapat menyebabkan nyeri perut dan memerlukan penilaian medis.',['apendisitis','usus buntu']],
- ['gi_bleeding','Perdarahan Saluran Cerna','darurat','Perdarahan saluran cerna dapat tampak sebagai muntah darah atau tinja hitam/berdarah dan membutuhkan evaluasi medis.',['muntah darah','tinja hitam','BAB berdarah']]
-].map(x=>({id:x[0],name:x[1],category:x[2],description:x[3],aliases:x[4],type:'condition'}));
-
-const redFlagPatterns=[
- /sulit bernapas|sesak berat|tidak bisa bernapas|napas sangat sulit/i,
- /pingsan|tidak sadar|sulit dibangunkan|kebingungan mendadak/i,
- /nyeri dada.*berat|dada.*tertekan.*berat/i,
- /muntah darah|batuk darah|tinja hitam|bab berdarah/i,
- /wajah mencong|bicara pelo|lengan.*lemah|kelemahan mendadak/i,
- /kejang/i,
- /nyeri kepala.*terburuk|sakit kepala.*sangat hebat.*mendadak/i,
- /penglihatan.*hilang|penglihatan.*menurun.*mendadak/i,
- /bengkak.*bibir|bengkak.*lidah.*sesak/i,
- /kondisi.*memburuk cepat|makin parah.*cepat/i
-];
-function safetyScan(text){
- const hits=redFlagPatterns.filter(r=>r.test(text));
- return {urgent:hits.length>0,hits:hits.length};
-}
-function findKnowledgeTopics(text){
- const t=text.toLowerCase();
- return conditionDatabase.map(c=>({c,score:c.aliases.reduce((n,a)=>n+(t.includes(a)?(a.length>5?3:1):0),0)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,4);
-}
-function knowledgeSourceHTML(topic){
- const id=typeof topic==='string'?topic:(topic?.id||'');
- const keys=(id==='acute_diarrhea'||id==='gastroenteritis'||id==='severe_dehydration')?['diare','dehidrasi']:(id==='dengue')?['dengue','tanda bahaya']:['obat'];
- const src=HEALTHLY_SOURCES.filter(s=>s.topics.some(x=>keys.includes(x))).slice(0,2);
- return src.length?`<div class="source-note"><b>Rujukan:</b> ${src.map(s=>`<a href="${s.url}" target="_blank" rel="noopener">${s.org} — ${s.title}</a>`).join(' · ')}</div>`:'';
-}
-function buildKnowledgeResponse(q,base){
- const safety=safetyScan(q), topics=findKnowledgeTopics(q);
- if(safety.urgent){
-   return `<b>Prioritas keselamatan 🚨</b><p>Ada kata/gejala dalam pesanmu yang termasuk tanda bahaya. Healthly tidak bisa menilai tingkat kegawatan lewat chat.</p><div class="warning"><b>Cari pertolongan medis segera.</b><br>Jika gejalanya sedang terjadi sekarang atau memburuk cepat, jangan menunggu jawaban Healthly. Beri tahu orang dewasa tepercaya dan gunakan layanan kesehatan/darurat yang sesuai.</div><p class="ai-note">Healthly tetap bersifat edukatif dan tidak dapat menggantikan pemeriksaan langsung.</p>`;
- }
- let related=topics.map(x=>`<span class="topic-badge">${escapeHTML(x.c.name)}</span>`).join('');
- let knowledge=topics.length?`<div class="info"><b>Topik edukasi yang mungkin relevan:</b> ${related}<br><span class="source-note">Ini bukan diagnosis; topik ditampilkan karena kata yang digunakan mirip dengan istilah dalam basis pengetahuan.</span></div>`:'';
- return formatResponse({...base,details:{...(base.details||{}),paired:base.details?.paired||[],knowledgeTopics:topics}})+knowledge+(topics.length?knowledgeSourceHTML(topics[0].c.id):'');
-}
-
 const demoResponses=[
  {id:'stomach',keys:['perut','mual','maag','kembung','begah','mules','mulas','asam lambung','heartburn','perih di lambung'],title:'Keluhan perut / mual',summary:'Mual, kembung, rasa begah, atau tidak nyaman di perut dapat berkaitan dengan berbagai hal. Percakapan ini tidak cukup untuk memastikan penyebab.',factors:['pola makan atau makanan tertentu yang memicu keluhan','gangguan pencernaan sementara','infeksi saluran cerna, terutama bila disertai diare atau muntah','iritasi atau keluhan lambung pada sebagian orang'],steps:['minum sedikit-sedikit tetapi lebih sering bila terasa mual','pilih makanan yang lebih ringan jika lebih mudah ditoleransi','catat makanan, waktu makan, dan kapan keluhan muncul','perhatikan apakah keluhan membaik atau justru semakin berat'],red:['nyeri perut sangat berat atau muncul mendadak','muntah darah atau tinja berdarah/hitam','sulit bernapas, pingsan, atau kondisi memburuk cepat'],follow:'Apakah keluhannya lebih terasa setelah makan, saat perut kosong, atau tidak terkait waktu makan?'} ,
  {id:'diarrhea',keys:['diare','mencret','berak cair','buang air cair','bab cair'],title:'Diare',summary:'Diare sering berkaitan dengan gangguan atau infeksi saluran cerna. Hal penting yang perlu diperhatikan adalah kehilangan cairan dan tanda dehidrasi.',factors:['infeksi saluran cerna','makanan atau air yang terkontaminasi','perubahan atau gangguan pencernaan lainnya'],steps:['utamakan cairan; larutan oralit dapat digunakan sesuai petunjuk kemasan','tetap makan sesuai kemampuan dan toleransi tubuh','perhatikan frekuensi buang air dan tanda kekurangan cairan'],red:['darah pada tinja','sulit minum atau tanda dehidrasi','keluhan menetap, sangat berat, atau kondisi memburuk'],follow:'Seberapa sering kamu buang air hari ini, dan apakah kamu masih bisa minum dengan baik?'},
@@ -636,15 +622,13 @@ function detectDetails(q){
  if(/\b(setelah|habis|sesudah|karena|kena|terpapar)\b/.test(t)) context.push('kemungkinan pemicu');
  return {duration:duration.trim(),severe,paired,context};
 }
-function getBaseDemoResponse(q){
+function getDemoResponse(q){
  const t=q.toLowerCase(); const d=detectDetails(q);
  if(d.paired.length===0) return {title:'Aku belum menangkap keluhan utamanya',summary:'Aku bisa membantu lebih baik kalau kamu menyebutkan keluhan yang paling mengganggu dengan bahasa sehari-hari. Aku tidak bisa memastikan diagnosis lewat chat.',factors:['keluhan utama yang paling mengganggu','sejak kapan keluhan terasa','gejala lain yang muncul bersamaan'],steps:['contoh: “mata aku berair dan perih sejak pagi”','contoh: “aku punya asma dan sekarang agak sesak”','kalau ada, tulis juga apa yang membuat keluhan membaik atau memburuk'],red:['sulit bernapas, pingsan, perdarahan, nyeri sangat berat, gangguan penglihatan, atau kondisi memburuk cepat'],follow:'Apa keluhan utama yang paling ingin kamu pahami sekarang?',details:d};
  let ranked=d.paired.map(r=>({r,score:r.keys.reduce((n,k)=>n+(t.includes(k)?(k.length>5?3:1):0),0)})).sort((a,b)=>b.score-a.score);
  const best=ranked[0].r;
  return {...best,details:d,related:ranked.slice(1,3).map(x=>x.r)};
 }
-function getDemoResponse(q){ const base=getBaseDemoResponse(q); return buildKnowledgeResponse(q,base); }
-
 function formatResponse(r){
  const d=r.details||{};
  let context='';
@@ -778,11 +762,8 @@ function searchLibrary(){go("library");document.getElementById("librarySearch").
 
 function resetApp(){
  if(!confirm("Atur ulang semua data prototype di browser ini?"))return;
- localStorage.removeItem("healthlyData");updateAll();toast("Semua data di-reset");
+ localStorage.removeItem("healthlyData_" + getCurrentUserKey());updateAll();toast("Data akun ini sudah di-reset");
 }
-
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){document.querySelectorAll(".modal.show").forEach(m=>m.classList.remove("show"))}});
-document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("show")}));
 
 renderLibrary();updateAll();showCategories();welcomeChat();
 </script>
