@@ -145,21 +145,16 @@ body.auth-locked{overflow:hidden}
 @media(max-width:520px){.auth-card{padding:23px;border-radius:20px}.user-name{display:none}.auth-options{align-items:flex-start}}
 </style>
 
-<style id="healthly-v2-css">
-.auth-switch{display:flex;gap:6px;background:#f3f7f5;padding:5px;border-radius:12px;margin:0 0 18px}
-.auth-switch button{flex:1;border:0;background:transparent;padding:10px;border-radius:9px;font-weight:800;color:#61706c}
-.auth-switch button.active{background:#fff;color:var(--primary-dark);box-shadow:0 3px 10px rgba(23,32,51,.07)}
-.auth-extra{display:none}.auth-extra.show{display:block}
-.level-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:15px}
-.level-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px}
-.level-card b{font-size:13px}.level-card span{display:block;color:var(--muted);font-size:11px;margin-top:5px;line-height:1.45}
-.kb-count{font-size:12px;color:var(--muted);font-weight:700}
-.safety-banner{border:1px solid #efb7b7;background:#fff1f1;border-left:5px solid var(--danger);padding:16px;border-radius:14px;margin:10px 0;line-height:1.6}
-.safe-banner{border:1px solid #cfe6dc;background:#eff9f5;border-left:5px solid var(--primary);padding:15px;border-radius:14px;line-height:1.6}
-.history-list{display:grid;gap:9px}.history-row{display:flex;justify-content:space-between;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fbfcfc}
-.med-search{margin:15px 0}.medicine-card h3{margin-bottom:5px}.compare-selects{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:700px){.level-strip{grid-template-columns:1fr 1fr}.compare-selects{grid-template-columns:1fr}}
+<style id="healthly-v2-polish">
+:focus-visible{outline:3px solid rgba(246,205,41,.9);outline-offset:3px}
+.hly-v2-panel{margin:18px 0;padding:18px;border:1px solid rgba(22,42,78,.12);border-radius:18px;background:linear-gradient(135deg,rgba(246,205,41,.10),rgba(22,42,78,.04))}
+.hly-v2-panel h3{margin:0 0 8px}.hly-v2-meta{font-size:.9rem;opacity:.78;line-height:1.5}
+.hly-v2-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.hly-v2-btn{border:1px solid rgba(22,42,78,.22);background:#fff;color:#162a4e;border-radius:10px;padding:9px 13px;cursor:pointer;font:inherit}
+.hly-v2-note{margin-top:10px;font-size:.82rem;opacity:.72}
+@media(max-width:600px){.hly-v2-actions{display:grid;grid-template-columns:1fr}.hly-v2-btn{width:100%}}
 </style>
+
 </head>
 <body class="auth-locked">
 <div class="auth-screen" id="authScreen">
@@ -239,17 +234,6 @@ body.auth-locked{overflow:hidden}
     <div class="card"><span class="muted">🎯 Kebiasaan</span><div class="stat" id="homeKebiasaan">0 / 3</div><p>Selesai hari ini</p></div>
   </div>
 
-  <div class="section"><h3>Perjalanan Healthly</h3><span class="kb-count">Fondasi → pengetahuan → keselamatan → pendamping</span></div>
-  <div class="level-strip">
-    <div class="level-card"><b>01 • Fondasi</b><span>Akun lokal, login, register, logout & data terpisah.</span></div>
-    <div class="level-card"><b>02 • Dashboard</b><span>Ringkasan hari ini, habit, tracker & riwayat.</span></div>
-    <div class="level-card"><b>03 • Knowledge</b><span>Keluhan, kondisi, artikel & sumber resmi.</span></div>
-    <div class="level-card"><b>04 • Safety</b><span>Red flag dan jalur mencari bantuan.</span></div>
-    <div class="level-card"><b>05 • Obat</b><span>Zat aktif, kegunaan umum, perhatian & duplikasi.</span></div>
-    <div class="level-card"><b>06 • Assistant</b><span>Keluhan → red flag → klarifikasi → edukasi.</span></div>
-    <div class="level-card"><b>07 • Polish</b><span>Responsive, aksesibel, error state & performa.</span></div>
-    <div class="level-card"><b>Healthly</b><span>Bukan diagnosis atau resep. Keselamatan selalu diutamakan.</span></div>
-  </div>
   <div class="section"><h3>Cek Kesehatan Cepat</h3></div>
   <div class="card">
     <p>Kalau kamu sedang mengalami keluhan, gunakan Panduan Gejala untuk memahami informasi umum terlebih dahulu.</p>
@@ -428,7 +412,7 @@ body.auth-locked{overflow:hidden}
     <textarea id="healthNotes" placeholder="Contoh: hari ini merasa lebih segar setelah tidur cukup..."></textarea>
     <button class="primary" onclick="saveNotes()" style="margin-top:10px">Simpan catatan</button>
   </div>
-  <div class="info"><b>Privasi prototipe:</b> data tracker dan catatan menggunakan localStorage di perangkat/browser ini. Akun dan data Healthly pada prototype ini tersimpan lokal di browser perangkat ini. Belum ada server/database. Hindari memasukkan informasi kesehatan yang sangat sensitif.<br><button class="danger-btn" onclick="resetApp()" style="margin-top:10px">Atur ulang semua data lokal</button></div>
+  <div class="info"><b>Privasi prototipe:</b> data tracker dan catatan menggunakan localStorage di perangkat/browser ini. Belum ada akun, server, atau database. Hindari memasukkan informasi identitas atau data kesehatan yang sangat sensitif ke dalam prototipe ini.<br><button class="danger-btn" onclick="resetApp()" style="margin-top:10px">Atur ulang semua data lokal</button></div>
 </section>
 
 <section id="library" class="page">
@@ -795,324 +779,82 @@ function resetApp(){
 renderLibrary();updateAll();showCategories();welcomeChat();
 </script>
 
-<div class="modal" id="compareModal"><div class="modal-box"><div class="modal-head"><h3>Bandingkan Obat</h3><button class="close" onclick="closeModal('compareModal')">✕</button></div><div class="compare-selects"><select id="compareA" class="form-input"></select><select id="compareB" class="form-input"></select></div><div id="compareResult" style="margin-top:15px"></div></div></div>
-
-<script id="healthly-v2">
-/* ================= HEALTHLY V2 ================= */
+<script>
 (function(){
-const ACCOUNTS_KEY="healthlyAccounts";
-const HISTORY_LIMIT=14;
+  const REG="healthlyUserRegistry_v2", ACT="healthlyActivity_v2_";
+  const read=(k,f)=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(f))}catch(e){return f}};
+  const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+  const name=()=> (localStorage.getItem("healthlyCurrentUser")||localStorage.getItem("currentUser")||"").trim();
+  const key=n=>(n||"").toLowerCase().replace(/[^a-z0-9]+/g,"_").slice(0,60)||"guest";
 
-function readAccounts(){
-  try{return JSON.parse(localStorage.getItem(ACCOUNTS_KEY)||"{}")}catch(e){return {}}
-}
-function writeAccounts(a){localStorage.setItem(ACCOUNTS_KEY,JSON.stringify(a))}
-function validUsername(v){return /^[a-zA-Z0-9_-]{3,24}$/.test(v)}
-function hashDemoPassword(p){return p} // Prototype only: never use plaintext passwords in a real app.
-
-window.registerUser=function(){
-  const name=(document.getElementById("regName")?.value||"").trim();
-  const username=(document.getElementById("regUsername")?.value||"").trim().toLowerCase();
-  const password=document.getElementById("regPassword")?.value||"";
-  const confirm=document.getElementById("regConfirm")?.value||"";
-  const msg=document.getElementById("authMessage");
-  if(name.length<2){setAuthMessage("Nama minimal 2 karakter.","error");return}
-  if(!validUsername(username)){setAuthMessage("Username 3–24 karakter: huruf, angka, _ atau -.","error");return}
-  if(password.length<6){setAuthMessage("Password minimal 6 karakter untuk prototype ini.","error");return}
-  if(password!==confirm){setAuthMessage("Konfirmasi password belum sama.","error");return}
-  const accounts=readAccounts();
-  if(accounts[username] || username==="demo"){setAuthMessage("Username sudah digunakan.","error");return}
-  accounts[username]={name,password:hashDemoPassword(password),createdAt:new Date().toISOString()};
-  writeAccounts(accounts);
-  localStorage.setItem(AUTH_KEY,JSON.stringify({username,name}));
-  setAuthMessage("Akun berhasil dibuat. Membuka dashboard…","success");
-  setTimeout(openDashboard,180);
-};
-
-function addRegisterUI(){
-  const card=document.querySelector(".auth-card");
-  if(!card || document.getElementById("registerPanel"))return;
-  const form=document.getElementById("authForm");
-  const switcher=document.createElement("div");
-  switcher.className="auth-switch";
-  switcher.innerHTML='<button type="button" id="loginTab" class="active">Masuk</button><button type="button" id="registerTab">Buat akun</button>';
-  card.insertBefore(switcher,form);
-  const panel=document.createElement("div");
-  panel.id="registerPanel";panel.className="auth-extra";
-  panel.innerHTML=`
-    <div class="auth-field"><label for="regName">Nama</label><input id="regName" autocomplete="name" placeholder="Nama yang ingin ditampilkan"></div>
-    <div class="auth-field"><label for="regUsername">Username</label><input id="regUsername" autocomplete="username" placeholder="contoh: sehat_hari_ini"></div>
-    <div class="auth-field"><label for="regPassword">Password</label><input id="regPassword" type="password" autocomplete="new-password" placeholder="Minimal 6 karakter"></div>
-    <div class="auth-field"><label for="regConfirm">Ulangi password</label><input id="regConfirm" type="password" autocomplete="new-password" placeholder="Ulangi password"></div>
-    <button class="auth-button" type="button" onclick="registerUser()">Buat Akun & Masuk →</button>
-    <div class="auth-message" style="min-height:18px;margin-top:10px">Akun hanya tersimpan di browser ini.</div>`;
-  card.insertBefore(panel,document.querySelector(".auth-demo"));
-  document.getElementById("loginTab").onclick=()=>toggleAuthMode("login");
-  document.getElementById("registerTab").onclick=()=>toggleAuthMode("register");
-}
-window.toggleAuthMode=function(mode){
-  const login=mode==="login";
-  document.getElementById("authForm").style.display=login?"block":"none";
-  document.getElementById("registerPanel").classList.toggle("show",!login);
-  document.getElementById("loginTab").classList.toggle("active",login);
-  document.getElementById("registerTab").classList.toggle("active",!login);
-  setAuthMessage("");
-};
-const oldLogin=window.login;
-window.login=function(username,password,remember){
-  const key=username.trim().toLowerCase();
-  const accounts=readAccounts();
-  let account=accounts[key];
-  if(key==="demo" && !account) account=DEMO_ACCOUNTS.demo;
-  if(!account || account.password!==password){
-    setAuthMessage("Username atau password salah.","error");return false;
-  }
-  localStorage.setItem(AUTH_KEY,JSON.stringify({username:key,name:account.name||key}));
-  if(remember)localStorage.setItem(REMEMBER_KEY,key);else localStorage.removeItem(REMEMBER_KEY);
-  setAuthMessage("Login berhasil. Membuka dashboard…","success");
-  setTimeout(openDashboard,180);return true;
-};
-
-const oldGetData=window.getData;
-function todayKey(){return new Date().toISOString().slice(0,10)}
-function defaultDay(){
-  return {water:0,sleep:0,activity:0,notes:"",habits:[
-    {name:"Minum air secara teratur",done:false},
-    {name:"Bergerak aktif hari ini",done:false},
-    {name:"Jaga jadwal tidur yang konsisten",done:false}
-  ]};
-}
-window.getData=function(){
-  const key="healthlyData_"+getCurrentUserKey();
-  try{
-    const raw=JSON.parse(localStorage.getItem(key)||"null");
-    if(raw && raw.days){
-      if(!raw.days[todayKey()]) raw.days[todayKey()]=defaultDay();
-      const d=raw.days[todayKey()];
-      if(!Array.isArray(d.habits))d.habits=defaultDay().habits;
-      return {...d,_store:raw};
+  window.healthlyV2={
+    ensureUser(n){
+      n=(n||"").trim(); if(!n)return;
+      const k=key(n), r=read(REG,{}), now=new Date().toISOString(), day=now.slice(0,10);
+      if(!r[k]) r[k]={name:n,firstVisit:now,lastVisit:now,visits:1,activeDays:{}};
+      else {r[k].name=n;r[k].lastVisit=now;r[k].visits=(r[k].visits||0)+1;}
+      r[k].activeDays=r[k].activeDays||{};r[k].activeDays[day]=true;
+      write(REG,r);localStorage.setItem("healthlyCurrentUser",n);
+    },
+    activity(type,detail){
+      const n=name();if(!n)return;
+      const k=ACT+key(n), a=read(k,[]);
+      a.push({time:new Date().toISOString(),type:type||"activity",detail:detail||""});
+      if(a.length>200)a.splice(0,a.length-200);write(k,a);this.ensureUser(n);
+    },
+    stats(){
+      const n=name(),r=n?read(REG,{})[key(n)]||{}:{};
+      return {days:Object.keys(r.activeDays||{}).length,visits:r.visits||0};
+    },
+    activities(){const n=name();return n?read(ACT+key(n),[]):[]},
+    exportData(){
+      const n=name();if(!n)return;
+      const payload={exportedAt:new Date().toISOString(),user:n,
+        profile:read("healthlyData_"+key(n),{}),activity:this.activities()};
+      const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+      const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+      a.download="healthly-"+key(n)+"-backup.json";a.click();
+      setTimeout(()=>URL.revokeObjectURL(a.href),1000);
     }
-    if(raw && (raw.water!==undefined || raw.habits)){
-      const migrated={days:{[todayKey()]:{...defaultDay(),...raw}},history:[]};
-      localStorage.setItem(key,JSON.stringify(migrated));
-      return {...migrated.days[todayKey()],_store:migrated};
-    }
-  }catch(e){}
-  const store={days:{[todayKey()]:defaultDay()},history:[]};
-  localStorage.setItem(key,JSON.stringify(store));
-  return {...store.days[todayKey()],_store:store};
-};
-window.saveData=function(d){
-  const key="healthlyData_"+getCurrentUserKey();
-  const store=d._store||{days:{},history:[]};
-  const clean={water:Number(d.water)||0,sleep:Number(d.sleep)||0,activity:Number(d.activity)||0,notes:String(d.notes||""),habits:Array.isArray(d.habits)?d.habits.map(h=>({name:String(h.name||"Kebiasaan"),done:!!h.done})):[]};
-  store.days=store.days||{};store.days[todayKey()]=clean;
-  store.history=Array.isArray(store.history)?store.history:[];
-  store.history=store.history.filter(x=>x.date!==todayKey());
-  store.history.unshift({date:todayKey(),water:clean.water,sleep:clean.sleep,activity:clean.activity,habitsDone:clean.habits.filter(h=>h.done).length,habitsTotal:clean.habits.length});
-  store.history=store.history.slice(0,HISTORY_LIMIT);
-  localStorage.setItem(key,JSON.stringify(store));updateAll();
-};
-const oldUpdateAll=window.updateAll;
-window.updateAll=function(){
-  oldUpdateAll();
-  renderHistory();
-  const u=getCurrentUser(); if(u) userName.textContent="Halo, "+(u.name||u.username);
-};
-function renderHistory(){
-  const d=getData(),box=document.getElementById("historyList");
-  if(!box)return;
-  const h=(d._store?.history||[]);
-  box.innerHTML=h.length?h.map(x=>`<div class="history-row"><span><b>${x.date}</b><br><small class="muted">💧 ${x.water} • 😴 ${x.sleep} jam • 🏃 ${x.activity} mnt</small></span><span class="pill">${x.habitsDone}/${x.habitsTotal} habit</span></div>`).join(""):'<div class="empty">Belum ada riwayat. Simpan tracker hari ini untuk mulai mencatat.</div>';
-}
+  };
 
-/* Knowledge base: 47 complaints + 20 common conditions, deliberately educational. */
-const complaints=[
-"Batuk","Pilek / hidung berair","Hidung tersumbat","Bersin","Sakit tenggorokan","Suara serak","Dahak ringan","Telinga terasa penuh",
-"Demam ringan","Menggigil","Mudah lelah","Pegal / badan terasa sakit","Sakit kepala ringan","Nafsu makan berkurang",
-"Mual","Muntah","Diare","Sembelit","Kembung","Nyeri perut ringan","Heartburn / rasa panas di dada","Gangguan pencernaan",
-"Nyeri otot","Nyeri punggung ringan","Nyeri leher ringan","Nyeri sendi ringan","Sakit gigi ringan","Nyeri haid ringan",
-"Mata gatal","Mata berair","Mata merah ringan","Iritasi mata","Kulit gatal","Kulit kering","Ruam ringan","Iritasi kulit",
-"Biang keringat","Jerawat ringan","Gigitan serangga ringan","Sariawan","Gusi terasa iritasi","Bau mulut","Memar ringan","Lecet ringan",
-"Luka kecil","Sulit tidur ringan","Kelelahan"
-];
-const conditions=[
-["Common cold","Infeksi saluran napas atas yang umumnya ringan dan dapat menimbulkan pilek, batuk, atau sakit tenggorokan.","respiratory"],
-["Influenza","Infeksi virus influenza yang dapat menimbulkan demam, batuk, nyeri badan, dan lelah.","respiratory"],
-["ISPA","Istilah umum untuk infeksi pada saluran pernapasan; penyebab dan tingkat keparahannya beragam.","respiratory"],
-["Faringitis","Peradangan tenggorokan yang dapat disebabkan infeksi atau iritasi.","respiratory"],
-["Gastroenteritis","Peradangan saluran cerna yang dapat disertai mual, muntah, atau diare.","digestive"],
-["Diare akut","Buang air besar cair/lebih sering dari biasanya yang berlangsung singkat; perhatian utama adalah cairan.","digestive"],
-["Konstipasi","Kesulitan atau perubahan pola buang air besar yang dapat dipengaruhi banyak faktor.","digestive"],
-["Dispepsia","Kumpulan keluhan seperti rasa penuh, tidak nyaman di perut bagian atas, atau cepat kenyang.","digestive"],
-["GERD","Kondisi ketika isi lambung berulang naik ke kerongkongan dan dapat menimbulkan rasa panas atau asam.","digestive"],
-["Migrain","Jenis sakit kepala yang dapat disertai mual atau sensitivitas terhadap cahaya/suara.","neurology"],
-["Rinitis alergi","Reaksi alergi pada hidung yang dapat menyebabkan bersin, gatal, dan hidung berair/tersumbat.","allergy"],
-["Dermatitis","Istilah untuk peradangan kulit yang dapat menimbulkan gatal, kering, atau ruam.","skin"],
-["Konjungtivitis","Peradangan selaput permukaan mata yang dapat menyebabkan merah, berair, atau kotoran mata.","eye"],
-["Asma","Penyakit saluran napas dengan gejala yang dapat meliputi mengi, batuk, dan sesak.","respiratory"],
-["Anemia","Kondisi ketika kemampuan darah membawa oksigen berkurang; penyebabnya beragam.","general"],
-["Skabies","Infestasi tungau pada kulit yang dapat menyebabkan gatal dan ruam.","skin"],
-["HFMD","Infeksi virus yang dapat menimbulkan demam serta lesi di mulut dan tangan/kaki.","infection"],
-["Tifoid","Infeksi bakteri yang dapat menyebabkan demam dan gejala saluran cerna; memerlukan evaluasi medis.","infection"],
-["Infeksi saluran kemih","Infeksi pada bagian saluran kemih yang dapat menimbulkan nyeri saat buang air kecil atau keluhan lain.","urinary"],
-["Otitis media","Infeksi/peradangan telinga tengah yang dapat menyebabkan nyeri telinga atau demam.","ear"]
-];
-const conditionExtra=[
-["Dengue/DBD","Infeksi virus yang ditularkan nyamuk; gejala berat dapat muncul ketika demam mulai turun.","urgent"],
-["Pneumonia","Infeksi paru yang dapat menyebabkan batuk, demam, dan kesulitan bernapas.","urgent"],
-["TBC","Infeksi bakteri yang terutama menyerang paru dan memerlukan pemeriksaan serta pengobatan tenaga kesehatan.","urgent"],
-["Dehidrasi berat","Kehilangan cairan berat yang dapat mengganggu fungsi tubuh dan memerlukan pertolongan segera.","urgent"],
-["Meningitis","Peradangan selaput sekitar otak dan sumsum tulang belakang; dapat menjadi keadaan gawat.","urgent"],
-["Sepsis","Respons tubuh yang berat terhadap infeksi dan dapat menyebabkan kegagalan organ.","urgent"],
-["Stroke","Gangguan aliran darah ke otak yang memerlukan pertolongan medis segera.","urgent"],
-["Sindrom koroner akut","Kelompok kondisi akibat gangguan aliran darah ke otot jantung yang memerlukan pertolongan segera.","urgent"],
-["Gagal jantung","Kondisi ketika jantung tidak memompa darah seefektif yang dibutuhkan tubuh.","urgent"],
-["Krisis hipertensi","Kenaikan tekanan darah yang sangat tinggi; keadaan dan gejala penyerta menentukan kebutuhan pertolongan.","urgent"],
-["Diabetes","Gangguan metabolisme glukosa yang memerlukan pemantauan dan tata laksana tenaga kesehatan.","chronic"],
-["Penyakit ginjal kronis","Penurunan fungsi ginjal yang berlangsung lama dan perlu pemantauan medis.","chronic"],
-["PPOK","Kelompok penyakit paru kronis yang menyebabkan hambatan aliran udara dan gangguan napas.","chronic"],
-["Serangan asma berat","Perburukan gejala asma yang dapat mengganggu pernapasan dan memerlukan pertolongan segera.","urgent"],
-["Anafilaksis","Reaksi alergi berat yang dapat menyebabkan gangguan napas atau sirkulasi dan merupakan keadaan darurat.","urgent"],
-["Paparan rabies","Paparan dari hewan yang berpotensi rabies memerlukan penilaian medis segera untuk pencegahan.","urgent"],
-["Malaria","Penyakit parasit yang ditularkan nyamuk dan dapat menjadi berat; memerlukan pemeriksaan.","urgent"],
-["Hepatitis akut","Peradangan hati yang berlangsung akut dengan penyebab beragam dan memerlukan evaluasi.","medical"],
-["Apendisitis","Peradangan usus buntu yang dapat menyebabkan nyeri perut dan memerlukan evaluasi medis.","urgent"],
-["Perdarahan saluran cerna","Perdarahan pada saluran pencernaan yang dapat terlihat sebagai muntah darah atau tinja hitam/berdarah.","urgent"]
-];
-window.healthlyKnowledge={complaints,conditions,conditionExtra};
+  document.addEventListener("DOMContentLoaded",()=>{
+    const n=name();if(n)healthlyV2.ensureUser(n);
+  });
 
-function buildKnowledge(){
-  const q=(document.getElementById("librarySearch")?.value||"").toLowerCase().trim();
-  const c=complaints.filter(x=>x.toLowerCase().includes(q));
-  const common=conditions.filter(x=>(x[0]+" "+x[1]).toLowerCase().includes(q));
-  const serious=conditionExtra.filter(x=>(x[0]+" "+x[1]).toLowerCase().includes(q));
-  const blocks=[];
-  if(c.length) blocks.push(`<div class="card" style="grid-column:1/-1"><h3>Keluhan umum <span class="kb-count">(${c.length})</span></h3><div class="chips">${c.map(x=>`<span class="topic-badge">${escapeHTML(x)}</span>`).join("")}</div></div>`);
-  [...common,...serious].forEach(x=>blocks.push(`<div class="card library-card"><span class="pill">${x[2]==="urgent"?"PERLU PERHATIAN":"EDUKASI"}</span><h3>${escapeHTML(x[0])}</h3><p>${escapeHTML(x[1])}</p><button class="ghost read" onclick="openKnowledgeArticle(${JSON.stringify(x[0])})">Baca ringkas →</button></div>`));
-  document.getElementById("libraryGrid").innerHTML=blocks.length?blocks.join(""):`<div class="card empty">Topik tidak ditemukan. Coba kata kunci lain.</div>`;
-}
-window.renderLibrary=buildKnowledge;
-window.openKnowledgeArticle=function(name){
-  const all=[...conditions,...conditionExtra];const x=all.find(v=>v[0]===name);if(!x)return;
-  const urgent=x[2]==="urgent";
-  document.getElementById("articleTitle").textContent=x[0];
-  document.getElementById("articleBody").innerHTML=`<p>${escapeHTML(x[1])}</p>
-  <div class="${urgent?'warning':'info'}"><b>${urgent?'Perhatian keselamatan':'Tentang topik ini'}</b><br>${urgent?'Jika ada gejala berat, memburuk cepat, atau tanda bahaya, cari bantuan medis segera.':'Informasi ini untuk membantu memahami topik, bukan untuk memastikan diagnosis.'}</div>
-  <p><b>Yang perlu diperhatikan:</b> gejala, durasi, tingkat keparahan, dan kondisi penyerta dapat mengubah kebutuhan pertolongan.</p>
-  <p class="source-note">Sumber umum: WHO dan Kementerian Kesehatan RI; topik spesifik perlu dirujuk ke sumber resmi terkait.</p>`;
-  document.getElementById("articleModal").classList.add("show");
-};
-
-/* Safety engine */
-const redFlags=[
-  {re:/sulit bernapas berat|sangat sulit bernapas|tidak bisa bernapas|napas sangat sesak|bibir.*biru/i,msg:"Kesulitan bernapas berat adalah tanda bahaya. Cari pertolongan medis darurat sekarang dan libatkan orang dewasa tepercaya."},
-  {re:/tidak bisa bicara.*napas|sulit bicara.*napas|pingsan|tidak sadar|kejang/i,msg:"Perubahan kesadaran, kejang, atau kesulitan berbicara/bernapas dapat merupakan keadaan darurat. Cari bantuan segera."},
-  {re:/muntah darah|muntah.*darah|bab.*darah|tinja.*darah|berak.*darah|tinja hitam/i,msg:"Perdarahan yang terlihat perlu dinilai tenaga kesehatan segera, terutama bila banyak atau disertai lemah/pusing."},
-  {re:/nyeri dada.*berat|dada.*sangat sakit|dada.*tertekan.*berat/i,msg:"Nyeri/tekanan dada yang berat atau disertai sesak, pingsan, atau keringat dingin memerlukan pertolongan segera."},
-  {re:/nyeri perut.*sangat berat|sakit perut.*sangat berat|perut.*mendadak.*sangat sakit/i,msg:"Nyeri perut sangat berat atau mendadak adalah tanda yang perlu dinilai segera."},
-  {re:/penglihatan.*hilang|tidak bisa melihat|penglihatan.*tiba.*tiba/i,msg:"Perubahan penglihatan yang tiba-tiba perlu dinilai segera oleh tenaga kesehatan."},
-  {re:/wajah.*mencong|mulut.*mencong|bicara.*pelo|lengan.*lemah.*satu|tangan.*lemah.*satu/i,msg:"Tanda seperti wajah mencong, kelemahan satu sisi, atau bicara mendadak tidak jelas dapat merupakan keadaan darurat. Cari bantuan segera."}
-];
-function checkSafety(q){
-  for(const f of redFlags)if(f.re.test(q))return f.msg;
-  return null;
-}
-function clarification(q){
-  const qs=[];
-  if(!/\bsejak|hari|jam|minggu|kemarin|tadi\b/i.test(q))qs.push("Sejak kapan keluhan ini mulai?");
-  if(!/\bberat|ringan|sedang|parah|mengganggu\b/i.test(q))qs.push("Seberapa mengganggu keluhannya sekarang?");
-  if(!/\busia|tahun\b/i.test(q))qs.push("Apakah ada kondisi kesehatan yang sudah diketahui atau obat yang sedang digunakan?");
-  return qs.slice(0,2);
-}
-const oldSendChat=window.sendChat;
-window.sendChat=function(){
-  const el=document.getElementById('chatInput'),q=el.value.trim();if(!q)return;
-  addBubble(escapeHTML(q),'user');el.value='';
-  const danger=checkSafety(q);
-  setTimeout(()=>{
-    if(danger){
-      addBubble(`<div class="safety-banner"><b>🚨 Prioritas keselamatan</b><br>${danger}<br><br><b>Healthly tidak dapat menilai kegawatan lewat chat.</b> Jangan menunda mencari pertolongan hanya untuk menunggu jawaban aplikasi.</div>`,'bot');
-      return;
-    }
-    const qs=clarification(q);
-    const base=formatResponse(getDemoResponse(q));
-    const follow=qs.length?`<div class="safe-banner"><b>Pertanyaan klarifikasi</b><br>${qs.map(escapeHTML).join("<br>")}<br><br>Jawaban ini tetap bersifat edukatif dan tidak memastikan diagnosis.</div>`:"";
-    addBubble(base+follow,'bot');
-  },180);
-};
-
-/* Medicine education */
-const medicinesV2=[
-["Paracetamol","Analgesik/antipiretik","Meredakan nyeri dan menurunkan demam.","Perhatikan kandungan produk kombinasi agar tidak menggandakan zat aktif.","Produk berbeda dapat memiliki aturan penggunaan berbeda.","MedlinePlus / FDA"],
-["Ibuprofen","NSAID","Meredakan nyeri, demam, dan peradangan tertentu.","NSAID memiliki perhatian dan kontraindikasi tertentu; tidak cocok untuk semua orang.","Jangan menentukan penggunaan pribadi dari chat.","MedlinePlus"],
-["Cetirizine","Antihistamin","Membantu gejala alergi tertentu seperti bersin atau gatal.","Dapat menyebabkan kantuk pada sebagian orang.","Perhatikan label dan konsultasikan bila ragu.","MedlinePlus"],
-["Loratadine","Antihistamin","Membantu meredakan gejala alergi tertentu.","Perhatikan produk kombinasi dan petunjuk produk.","Jangan menganggap semua gejala pasti alergi.","MedlinePlus"],
-["Antasida","Antasida","Menetralkan asam lambung dan digunakan untuk keluhan tertentu.","Interaksi dengan obat lain dapat terjadi.","Tanyakan apoteker bila memakai beberapa obat.","MedlinePlus"],
-["Oralit / ORS","Larutan rehidrasi oral","Mengganti cairan dan elektrolit yang hilang, terutama pada diare.","Gunakan produk sesuai petunjuk kemasan.","Diare berat atau tanda dehidrasi memerlukan pertolongan medis.","WHO"],
-["Saline nasal spray","Larutan garam hidung","Membantu melembapkan dan membersihkan hidung pada sebagian keluhan.","Produk berbeda memiliki petunjuk berbeda.","Bukan terapi untuk semua penyebab hidung tersumbat.","MedlinePlus"],
-["Topical moisturizer","Pelembap kulit","Membantu menjaga kelembapan kulit kering.","Pilih produk yang sesuai dan hentikan bila iritasi memburuk.","Ruam berat atau menyebar perlu dinilai tenaga kesehatan.","AAD / sumber kesehatan resmi"]
-];
-window.medicinesV2=medicinesV2;
-window.renderMedicinesV2=function(){
- const box=document.getElementById("medicineV2Grid");if(!box)return;
- const q=(document.getElementById("medicineSearch")?.value||"").toLowerCase();
- const list=medicinesV2.filter(m=>m.join(" ").toLowerCase().includes(q));
- box.innerHTML=list.map(m=>`<div class="card medicine-card"><span class="pill">${m[1]}</span><h3>${m[0]}</h3><p><b>Kegunaan umum:</b> ${m[2]}</p><h4>Perhatian</h4><p>${m[3]}</p><h4>Catatan</h4><p>${m[4]}</p><div class="source-note" style="margin-top:10px">Sumber: ${m[5]}</div></div>`).join("")||'<div class="card empty">Informasi obat tidak ditemukan.</div>';
-};
-window.openCompare=function(){
- const a=document.getElementById("compareA"),b=document.getElementById("compareB");
- a.innerHTML=medicinesV2.map((m,i)=>`<option value="${i}">${m[0]}</option>`).join("");
- b.innerHTML=medicinesV2.map((m,i)=>`<option value="${i}" ${i===1?"selected":""}>${m[0]}</option>`).join("");
- renderCompare();document.getElementById("compareModal").classList.add("show");
-};
-window.renderCompare=function(){
- const a=medicinesV2[+document.getElementById("compareA").value],b=medicinesV2[+document.getElementById("compareB").value];
- document.getElementById("compareResult").innerHTML=`<table class="compare-table"><tr><th>Aspek</th><th>${a[0]}</th><th>${b[0]}</th></tr>
- <tr><td>Kelompok</td><td>${a[1]}</td><td>${b[1]}</td></tr><tr><td>Kegunaan umum</td><td>${a[2]}</td><td>${b[2]}</td></tr><tr><td>Perhatian</td><td>${a[3]}</td><td>${b[3]}</td></tr><tr><td>Catatan</td><td>${a[4]}</td><td>${b[4]}</td></tr></table><div class="info">Perbandingan ini tidak menentukan mana yang lebih baik atau cocok untuk seseorang.</div>`;
-};
-
-/* Dashboard history UI */
-function addHistoryUI(){
- const tracker=document.getElementById("tracker");if(!tracker||document.getElementById("historyList"))return;
- const sec=document.createElement("div");sec.className="section";sec.innerHTML="<h3>Riwayat sederhana</h3><span class='kb-count'>14 catatan terakhir</span>";
- tracker.appendChild(sec);
- const card=document.createElement("div");card.className="card";card.innerHTML='<div id="historyList" class="history-list"></div>';
- tracker.appendChild(card);
-}
-
-/* Upgrade medicines page in-place */
-function upgradeMedicinePage(){
- const page=document.getElementById("medicines");if(!page||document.getElementById("medicineV2Grid"))return;
- const wrap=document.createElement("div");wrap.innerHTML=`
- <div class="section"><h3>🔎 Cari informasi zat aktif</h3><button class="secondary" onclick="openCompare()">Bandingkan Obat</button></div>
- <div class="card med-search"><input id="medicineSearch" class="form-input" placeholder="Cari: paracetamol, antihistamin, oralit..." oninput="renderMedicinesV2()"></div>
- <div id="medicineV2Grid" class="grid g2"></div>`;
- page.appendChild(wrap);renderMedicinesV2();
-}
-
-/* Services: explicit care pathways */
-function upgradeServices(){
- const page=document.getElementById("services");if(!page||document.getElementById("carePathways"))return;
- const box=document.createElement("div");box.id="carePathways";box.innerHTML=`
- <div class="section"><h3>Jalur mencari bantuan</h3></div>
- <div class="grid g3">
-  <div class="card"><h3>🟢 Pantau & edukasi</h3><p>Keluhan ringan tanpa tanda bahaya dapat dipelajari dan dipantau. Jika menetap, berulang, atau mengganggu aktivitas, pertimbangkan konsultasi.</p></div>
-  <div class="card"><h3>🟡 Puskesmas / klinik</h3><p>Pertimbangkan pemeriksaan ketika keluhan menetap, berulang, memburuk, atau membutuhkan evaluasi yang tidak dapat dilakukan aplikasi.</p></div>
-  <div class="card"><h3>🔴 Bantuan segera</h3><p>Kesulitan bernapas berat, penurunan kesadaran, perdarahan berat, tanda stroke, atau kondisi memburuk cepat memerlukan pertolongan segera.</p></div>
- </div>`;
- page.appendChild(box);
-}
-
-/* Override library and initializers */
-const oldGo=window.go;
-window.go=function(id){oldGo(id);if(id==="library")buildKnowledge();if(id==="medicines")renderMedicinesV2();if(id==="tracker")renderHistory()};
-addRegisterUI();addHistoryUI();upgradeMedicinePage();upgradeServices();
-buildKnowledge();
-renderHistory();
-
-/* Demo account remains available; registered accounts are stored locally. */
+  document.addEventListener("click",e=>{
+    const b=e.target.closest("button");if(!b)return;
+    const t=(b.innerText||b.textContent||"").trim().replace(/\s+/g," ").slice(0,80);
+    if(/tanya|chat/i.test(t))healthlyV2.activity("chat",t);
+    else if(/gejala|symptom/i.test(t))healthlyV2.activity("symptom",t);
+    else if(/obat|medicine/i.test(t))healthlyV2.activity("medication",t);
+    else if(/tidur|air|aktivitas|kebiasaan|habit/i.test(t))healthlyV2.activity("habit",t);
+    else if(/library|artikel|bacaan/i.test(t))healthlyV2.activity("library",t);
+  },true);
 })();
 </script>
+
+
+<script>
+(function(){
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function add(){
+ if(!window.healthlyV2||document.getElementById("healthlyV2Panel"))return;
+ const n=(localStorage.getItem("healthlyCurrentUser")||localStorage.getItem("currentUser")||"").trim();if(!n)return;
+ const host=document.querySelector("#home")||document.querySelector(".dashboard")||document.querySelector("main");if(!host)return;
+ const s=healthlyV2.stats(),p=document.createElement("section");p.id="healthlyV2Panel";p.className="hly-v2-panel";
+ p.innerHTML='<h3>Profil Healthly</h3><div class="hly-v2-meta">Halo, <strong>'+esc(n)+'</strong> 👋<br>Hari aktif: <strong>'+s.days+'</strong> · Sesi tercatat: <strong>'+s.visits+'</strong></div><div class="hly-v2-actions"><button class="hly-v2-btn" id="hlyExport" type="button">Backup data</button><button class="hly-v2-btn" id="hlyActivity" type="button">Lihat aktivitas</button></div><div class="hly-v2-note">Mode lokal: data tersimpan di browser/perangkat ini, bukan database online.</div>';
+ host.prepend(p);
+ document.getElementById("hlyExport").onclick=()=>{healthlyV2.exportData();healthlyV2.activity("backup","Membuat backup data")};
+ document.getElementById("hlyActivity").onclick=()=>{
+   const a=healthlyV2.activities().slice(-12).reverse();
+   alert(a.length?"Aktivitas terbaru:\n\n"+a.map(x=>new Date(x.time).toLocaleString("id-ID")+" — "+x.type+" — "+x.detail).join("\n"):"Belum ada aktivitas yang tercatat.");
+ };
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(add,400));else setTimeout(add,400);
+})();
+</script>
+
+<div id="healthlyLocalModeNotice" style="margin:18px auto;max-width:980px;padding:12px 16px;border-radius:12px;background:#f7f8fb;border:1px solid rgba(22,42,78,.10);font-size:.84rem;line-height:1.5;color:#162a4e"><strong>Mode lokal:</strong> Healthly versi ini adalah prototipe edukasi. Data akun dan aktivitas disimpan di browser/perangkat ini, bukan database online.</div>
 </body>
 </html>
