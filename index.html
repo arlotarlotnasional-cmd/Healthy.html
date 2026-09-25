@@ -153,6 +153,32 @@ body.auth-locked{overflow:hidden}
 .hly-v2-btn{border:1px solid rgba(22,42,78,.22);background:#fff;color:#162a4e;border-radius:10px;padding:9px 13px;cursor:pointer;font:inherit}
 .hly-v2-note{margin-top:10px;font-size:.82rem;opacity:.72}
 @media(max-width:600px){.hly-v2-actions{display:grid;grid-template-columns:1fr}.hly-v2-btn{width:100%}}
+
+/* ===== MAXIMIZED HEALTH EDUCATION LIBRARY ===== */
+.disease-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.disease-toolbar .filter-btn{border:1px solid var(--line);background:#fff;color:var(--text);padding:9px 12px;border-radius:999px;font-weight:700}
+.disease-toolbar .filter-btn.active,.disease-toolbar .filter-btn:hover{background:var(--soft);color:var(--primary-dark);border-color:#bcded4}
+.disease-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
+.disease-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 7px 25px rgba(23,32,51,.04);transition:.2s}
+.disease-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.disease-card-top{padding:18px 18px 12px}
+.disease-icon{font-size:30px;float:right}
+.disease-card h3{margin:0 0 7px;font-size:18px}
+.disease-card p{color:var(--muted);line-height:1.6;margin:0}
+.disease-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.disease-card-bottom{padding:12px 18px;border-top:1px solid var(--line);background:#fbfcfc}
+.disease-more{border:0;background:transparent;color:var(--primary-dark);font-weight:800;padding:6px 0}
+.disease-modal-title{font-size:26px;margin:4px 0 7px}
+.disease-definition{background:var(--soft);border-left:4px solid var(--primary);padding:15px;border-radius:10px;line-height:1.7;margin:15px 0}
+.detail-section{padding:14px 0;border-top:1px solid var(--line)}
+.detail-section h4{margin:0 0 7px}
+.detail-section p,.detail-section li{line-height:1.7;color:#445064}
+.detail-section ul{padding-left:21px;margin:7px 0}
+.detail-warning{background:var(--danger-soft);border-left:4px solid var(--danger);padding:14px;border-radius:10px;line-height:1.65;margin-top:15px}
+.detail-source{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.55}
+@media(max-width:900px){.disease-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.disease-grid{grid-template-columns:1fr}}
+
 </style>
 
 </head>
@@ -196,7 +222,7 @@ body.auth-locked{overflow:hidden}
 <main class="main">
 <div class="topbar">
   <div><h2 id="pageTitle">Dasbor Kesehatan</h2><p id="pageSub">Langkah kecil yang konsisten bisa berarti.</p></div>
-  <div class="user-actions"><span class="user-name" id="userName">Pengguna</span><button class="logout-btn" id="logoutBtn" type="button">Keluar</button><div class="tag">PROTOTIPE • EDUKASI</div></div>
+  <div class="user-actions"><span class="user-name" id="userName">Pengguna</span><button class="logout-btn" id="logoutBtn" type="button">Keluar</button><div class="tag">EDUKASI KESEHATAN</div></div>
 </div>
 
 <section id="home" class="page active">
@@ -243,10 +269,10 @@ body.auth-locked{overflow:hidden}
 
 <section id="assistant" class="page">
   <div class="card" style="margin-bottom:15px">
-    <span class="pill">ASISTEN DEMO • EDUKASI</span>
+    <span class="pill">ASISTEN EDUKASI</span>
     <h2 style="margin:10px 0 6px">Tanya Healthly 💬</h2>
     <p>Ketik keluhanmu dengan bahasa sehari-hari. Kamu tidak perlu memakai istilah medis. Contoh: <b>“Mata aku berair dan perih sejak tadi pagi”</b> atau <b>“Aku punya asma dan sekarang napas terasa sesak”</b>.</p>
-    <div class="info"><b>Penting:</b> versi GitHub Pages ini memakai mesin respons demo berbasis aturan, bukan AI medis sungguhan. Jawaban bersifat edukatif, tidak mendiagnosis, dan tidak menggantikan tenaga kesehatan.</div>
+    <div class="info"><b>Penting:</b> Versi ini menggunakan mesin respons berbasis aturan untuk membantu menjelaskan topik kesehatan secara edukatif; ini bukan diagnosis medis. Jawaban bersifat edukatif, tidak mendiagnosis, dan tidak menggantikan tenaga kesehatan.</div>
   </div>
   <div class="card" style="margin-bottom:15px">
     <h3 style="margin-top:0">Contoh topik yang bisa dipahami</h3>
@@ -417,9 +443,25 @@ body.auth-locked{overflow:hidden}
 
 <section id="library" class="page">
   <div class="card">
-    <input class="form-input" id="librarySearch" oninput="renderLibrary()" placeholder="Cari: tidur, batuk, nutrisi, hidrasi, dll.">
+    <span class="pill">PERPUSTAKAAN KESEHATAN</span>
+    <h2 style="margin:10px 0 6px">Pahami Penyakit & Kondisi Kesehatan 📚</h2>
+    <p>Jangan berhenti di nama penyakit. Buka setiap topik untuk membaca pengertian, gejala yang umum, faktor yang dapat berkaitan, perawatan suportif, tanda bahaya, dan kapan perlu mencari bantuan.</p>
+    <div class="disease-toolbar">
+      <input class="form-input" id="diseaseSearch" oninput="renderDiseaseLibrary()" placeholder="Cari penyakit atau kondisi, misalnya asma, diare, anemia..." style="flex:1;min-width:220px">
+      <button class="filter-btn" onclick="clearDiseaseSearch()">Reset</button>
+    </div>
+    <div class="disease-toolbar" id="diseaseFilters"></div>
   </div>
-  <div id="libraryGrid" class="grid g3" style="margin-top:15px"></div>
+  <div id="diseaseGrid" class="disease-grid"></div>
+  <div class="card" style="margin-top:16px">
+    <h3 style="margin-top:0">📖 Materi gaya hidup</h3>
+    <p class="muted">Selain penyakit, Healthly juga menyediakan materi tentang nutrisi, tidur, aktivitas fisik, hidrasi, kebersihan, dan kesejahteraan.</p>
+    <div class="grid g3" style="margin-top:14px">
+      <button class="card action" onclick="openArticle('nutrition')"><div class="icon">🥗</div><h3>Nutrisi Seimbang</h3><p>Mengenal prinsip makan beragam dan cukup.</p></button>
+      <button class="card action" onclick="openArticle('sleep')"><div class="icon">😴</div><h3>Tidur</h3><p>Memahami rutinitas dan kualitas istirahat.</p></button>
+      <button class="card action" onclick="openArticle('movement')"><div class="icon">🏃</div><h3>Aktivitas Fisik</h3><p>Aktivitas yang sesuai kemampuan.</p></button>
+    </div>
+  </div>
 </section>
 
 <div class="card" style="margin:30px auto 0;max-width:1180px">
@@ -451,6 +493,17 @@ body.auth-locked{overflow:hidden}
  </div>
 </div>
 
+
+<div class="modal" id="diseaseModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div><span class="pill">MATERI EDUKASI</span><h3 id="diseaseModalTitle" class="disease-modal-title">Topik Kesehatan</h3><div id="diseaseModalMeta" class="muted"></div></div>
+      <button class="close" onclick="closeModal('diseaseModal')">✕</button>
+    </div>
+    <div id="diseaseModalBody"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -467,17 +520,13 @@ const pageMeta={
  services:["Layanan Kesehatan","Pahami pilihan bantuan dan jalur layanan kesehatan."]
 };
 
-/* ===== AUTHENTICATION / LOGIN GATE ===== */
-const DEMO_ACCOUNTS={demo:{password:"healthly123",name:"Pengguna Demo"}};
+/* ===== NAME-ONLY USER GATE ===== */
 const AUTH_KEY="healthlyAuth";
 const REMEMBER_KEY="healthlyRemember";
 const authScreen=document.getElementById("authScreen");
 const app=document.getElementById("app");
 const authForm=document.getElementById("authForm");
-const authUsername=document.getElementById("authUsername");
-const authPassword=document.getElementById("authPassword");
-const authToggle=document.getElementById("authToggle");
-const authRemember=document.getElementById("authRemember");
+const authName=document.getElementById("authName");
 const authMessage=document.getElementById("authMessage");
 const userName=document.getElementById("userName");
 const logoutBtn=document.getElementById("logoutBtn");
@@ -485,33 +534,57 @@ const logoutBtn=document.getElementById("logoutBtn");
 function getCurrentUser(){
   try{return JSON.parse(localStorage.getItem(AUTH_KEY)||"null")}catch(e){return null}
 }
+function normalizeUserName(name){
+  return name.trim().replace(/\s+/g," ").slice(0,60);
+}
 function getCurrentUserKey(){
   const u=getCurrentUser();
-  return u&&u.username?u.username.toLowerCase().replace(/[^a-z0-9_-]/g,"_"):"guest";
+  return u&&u.name ? u.name.toLowerCase().replace(/[^a-z0-9_-]/g,"_") : "guest";
 }
-function setAuthMessage(msg,type=""){authMessage.textContent=msg;authMessage.className="auth-message"+(type?" "+type:"")}
+function setAuthMessage(msg,type=""){
+  authMessage.textContent=msg;
+  authMessage.className="auth-message"+(type?" "+type:"");
+}
 function openDashboard(){
   const user=getCurrentUser();
   if(!user){lockDashboard();return}
-  authScreen.classList.add("hidden");app.classList.remove("auth-hidden");document.body.classList.remove("auth-locked");
-  userName.textContent="Halo, "+(user.name||user.username);
+  authScreen.classList.add("hidden");
+  app.classList.remove("auth-hidden");
+  document.body.classList.remove("auth-locked");
+  userName.textContent="Halo, "+user.name;
   updateAll();
 }
 function lockDashboard(){
-  app.classList.add("auth-hidden");authScreen.classList.remove("hidden");document.body.classList.add("auth-locked");
+  app.classList.add("auth-hidden");
+  authScreen.classList.remove("hidden");
+  document.body.classList.add("auth-locked");
 }
-function login(username,password,remember){
-  const key=username.trim().toLowerCase();const account=DEMO_ACCOUNTS[key];
-  if(!account||account.password!==password){setAuthMessage("Username atau password salah.","error");return false}
-  localStorage.setItem(AUTH_KEY,JSON.stringify({username:key,name:account.name}));
-  if(remember)localStorage.setItem(REMEMBER_KEY,key);else localStorage.removeItem(REMEMBER_KEY);
-  setAuthMessage("Login berhasil. Membuka dashboard…","success");
-  setTimeout(openDashboard,180);return true;
+function login(name,remember){
+  const clean=normalizeUserName(name);
+  if(clean.length<2){
+    setAuthMessage("Masukkan nama minimal 2 karakter.","error");
+    return false;
+  }
+  localStorage.setItem(AUTH_KEY,JSON.stringify({name:clean}));
+  if(remember) localStorage.setItem(REMEMBER_KEY,clean);
+  else localStorage.removeItem(REMEMBER_KEY);
+  setAuthMessage("Selamat datang, "+clean+"! Membuka Healthly…","success");
+  setTimeout(openDashboard,180);
+  return true;
 }
-authForm.addEventListener("submit",e=>{e.preventDefault();login(authUsername.value,authPassword.value,authRemember.checked)});
-authToggle.addEventListener("click",()=>{const show=authPassword.type==="password";authPassword.type=show?"text":"password";authToggle.textContent=show?"🙈":"👁️";authToggle.setAttribute("aria-label",show?"Sembunyikan password":"Tampilkan password")});
-logoutBtn.addEventListener("click",()=>{localStorage.removeItem(AUTH_KEY);lockDashboard();authPassword.value="";setAuthMessage("Kamu sudah keluar dari Healthly.","success");authUsername.value=localStorage.getItem(REMEMBER_KEY)||"";authPassword.focus()});
-const rememberedUser=localStorage.getItem(REMEMBER_KEY);if(rememberedUser){authUsername.value=rememberedUser;authRemember.checked=true}
+authForm.addEventListener("submit",e=>{
+  e.preventDefault();
+  login(authName.value,true);
+});
+logoutBtn.addEventListener("click",()=>{
+  localStorage.removeItem(AUTH_KEY);
+  lockDashboard();
+  setAuthMessage("Kamu sudah keluar dari Healthly.","success");
+  authName.value="";
+  authName.focus();
+});
+const rememberedUser=localStorage.getItem(REMEMBER_KEY);
+if(rememberedUser) authName.value=rememberedUser;
 openDashboard();
 
 const mobileMenu=document.getElementById('mobileMenu');
@@ -528,7 +601,7 @@ function go(id){
  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
  document.getElementById("pageTitle").textContent=pageMeta[id][0];
  document.getElementById("pageSub").textContent=pageMeta[id][1];
- if(id==="symptoms")showCategories();
+ if(id==="symptoms")showCategories(); if(id==="library")renderDiseaseLibrary();
  closeMobileNav(); window.scrollTo({top:0,behavior:"smooth"});
 }
 document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
@@ -536,6 +609,14 @@ document.getElementById("chatInput")?.addEventListener("keydown",e=>{if(e.key===
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){document.querySelectorAll(".modal.show").forEach(m=>m.classList.remove("show"));closeMobileNav();}});
 document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("show")}));
 
+function recordActivity(action){
+  try{
+    const key="healthlyActivity_v2_"+getCurrentUserKey();
+    const list=JSON.parse(localStorage.getItem(key)||"[]");
+    list.push({action,at:new Date().toISOString()});
+    localStorage.setItem(key,JSON.stringify(list.slice(-300)));
+  }catch(e){}
+}
 function toast(msg){
  const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");
  setTimeout(()=>el.classList.remove("show"),1800);
@@ -729,6 +810,148 @@ function renderSymptomResult(){
  </div>`;
 }
 
+
+/* ===== DETAILED HEALTH TOPICS =====
+   Educational summaries. They do not diagnose, prescribe, or replace professional care.
+*/
+const diseaseData=[
+ {id:"flu",cat:"Pernapasan",icon:"🤧",name:"Flu (Influenza)",short:"Infeksi saluran pernapasan yang disebabkan virus influenza dan dapat menimbulkan demam, batuk, nyeri badan, serta rasa lelah.",
+  definition:"Influenza atau flu adalah infeksi saluran pernapasan yang disebabkan oleh virus influenza. Flu berbeda dari sekadar pilek karena gejalanya dapat muncul lebih mendadak dan rasa sakit badan atau lelah bisa lebih terasa.",
+  symptoms:["Demam atau merasa meriang","Batuk, sering kali kering","Sakit tenggorokan","Pilek atau hidung tersumbat","Nyeri otot atau badan","Sakit kepala dan kelelahan"],
+  causes:"Penyebabnya adalah virus influenza. Virus dapat menyebar melalui percikan pernapasan dan kontak dengan permukaan yang terkontaminasi lalu menyentuh hidung, mulut, atau mata.",
+  care:["Istirahat dan cukup minum sesuai kebutuhan.","Perhatikan perkembangan demam dan kondisi umum.","Hindari berbagi alat makan/minum dan terapkan kebersihan tangan.","Jika gejala berat, memburuk, atau ada kondisi khusus, cari nasihat tenaga kesehatan."],
+  warning:"Cari bantuan segera bila muncul kesulitan bernapas, nyeri/tekanan dada yang berat, kebingungan, penurunan kesadaran, atau kondisi memburuk cepat.",
+  source:"CDC — Influenza: Signs and Symptoms; WHO — Influenza."},
+ {id:"common-cold",cat:"Pernapasan",icon:"🤧",name:"Pilek (Common Cold)",short:"Infeksi virus pada saluran pernapasan bagian atas yang umumnya menyebabkan hidung berair/tersumbat, bersin, dan sakit tenggorokan.",
+  definition:"Pilek atau common cold adalah kumpulan gejala akibat infeksi virus pada saluran pernapasan bagian atas. Banyak virus dapat menyebabkan pilek. Kondisi ini umumnya berbeda dari influenza, walaupun beberapa gejalanya dapat tumpang tindih.",
+  symptoms:["Hidung berair atau tersumbat","Bersin","Sakit atau gatal tenggorokan","Batuk","Rasa lelah ringan","Kadang demam ringan"],
+  causes:"Berbagai virus dapat menyebabkan pilek. Penularan terjadi terutama melalui droplet/sekresi pernapasan dan kontak dekat.",
+  care:["Istirahat cukup dan minum sesuai kebutuhan.","Jaga kebersihan tangan dan hindari menyentuh wajah dengan tangan yang belum dicuci.","Gunakan langkah suportif yang membuat tubuh lebih nyaman.","Jika gejala sangat berat atau tidak membaik sebagaimana mestinya, konsultasikan ke tenaga kesehatan."],
+  warning:"Kesulitan bernapas, kondisi sangat lemah, dehidrasi, atau gejala yang memburuk perlu dinilai oleh tenaga kesehatan.",
+  source:"MedlinePlus — Common Cold; CDC — Common Cold."},
+ {id:"asthma",cat:"Pernapasan",icon:"🫁",name:"Asma",short:"Kondisi jangka panjang pada saluran napas yang dapat menyebabkan saluran napas menyempit sehingga muncul batuk, mengi, atau sesak.",
+  definition:"Asma adalah penyakit kronis pada saluran napas. Pada orang dengan asma, saluran napas dapat mengalami peradangan dan menjadi lebih sensitif. Saat kambuh, saluran napas dapat menyempit sehingga aliran udara terasa lebih sulit.",
+  symptoms:["Mengi atau bunyi napas seperti siulan","Batuk, terutama pada malam atau dini hari","Sesak atau terasa sulit bernapas","Dada terasa berat/tertekan","Gejala dapat datang dan pergi"],
+  causes:"Pemicu berbeda pada tiap orang, misalnya asap rokok, alergen tertentu, udara dingin, aktivitas fisik, atau infeksi saluran napas. Pemicu bukan berarti penyebab tunggal penyakitnya.",
+  care:["Kenali dan hindari pemicu yang diketahui bila memungkinkan.","Ikuti rencana penanganan yang diberikan tenaga kesehatan bila sudah pernah didiagnosis.","Jangan mengubah atau menghentikan obat pengontrol tanpa arahan tenaga kesehatan.","Catat pola gejala agar mudah dibicarakan saat konsultasi."],
+  warning:"Sesak berat, sulit berbicara karena napas, bibir/kuku tampak kebiruan, atau kondisi memburuk cepat membutuhkan pertolongan medis segera.",
+  source:"MedlinePlus — Asthma; WHO — Asthma."},
+ {id:"diarrhea",cat:"Pencernaan",icon:"💧",name:"Diare",short:"Buang air besar dengan tinja lebih encer dan/atau lebih sering dari biasanya. Risiko penting yang perlu diperhatikan adalah kehilangan cairan.",
+  definition:"Diare adalah kondisi ketika seseorang buang air besar dengan tinja yang cair atau lebih lembek dari biasanya, biasanya dengan frekuensi yang meningkat. Diare dapat berlangsung singkat atau lebih lama dan penyebabnya beragam.",
+  symptoms:["Tinja cair atau lembek","Buang air besar lebih sering","Kram atau nyeri perut","Mual atau muntah pada sebagian orang","Tanda kekurangan cairan seperti sangat haus atau jarang buang air kecil"],
+  causes:"Penyebab umum termasuk infeksi saluran cerna, makanan atau air yang terkontaminasi, serta kondisi atau obat tertentu. Penyebab tidak dapat dipastikan hanya dari satu gejala.",
+  care:["Utamakan penggantian cairan dan elektrolit sesuai kebutuhan.","Tetap makan sesuai toleransi dan kemampuan.","Jaga kebersihan tangan untuk mengurangi penyebaran infeksi.","Pantau frekuensi diare dan tanda kekurangan cairan."],
+  warning:"Cari pertolongan bila ada tanda dehidrasi berat, darah pada tinja, muntah terus-menerus sehingga sulit minum, nyeri perut berat, penurunan kesadaran, atau kondisi memburuk.",
+  source:"WHO — Diarrhoeal disease; MedlinePlus — Diarrhea."},
+ {id:"constipation",cat:"Pencernaan",icon:"🚽",name:"Sembelit (Konstipasi)",short:"Kesulitan buang air besar, frekuensi buang air besar yang berkurang, atau tinja keras yang sulit dikeluarkan.",
+  definition:"Konstipasi adalah masalah buang air besar yang dapat berupa tinja keras, sulit dikeluarkan, mengejan, atau frekuensi buang air besar yang lebih jarang dari pola normal seseorang. Pola setiap orang berbeda, sehingga tidak hanya jumlah buang air besar yang dinilai.",
+  symptoms:["Tinja keras atau menggumpal","Mengejan saat buang air besar","Merasa belum tuntas","Perut kembung atau tidak nyaman","Buang air besar lebih jarang dari biasanya"],
+  causes:"Dapat berkaitan dengan kurangnya asupan serat, kurang minum, perubahan rutinitas, kurang bergerak, kebiasaan menahan buang air besar, obat tertentu, atau kondisi lain.",
+  care:["Cukupi cairan sesuai kebutuhan.","Tingkatkan makanan berserat secara bertahap bila cocok.","Tetap aktif sesuai kemampuan.","Jangan membiasakan menahan dorongan buang air besar."],
+  warning:"Nyeri perut hebat, muntah berulang, perut sangat membesar, darah dalam tinja, atau perubahan yang menetap perlu dinilai tenaga kesehatan.",
+  source:"NIDDK — Constipation; MedlinePlus — Constipation."},
+ {id:"gastritis",cat:"Pencernaan",icon:"🍽️",name:"Gastritis (Radang Lambung)",short:"Peradangan pada lapisan lambung yang dapat menimbulkan nyeri atau tidak nyaman di perut bagian atas, mual, atau cepat kenyang.",
+  definition:"Gastritis berarti peradangan pada lapisan lambung. Istilah 'maag' sering digunakan sehari-hari untuk berbagai keluhan perut, sehingga 'maag' tidak otomatis berarti gastritis. Penyebab dan penanganannya dapat berbeda.",
+  symptoms:["Nyeri atau rasa tidak nyaman di perut bagian atas","Mual atau muntah","Cepat kenyang","Perut terasa penuh atau kembung","Sebagian orang tidak memiliki gejala jelas"],
+  causes:"Penyebab dapat mencakup infeksi tertentu, penggunaan obat antiinflamasi tertentu, konsumsi alkohol, dan kondisi lain. Tidak semua nyeri lambung disebabkan gastritis.",
+  care:["Catat makanan/minuman atau kebiasaan yang tampaknya memperburuk keluhan.","Hindari penggunaan obat secara sembarangan.","Bila keluhan menetap atau berulang, konsultasikan penyebabnya kepada tenaga kesehatan.","Ikuti saran tenaga kesehatan bila sudah diperiksa."],
+  warning:"Muntah darah, tinja hitam seperti aspal, nyeri hebat, pingsan, atau lemah berat membutuhkan pertolongan medis segera.",
+  source:"NIDDK — Gastritis & Gastropathy; MedlinePlus — Gastritis."},
+ {id:"headache",cat:"Saraf & nyeri",icon:"🤕",name:"Sakit Kepala",short:"Rasa sakit atau tidak nyaman di kepala dengan banyak kemungkinan penyebab, mulai dari kurang tidur hingga kondisi yang membutuhkan penilaian medis.",
+  definition:"Sakit kepala adalah gejala, bukan satu penyakit tunggal. Polanya bisa berbeda-beda dan penyebabnya beragam. Karena itu, nama 'sakit kepala' saja tidak cukup untuk menentukan penyebab seseorang.",
+  symptoms:["Nyeri di satu atau kedua sisi kepala","Rasa berdenyut, tertekan, atau seperti berat","Sensitif terhadap cahaya atau suara pada sebagian jenis sakit kepala","Mual pada sebagian kondisi","Dapat berkaitan dengan kurang tidur, dehidrasi, atau faktor lain"],
+  causes:"Pemicu dapat berupa kurang tidur, stres, dehidrasi, infeksi, perubahan rutinitas, ketegangan otot, migrain, atau penyebab lain. Diagnosis membutuhkan penilaian pola dan konteks.",
+  care:["Perhatikan tidur, makan, minum, dan waktu munculnya keluhan.","Istirahat di lingkungan yang nyaman bila membantu.","Catat frekuensi dan pemicu yang tampak berhubungan.","Jika sering berulang atau mengganggu aktivitas, konsultasikan."],
+  warning:"Sakit kepala yang sangat mendadak dan berat, setelah cedera kepala, disertai penurunan kesadaran, kejang, kelemahan anggota tubuh, gangguan bicara/penglihatan, atau kondisi berat lain memerlukan pertolongan segera.",
+  source:"MedlinePlus — Headache; NHS — Headaches."},
+ {id:"fever",cat:"Gejala umum",icon:"🌡️",name:"Demam",short:"Peningkatan suhu tubuh yang dapat terjadi ketika tubuh merespons infeksi atau kondisi lain. Demam adalah gejala, bukan penyakit tunggal.",
+  definition:"Demam adalah peningkatan suhu tubuh di atas rentang normal yang dapat terjadi sebagai bagian dari respons tubuh terhadap infeksi atau kondisi lain. Suhu dapat berubah menurut waktu, aktivitas, metode pengukuran, dan lokasi pengukuran.",
+  symptoms:["Tubuh terasa panas atau meriang","Menggigil","Berkeringat","Lemas","Sakit kepala atau nyeri badan pada sebagian kondisi"],
+  causes:"Infeksi adalah salah satu penyebab umum, tetapi demam juga dapat berkaitan dengan kondisi lain. Karena itu, penyebab perlu dilihat bersama gejala dan riwayatnya.",
+  care:["Istirahat dan cukup minum sesuai kebutuhan.","Gunakan alat ukur suhu bila tersedia agar tidak hanya mengandalkan rasa panas.","Perhatikan gejala lain dan perkembangan kondisi.","Bila demam menetap, sangat tinggi, atau disertai gejala mengkhawatirkan, cari nasihat tenaga kesehatan."],
+  warning:"Cari pertolongan segera jika demam disertai kesulitan bernapas, penurunan kesadaran, kejang, leher kaku, ruam yang mengkhawatirkan, atau kondisi memburuk cepat.",
+  source:"MedlinePlus — Fever; NHS — High temperature."},
+ {id:"allergy",cat:"Alergi & imun",icon:"🌿",name:"Alergi",short:"Respons sistem kekebalan yang berlebihan terhadap zat yang sebenarnya tidak berbahaya bagi kebanyakan orang, seperti serbuk sari atau bahan tertentu.",
+  definition:"Alergi terjadi ketika sistem kekebalan bereaksi terhadap zat tertentu yang disebut alergen. Reaksi dapat mengenai kulit, hidung, mata, saluran napas, atau sistem tubuh lain.",
+  symptoms:["Bersin dan hidung berair","Mata gatal atau berair","Gatal atau ruam pada kulit","Batuk atau mengi pada sebagian orang","Bengkak pada area tertentu pada reaksi tertentu"],
+  causes:"Pemicu dapat berupa serbuk sari, tungau debu, bulu/dander hewan, makanan, obat, atau bahan lain. Pemicu berbeda antarorang.",
+  care:["Kenali pemicu yang dicurigai dan kurangi paparan bila memungkinkan.","Jangan mencoba menguji alergi berat sendiri.","Jika keluhan berulang, konsultasikan untuk mengetahui pola dan pilihan penanganan yang sesuai."],
+  warning:"Bengkak pada bibir/lidah/tenggorokan, sulit bernapas, pusing berat, atau gejala cepat memburuk dapat menandakan reaksi alergi berat dan membutuhkan pertolongan darurat.",
+  source:"MedlinePlus — Allergies; CDC — Allergy basics."},
+ {id:"dehydration",cat:"Cairan",icon:"💧",name:"Dehidrasi",short:"Kondisi ketika tubuh kehilangan cairan lebih banyak daripada yang masuk sehingga keseimbangan cairan tubuh terganggu.",
+  definition:"Dehidrasi terjadi ketika tubuh kehilangan lebih banyak cairan daripada yang diganti. Hal ini dapat terjadi karena diare, muntah, berkeringat banyak, demam, aktivitas berat, atau asupan cairan yang tidak mencukupi.",
+  symptoms:["Haus","Mulut terasa kering","Buang air kecil lebih sedikit atau urin lebih pekat","Lemas atau pusing","Pada kondisi berat dapat terjadi kebingungan atau penurunan kesadaran"],
+  causes:"Kehilangan cairan melalui muntah, diare, keringat, demam, atau kondisi lain dapat berkontribusi. Kebutuhan cairan juga dipengaruhi lingkungan dan aktivitas.",
+  care:["Minum secara bertahap sesuai kemampuan.","Saat kehilangan cairan cukup banyak, penggantian cairan dan elektrolit dapat diperlukan sesuai kondisi.","Atasi penyebab kehilangan cairan dan pantau kondisi."],
+  warning:"Tidak mampu minum, sangat jarang buang air kecil, kebingungan, pingsan, kelemahan berat, atau kondisi memburuk cepat membutuhkan pertolongan medis.",
+  source:"WHO — Diarrhoeal disease; MedlinePlus — Dehydration."},
+ {id:"insomnia",cat:"Tidur",icon:"😴",name:"Insomnia / Sulit Tidur",short:"Kesulitan memulai tidur, mempertahankan tidur, atau mendapatkan tidur yang terasa cukup dan memengaruhi aktivitas sehari-hari.",
+  definition:"Insomnia adalah masalah tidur yang dapat berupa sulit mulai tidur, sering terbangun, atau bangun terlalu dini dan sulit tidur kembali. Jika berlangsung terus dan mengganggu fungsi sehari-hari, perlu dibicarakan dengan tenaga kesehatan.",
+  symptoms:["Sulit mulai tidur","Sering terbangun di malam hari","Bangun terlalu dini","Merasa tidak segar setelah tidur","Mengantuk atau sulit berkonsentrasi di siang hari"],
+  causes:"Dapat berkaitan dengan stres, jadwal tidur tidak teratur, lingkungan, kebiasaan, kafein, penggunaan perangkat sebelum tidur, atau kondisi kesehatan tertentu.",
+  care:["Buat jadwal tidur dan bangun yang konsisten.","Jaga kamar nyaman dan minim gangguan.","Hindari kafein terlalu dekat dengan waktu tidur bila sensitif.","Jika masalah menetap dan mengganggu aktivitas, konsultasikan."],
+  warning:"Jika masalah tidur disertai sesak saat tidur, pingsan, kebingungan, atau gangguan fungsi yang berat, cari bantuan kesehatan.",
+  source:"MedlinePlus — Insomnia; CDC — Sleep and Sleep Disorders."},
+ {id:"anemia",cat:"Darah & nutrisi",icon:"🩸",name:"Anemia",short:"Kondisi ketika darah memiliki kemampuan membawa oksigen yang tidak mencukupi, sering berkaitan dengan kadar hemoglobin yang rendah.",
+  definition:"Anemia adalah kondisi ketika tubuh tidak memiliki cukup sel darah merah sehat atau hemoglobin untuk membawa oksigen secara memadai. Anemia bukan satu penyakit tunggal; penyebabnya beragam sehingga pemeriksaan dapat diperlukan.",
+  symptoms:["Mudah lelah","Lemas","Pusing","Kulit tampak lebih pucat pada sebagian orang","Sesak saat aktivitas pada sebagian kondisi"],
+  causes:"Penyebab dapat mencakup kekurangan zat besi atau nutrisi tertentu, kehilangan darah, gangguan produksi sel darah, atau kondisi kronis. Tidak semua anemia disebabkan kekurangan zat besi.",
+  care:["Jangan langsung menyimpulkan penyebab dari rasa lelah saja.","Pola makan bergizi dan beragam mendukung kesehatan, tetapi suplemen zat besi tidak sebaiknya digunakan sembarangan.","Jika gejala menetap, konsultasikan agar penyebab dapat dinilai."],
+  warning:"Sesak berat, nyeri dada, pingsan, perdarahan banyak, atau kelemahan berat membutuhkan pertolongan segera.",
+  source:"MedlinePlus — Anemia; WHO — Anaemia."}
+];
+
+function renderDiseaseFilters(){
+  const box=document.getElementById("diseaseFilters"); if(!box)return;
+  const cats=["Semua",...new Set(diseaseData.map(d=>d.cat))];
+  box.innerHTML=cats.map((c,i)=>`<button class="filter-btn ${i===0?"active":""}" data-cat="${escapeHTML(c)}" onclick="filterDisease('${escapeHTML(c).replace(/'/g,"&#39;")}')">${escapeHTML(c)}</button>`).join("");
+}
+let activeDiseaseCategory="Semua";
+function filterDisease(cat){
+  activeDiseaseCategory=cat;
+  document.querySelectorAll("#diseaseFilters .filter-btn").forEach(b=>b.classList.toggle("active",b.dataset.cat===cat));
+  renderDiseaseLibrary();
+}
+function clearDiseaseSearch(){
+  const el=document.getElementById("diseaseSearch"); if(el)el.value="";
+  activeDiseaseCategory="Semua";
+  document.querySelectorAll("#diseaseFilters .filter-btn").forEach((b,i)=>b.classList.toggle("active",i===0));
+  renderDiseaseLibrary();
+}
+function renderDiseaseLibrary(){
+  const box=document.getElementById("diseaseGrid"); if(!box)return;
+  renderDiseaseFilters();
+  const q=(document.getElementById("diseaseSearch")?.value||"").toLowerCase().trim();
+  const list=diseaseData.filter(d=>(activeDiseaseCategory==="Semua"||d.cat===activeDiseaseCategory)&&(!q||(d.name+" "+d.short+" "+d.definition+" "+d.cat).toLowerCase().includes(q)));
+  if(!list.length){box.innerHTML='<div class="card empty" style="grid-column:1/-1">Topik belum ditemukan. Coba kata kunci lain.</div>';return}
+  box.innerHTML=list.map(d=>`
+    <article class="disease-card">
+      <div class="disease-card-top">
+        <span class="disease-icon">${d.icon}</span>
+        <span class="pill">${escapeHTML(d.cat)}</span>
+        <h3>${escapeHTML(d.name)}</h3>
+        <p>${escapeHTML(d.short)}</p>
+        <div class="disease-meta"><span class="topic-badge">📖 Pengertian</span><span class="topic-badge">🔎 Gejala</span><span class="topic-badge">⚠️ Tanda bahaya</span></div>
+      </div>
+      <div class="disease-card-bottom"><button class="disease-more" onclick="openDisease('${d.id}')">Baca penjelasan lengkap →</button></div>
+    </article>`).join("");
+}
+function openDisease(id){
+  const d=diseaseData.find(x=>x.id===id); if(!d)return;
+  document.getElementById("diseaseModalTitle").textContent=d.icon+" "+d.name;
+  document.getElementById("diseaseModalMeta").textContent=d.cat;
+  document.getElementById("diseaseModalBody").innerHTML=`
+    <div class="disease-definition"><b>💡 Apa itu ${escapeHTML(d.name)}?</b><br>${escapeHTML(d.definition)}</div>
+    <div class="detail-section"><h4>🔎 Gejala yang dapat muncul</h4><ul>${d.symptoms.map(x=>`<li>${escapeHTML(x)}</li>`).join("")}</ul></div>
+    <div class="detail-section"><h4>🧩 Penyebab / faktor yang dapat berkaitan</h4><p>${escapeHTML(d.causes)}</p></div>
+    <div class="detail-section"><h4>🌿 Apa yang dapat dilakukan?</h4><ul>${d.care.map(x=>`<li>${escapeHTML(x)}</li>`).join("")}</ul></div>
+    <div class="detail-warning"><b>🚨 Kapan perlu mencari bantuan?</b><br>${escapeHTML(d.warning)}</div>
+    <div class="detail-section"><h4>❗ Penting dipahami</h4><p>Gejala yang sama dapat muncul pada beberapa kondisi. Halaman ini membantu memahami istilah dan informasi umum, bukan memastikan penyakit yang sedang dialami seseorang.</p></div>
+    <div class="detail-source"><b>Rujukan:</b> ${escapeHTML(d.source)}</div>`;
+  document.getElementById("diseaseModal").classList.add("show");
+  recordActivity("library_detail:"+id);
+}
+
 const articles={
  nutrition:["Nutrisi Seimbang","Pola makan yang beragam dan cukup membantu memenuhi kebutuhan tubuh. Utamakan variasi makanan, makan secara teratur sesuai kebutuhan, dan hindari pembatasan ekstrem tanpa arahan tenaga kesehatan."],
  sleep:["Tidur","Rutinitas tidur yang konsisten, lingkungan yang nyaman, dan kebiasaan sebelum tidur yang tenang dapat mendukung istirahat. Bila masalah tidur menetap dan mengganggu aktivitas, pertimbangkan berkonsultasi dengan tenaga kesehatan."],
@@ -769,11 +992,11 @@ function renderLibrary(){
  <button class="ghost read" onclick="${["stomach","headache","respiratory","asthma","eye","fatigue","fever","allergy","sleep","hydration"].includes(t[3])?`startFromLibrary('${t[3]}')`:`openArticle('${t[3]}')`}">Pelajari →</button></div>`).join(""):`<div class="card empty">Topik tidak ditemukan. Coba kata kunci lain.</div>`;
 }
 function startFromLibrary(key){go("symptoms");setTimeout(()=>startSymptom(key),50)}
-function searchLibrary(){go("library");document.getElementById("librarySearch").value=document.getElementById("homeSearch").value;renderLibrary()}
-
-function resetApp(){
- if(!confirm("Atur ulang semua data prototype di browser ini?"))return;
- localStorage.removeItem("healthlyData_" + getCurrentUserKey());updateAll();toast("Data akun ini sudah di-reset");
+function searchLibrary(){
+  const q=(document.getElementById("homeSearch")?.value||"").trim();
+  go("library");
+  const el=document.getElementById("diseaseSearch");
+  if(el){el.value=q;renderDiseaseLibrary();}
 }
 
 renderLibrary();updateAll();showCategories();welcomeChat();
