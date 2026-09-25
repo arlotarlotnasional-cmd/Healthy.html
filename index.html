@@ -376,6 +376,7 @@ body{overflow-x:hidden}.mobile-menu{display:none}
     <input class="form-input" id="librarySearch" oninput="renderLibrary()" placeholder="Cari: tidur, batuk, nutrisi, hidrasi, dll.">
   </div>
   <div id="libraryGrid" class="grid g3" style="margin-top:15px"></div>
+  <div class="card" style="margin-top:15px"><div class="section" style="margin-top:0"><h3>Basis Pengetahuan Healthly MAX</h3><span class="badge-safe">Safety-first • Non-diagnostic</span></div><p class="muted">Basis pengetahuan memisahkan keluhan, kondisi, tanda bahaya, edukasi obat, perawatan suportif, dan sumber. Mesin tidak menyimpulkan diagnosis dari satu gejala.</p><div class="mini-grid" style="margin-top:12px"><div class="mini"><b>47+</b><br><span class="muted">keluhan sehari-hari</span></div><div class="mini"><b>40</b><br><span class="muted">topik kondisi bertingkat</span></div><div class="mini"><b>10</b><br><span class="muted">alur panduan gejala</span></div><div class="mini"><b>7</b><br><span class="muted">kelompok sumber rujukan</span></div></div></div>
 </section>
 
 <div class="card" style="margin:30px auto 0;max-width:1180px">
@@ -515,6 +516,99 @@ function deleteHabit(i){if(!confirm("Hapus habit ini?"))return;let d=getData();d
 function closeModal(id){document.getElementById(id).classList.remove("show")}
 function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 
+
+/* ================= HEALTHLY MAX — FINAL KNOWLEDGE ENGINE =================
+   Safety-first, educational, non-diagnostic knowledge layer.
+*/
+const HEALTHLY_SOURCES=[
+ {org:'WHO',title:'Diarrhoeal disease',url:'https://www.who.int/news-room/fact-sheets/detail/diarrhoeal-disease',topics:['diare','dehidrasi']},
+ {org:'WHO',title:'Dengue and severe dengue',url:'https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue',topics:['dengue','tanda bahaya']},
+ {org:'MedlinePlus',title:'Medical emergencies',url:'https://medlineplus.gov/medicalemergencies.html',topics:['tanda bahaya','darurat']},
+ {org:'Kemenkes RI',title:'Pedoman Nasional Pelayanan Kedokteran',url:'https://www.kemkes.go.id/',topics:['stroke','diabetes','hipertensi','pneumonia','ACS']},
+ {org:'CDC',title:'Health information',url:'https://www.cdc.gov/',topics:['infeksi','pencegahan']},
+ {org:'FDA',title:'Drug safety information',url:'https://www.fda.gov/drugs',topics:['obat']},
+ {org:'NCCIH',title:'Herbs at a Glance',url:'https://www.nccih.nih.gov/health/herbsataglance',topics:['alami','herbal']}
+];
+
+const conditionDatabase=[
+ ['common_cold','Common Cold','pernapasan','Pilek biasa umumnya menimbulkan hidung berair/tersumbat, bersin, dan sakit tenggorokan. Gejala dapat tumpang tindih dengan infeksi lain.',['pilek','hidung berair','bersin','common cold']],
+ ['influenza','Influenza','pernapasan','Influenza dapat menyebabkan demam, batuk, nyeri tubuh, sakit kepala, dan rasa lelah.',['flu','influenza']],
+ ['ispa','ISPA','pernapasan','ISPA adalah kelompok infeksi saluran pernapasan akut. Gejalanya bergantung pada bagian saluran napas dan penyebabnya.',['ispa']],
+ ['pharyngitis','Faringitis','pernapasan','Faringitis adalah peradangan pada tenggorokan yang dapat disebabkan infeksi atau iritasi.',['faringitis','radang tenggorokan']],
+ ['gastroenteritis','Gastroenteritis','pencernaan','Gastroenteritis dapat menyebabkan diare, mual, muntah, dan kram perut. Risiko utama pada sebagian kasus adalah kehilangan cairan.',['gastroenteritis','muntah diare']],
+ ['acute_diarrhea','Diare Akut','pencernaan','Diare akut ditandai BAB cair/lebih sering dan dapat disebabkan infeksi atau faktor lain. Perhatian utama adalah dehidrasi.',['diare akut','diare']],
+ ['constipation','Konstipasi','pencernaan','Konstipasi dapat berupa BAB yang jarang atau sulit dengan tinja keras. Pola makan, cairan, aktivitas, dan faktor lain dapat berperan.',['konstipasi','sembelit','susah bab']],
+ ['dyspepsia','Dispepsia','pencernaan','Dispepsia adalah kumpulan keluhan seperti rasa penuh, cepat kenyang, nyeri atau tidak nyaman di perut bagian atas.',['dispepsia','begah','cepat kenyang']],
+ ['gerd','GERD','pencernaan','GERD terjadi ketika isi lambung berulang naik ke kerongkongan dan dapat menimbulkan rasa panas di dada atau regurgitasi.',['gerd','asam lambung','heartburn','refluks']],
+ ['migraine','Migrain','saraf','Migrain dapat menyebabkan sakit kepala berdenyut dan pada sebagian orang disertai mual atau sensitif terhadap cahaya/suara.',['migrain','migraine']],
+ ['allergic_rhinitis','Rinitis Alergi','alergi','Rinitis alergi dapat menyebabkan bersin, hidung berair/tersumbat, dan gatal pada hidung atau mata setelah paparan pemicu tertentu.',['rinitis alergi','alergi hidung']],
+ ['dermatitis','Dermatitis','kulit','Dermatitis adalah peradangan kulit yang dapat menyebabkan gatal, kering, kemerahan, atau iritasi.',['dermatitis','eksim']],
+ ['conjunctivitis','Konjungtivitis','mata','Konjungtivitis adalah peradangan selaput yang melapisi bagian putih mata dan kelopak bagian dalam.',['konjungtivitis','belekan']],
+ ['asthma','Asma','pernapasan','Asma dapat menyebabkan mengi, sesak, batuk, dan rasa dada tertekan. Derajat keluhan perlu dinilai secara klinis.',['asma','mengi']],
+ ['anemia','Anemia','darah','Anemia adalah kondisi ketika kemampuan darah membawa oksigen berkurang; keluhan dapat berupa lelah atau lemah dan penyebabnya beragam.',['anemia','kurang darah']],
+ ['scabies','Skabies','kulit','Skabies adalah infestasi tungau yang biasanya menyebabkan gatal, sering lebih mengganggu pada malam hari.',['skabies','kudis']],
+ ['hfmd','HFMD','infeksi','Hand, foot and mouth disease dapat menyebabkan demam dan luka di mulut serta ruam pada tangan/kaki, terutama pada anak.',['hfmd','tangan kaki mulut']],
+ ['typhoid','Tifoid','infeksi','Demam tifoid adalah infeksi yang dapat menyebabkan demam dan keluhan pencernaan. Diagnosis memerlukan penilaian tenaga kesehatan.',['tifoid','tipes']],
+ ['uti','Infeksi Saluran Kemih','urinaria','ISK dapat menyebabkan nyeri saat buang air kecil, sering ingin berkemih, atau rasa tidak nyaman di area kemih.',['isk','infeksi saluran kemih','anyang-anyangan']],
+ ['otitis_media','Otitis Media','telinga','Otitis media adalah infeksi/peradangan telinga tengah dan dapat menimbulkan nyeri telinga, demam, atau gangguan pendengaran sementara.',['otitis','sakit telinga']],
+ ['dengue','Dengue/DBD','infeksi','Dengue dapat menyebabkan demam tinggi, sakit kepala, nyeri tubuh, mual/muntah, dan ruam. Tanda bahaya membutuhkan pertolongan segera.',['dengue','dbd','demam berdarah']],
+ ['pneumonia','Pneumonia','pernapasan','Pneumonia adalah infeksi paru yang dapat menyebabkan batuk, demam, dan kesulitan bernapas.',['pneumonia','infeksi paru']],
+ ['tb','Tuberkulosis (TBC)','infeksi','TBC adalah penyakit infeksi yang paling sering mengenai paru dan dapat menimbulkan batuk berkepanjangan serta gejala umum lain.',['tbc','tuberkulosis','batuk lama']],
+ ['severe_dehydration','Dehidrasi Berat','darurat','Kehilangan cairan berat dapat mengganggu fungsi tubuh dan memerlukan penilaian medis segera.',['dehidrasi berat']],
+ ['meningitis','Meningitis','darurat','Meningitis adalah peradangan selaput di sekitar otak dan sumsum tulang belakang; kondisi ini dapat menjadi kegawatdaruratan.',['meningitis']],
+ ['sepsis','Sepsis','darurat','Sepsis adalah respons tubuh yang mengancam nyawa terhadap infeksi dan memerlukan penanganan segera.',['sepsis']],
+ ['stroke','Stroke','saraf','Stroke terjadi ketika aliran darah ke bagian otak terganggu atau terjadi perdarahan. Gejala mendadak memerlukan pertolongan segera.',['stroke','wajah mencong','bicara pelo']],
+ ['acs','Sindrom Koroner Akut','jantung','Sindrom koroner akut mencakup kondisi akibat berkurangnya aliran darah ke otot jantung dan memerlukan evaluasi medis segera.',['serangan jantung','nyeri dada','acs']],
+ ['heart_failure','Gagal Jantung','jantung','Gagal jantung adalah kondisi ketika jantung tidak mampu memenuhi kebutuhan tubuh secara efektif; dapat menyebabkan sesak dan bengkak.',['gagal jantung']],
+ ['hypertensive_crisis','Krisis Hipertensi','jantung','Tekanan darah yang sangat tinggi disertai gejala tertentu dapat menjadi keadaan gawat dan perlu evaluasi segera.',['krisis hipertensi']],
+ ['diabetes','Diabetes Melitus','metabolik','Diabetes adalah gangguan kadar glukosa darah yang menetap dan memerlukan pengelolaan serta pemantauan tenaga kesehatan.',['diabetes','gula darah']],
+ ['ckd','Penyakit Ginjal Kronis','ginjal','Penyakit ginjal kronis adalah penurunan fungsi/kerusakan ginjal yang menetap dan perlu pemantauan medis.',['penyakit ginjal kronis','gagal ginjal kronis']],
+ ['copd','PPOK','pernapasan','PPOK menyebabkan hambatan aliran udara yang menetap dan dapat menimbulkan batuk serta sesak.',['ppok','copd']],
+ ['severe_asthma','Serangan Asma Berat','darurat','Serangan asma berat dapat menyebabkan kesulitan bernapas yang nyata dan membutuhkan pertolongan medis segera.',['serangan asma berat']],
+ ['anaphylaxis','Anafilaksis','darurat','Anafilaksis adalah reaksi alergi berat yang dapat berkembang cepat dan mengganggu pernapasan atau sirkulasi.',['anafilaksis','alergi berat']],
+ ['rabies_exposure','Paparan Rabies','infeksi','Paparan hewan yang berpotensi membawa rabies perlu dinilai segera karena pencegahan setelah pajanan bergantung pada penilaian medis.',['rabies','digigit anjing','digigit kucing']],
+ ['malaria','Malaria','infeksi','Malaria adalah penyakit akibat parasit yang ditularkan nyamuk tertentu dan dapat menjadi berat.',['malaria']],
+ ['acute_hepatitis','Hepatitis Akut','hati','Hepatitis akut adalah peradangan hati yang dapat disebabkan beberapa virus atau penyebab lain.',['hepatitis']],
+ ['appendicitis','Apendisitis','pencernaan','Apendisitis adalah peradangan usus buntu yang dapat menyebabkan nyeri perut dan memerlukan penilaian medis.',['apendisitis','usus buntu']],
+ ['gi_bleeding','Perdarahan Saluran Cerna','darurat','Perdarahan saluran cerna dapat tampak sebagai muntah darah atau tinja hitam/berdarah dan membutuhkan evaluasi medis.',['muntah darah','tinja hitam','BAB berdarah']]
+].map(x=>({id:x[0],name:x[1],category:x[2],description:x[3],aliases:x[4],type:'condition'}));
+
+const redFlagPatterns=[
+ /sulit bernapas|sesak berat|tidak bisa bernapas|napas sangat sulit/i,
+ /pingsan|tidak sadar|sulit dibangunkan|kebingungan mendadak/i,
+ /nyeri dada.*berat|dada.*tertekan.*berat/i,
+ /muntah darah|batuk darah|tinja hitam|bab berdarah/i,
+ /wajah mencong|bicara pelo|lengan.*lemah|kelemahan mendadak/i,
+ /kejang/i,
+ /nyeri kepala.*terburuk|sakit kepala.*sangat hebat.*mendadak/i,
+ /penglihatan.*hilang|penglihatan.*menurun.*mendadak/i,
+ /bengkak.*bibir|bengkak.*lidah.*sesak/i,
+ /kondisi.*memburuk cepat|makin parah.*cepat/i
+];
+function safetyScan(text){
+ const hits=redFlagPatterns.filter(r=>r.test(text));
+ return {urgent:hits.length>0,hits:hits.length};
+}
+function findKnowledgeTopics(text){
+ const t=text.toLowerCase();
+ return conditionDatabase.map(c=>({c,score:c.aliases.reduce((n,a)=>n+(t.includes(a)?(a.length>5?3:1):0),0)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,4);
+}
+function knowledgeSourceHTML(topic){
+ const id=typeof topic==='string'?topic:(topic?.id||'');
+ const keys=(id==='acute_diarrhea'||id==='gastroenteritis'||id==='severe_dehydration')?['diare','dehidrasi']:(id==='dengue')?['dengue','tanda bahaya']:['obat'];
+ const src=HEALTHLY_SOURCES.filter(s=>s.topics.some(x=>keys.includes(x))).slice(0,2);
+ return src.length?`<div class="source-note"><b>Rujukan:</b> ${src.map(s=>`<a href="${s.url}" target="_blank" rel="noopener">${s.org} — ${s.title}</a>`).join(' · ')}</div>`:'';
+}
+function buildKnowledgeResponse(q,base){
+ const safety=safetyScan(q), topics=findKnowledgeTopics(q);
+ if(safety.urgent){
+   return `<b>Prioritas keselamatan 🚨</b><p>Ada kata/gejala dalam pesanmu yang termasuk tanda bahaya. Healthly tidak bisa menilai tingkat kegawatan lewat chat.</p><div class="warning"><b>Cari pertolongan medis segera.</b><br>Jika gejalanya sedang terjadi sekarang atau memburuk cepat, jangan menunggu jawaban Healthly. Beri tahu orang dewasa tepercaya dan gunakan layanan kesehatan/darurat yang sesuai.</div><p class="ai-note">Healthly tetap bersifat edukatif dan tidak dapat menggantikan pemeriksaan langsung.</p>`;
+ }
+ let related=topics.map(x=>`<span class="topic-badge">${escapeHTML(x.c.name)}</span>`).join('');
+ let knowledge=topics.length?`<div class="info"><b>Topik edukasi yang mungkin relevan:</b> ${related}<br><span class="source-note">Ini bukan diagnosis; topik ditampilkan karena kata yang digunakan mirip dengan istilah dalam basis pengetahuan.</span></div>`:'';
+ return formatResponse({...base,details:{...(base.details||{}),paired:base.details?.paired||[],knowledgeTopics:topics}})+knowledge+(topics.length?knowledgeSourceHTML(topics[0].c.id):'');
+}
+
 const demoResponses=[
  {id:'stomach',keys:['perut','mual','maag','kembung','begah','mules','mulas','asam lambung','heartburn','perih di lambung'],title:'Keluhan perut / mual',summary:'Mual, kembung, rasa begah, atau tidak nyaman di perut dapat berkaitan dengan berbagai hal. Percakapan ini tidak cukup untuk memastikan penyebab.',factors:['pola makan atau makanan tertentu yang memicu keluhan','gangguan pencernaan sementara','infeksi saluran cerna, terutama bila disertai diare atau muntah','iritasi atau keluhan lambung pada sebagian orang'],steps:['minum sedikit-sedikit tetapi lebih sering bila terasa mual','pilih makanan yang lebih ringan jika lebih mudah ditoleransi','catat makanan, waktu makan, dan kapan keluhan muncul','perhatikan apakah keluhan membaik atau justru semakin berat'],red:['nyeri perut sangat berat atau muncul mendadak','muntah darah atau tinja berdarah/hitam','sulit bernapas, pingsan, atau kondisi memburuk cepat'],follow:'Apakah keluhannya lebih terasa setelah makan, saat perut kosong, atau tidak terkait waktu makan?'} ,
  {id:'diarrhea',keys:['diare','mencret','berak cair','buang air cair','bab cair'],title:'Diare',summary:'Diare sering berkaitan dengan gangguan atau infeksi saluran cerna. Hal penting yang perlu diperhatikan adalah kehilangan cairan dan tanda dehidrasi.',factors:['infeksi saluran cerna','makanan atau air yang terkontaminasi','perubahan atau gangguan pencernaan lainnya'],steps:['utamakan cairan; larutan oralit dapat digunakan sesuai petunjuk kemasan','tetap makan sesuai kemampuan dan toleransi tubuh','perhatikan frekuensi buang air dan tanda kekurangan cairan'],red:['darah pada tinja','sulit minum atau tanda dehidrasi','keluhan menetap, sangat berat, atau kondisi memburuk'],follow:'Seberapa sering kamu buang air hari ini, dan apakah kamu masih bisa minum dengan baik?'},
@@ -542,13 +636,15 @@ function detectDetails(q){
  if(/\b(setelah|habis|sesudah|karena|kena|terpapar)\b/.test(t)) context.push('kemungkinan pemicu');
  return {duration:duration.trim(),severe,paired,context};
 }
-function getDemoResponse(q){
+function getBaseDemoResponse(q){
  const t=q.toLowerCase(); const d=detectDetails(q);
  if(d.paired.length===0) return {title:'Aku belum menangkap keluhan utamanya',summary:'Aku bisa membantu lebih baik kalau kamu menyebutkan keluhan yang paling mengganggu dengan bahasa sehari-hari. Aku tidak bisa memastikan diagnosis lewat chat.',factors:['keluhan utama yang paling mengganggu','sejak kapan keluhan terasa','gejala lain yang muncul bersamaan'],steps:['contoh: “mata aku berair dan perih sejak pagi”','contoh: “aku punya asma dan sekarang agak sesak”','kalau ada, tulis juga apa yang membuat keluhan membaik atau memburuk'],red:['sulit bernapas, pingsan, perdarahan, nyeri sangat berat, gangguan penglihatan, atau kondisi memburuk cepat'],follow:'Apa keluhan utama yang paling ingin kamu pahami sekarang?',details:d};
  let ranked=d.paired.map(r=>({r,score:r.keys.reduce((n,k)=>n+(t.includes(k)?(k.length>5?3:1):0),0)})).sort((a,b)=>b.score-a.score);
  const best=ranked[0].r;
  return {...best,details:d,related:ranked.slice(1,3).map(x=>x.r)};
 }
+function getDemoResponse(q){ const base=getBaseDemoResponse(q); return buildKnowledgeResponse(q,base); }
+
 function formatResponse(r){
  const d=r.details||{};
  let context='';
